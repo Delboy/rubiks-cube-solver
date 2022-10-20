@@ -1,10 +1,8 @@
-import './App.css';
+import Header from './components/Layout/Header';
 
 function App() {
   return (
-    <div>
-      <h1>Rubiks Cube Solver</h1>
-    </div>
+    <Header />
   );
 }
 
