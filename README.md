@@ -31,10 +31,14 @@ I wanted the colours of the cube to be easy on the eye and almost look like it w
 
 - ![#92CEEE](https://via.placeholder.com/15/92CEEE/92CEEE.png) Blue - #92CEEE
 - ![#C3E8B5](https://via.placeholder.com/15/C3E8B5/C3E8B5.png) Green - #C3E8B5
-- ![#FFEEB8](https://via.placeholder.com/15/FFEEB8/FFEEB8.png) Yellow - #FFEEB8
+- ![#FFFFBD](https://via.placeholder.com/15/FFFFBD/FFFFBD.png) Yellow - #FFFFBD
 - ![#F9D39D](https://via.placeholder.com/15/F9D39D/F9D39D.png) Orange - #F9D39D
 - ![#FCB6B6](https://via.placeholder.com/15/FCB6B6/FCB6B6.png) Red - #FCB6B6
 - ![#FAF9ED](https://via.placeholder.com/15/FAF9ED/FAF9ED.png) White - #FAF9ED
 
+### Wireframes
+
+The wireframe for the site is linked here:
+- [Rubik's Cube Solver](public/assets/documents/Rubiks-wireframe.pdf)
 
 
