@@ -1,8 +1,16 @@
-import Header from './components/Layout/Header';
+import Header from "./components/Layout/Header";
+import Cube from "./components/Cube/Cube";
+
+import classes from './App.module.css'
 
 function App() {
   return (
-    <Header />
+    <>
+      <div className={classes.main}>
+      <Header />
+        <Cube />
+      </div>
+    </>
   );
 }
 
