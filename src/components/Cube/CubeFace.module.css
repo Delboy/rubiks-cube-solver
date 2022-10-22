@@ -1,14 +1,29 @@
 .cubeFace {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     position: absolute;
     width: 200px;
     height: 200px;
-    border: 2px solid var(--color-grey);
-    line-height: 200px;
-    font-size: 40px;
+    border: 1px solid var(--color-grey);
+    border-radius: 18px;
+    font-size: 16px;
     font-weight: bold;
-    color: white;
+    color: black;
     text-align: center;
     opacity: .8;
+}
+
+.cubeFace div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid var(--color-grey);
+    border-radius: 12px;
+}
+
+.cubeFace div:hover {
+    background-color: aliceblue;
+    cursor: pointer;
 }
 
 .front {
