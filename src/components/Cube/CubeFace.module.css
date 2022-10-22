@@ -1,0 +1,42 @@
+.cubeFace {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border: 2px solid var(--color-grey);
+    line-height: 200px;
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    opacity: .8;
+}
+
+.front {
+    background-color: var(--color-blue);
+    transform: rotateY(  0deg) translateZ(100px);
+  }
+  
+  .back {
+    background-color: var(--color-green);
+    transform: rotateY(180deg) translateZ(100px);
+  }
+  
+  .right {
+      background-color: var(--color-red);
+      transform: rotateY( 90deg) translateZ(100px);
+  }
+  
+  .left {
+      background-color: var(--color-orange);
+      transform: rotateY(-90deg) translateZ(100px);
+  }
+  
+  .bottom {
+      background-color: var(--color-white);
+      transform: rotateX(-90deg) translateZ(100px);
+  }
+  
+  .top {
+      background-color: var(--color-yellow);
+      transform: rotateX( 90deg) translateZ(100px);
+  }
