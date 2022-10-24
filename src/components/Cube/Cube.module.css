@@ -1,22 +1,20 @@
 .scene {
-    width: 200px;
-    height: 200px;
-    margin: 80px;
-    perspective: 400px;
+  width: 200px;
+  height: 200px;
+  margin: 80px;
+  perspective: 400px;
 }
 
 .cube {
-    width: 200px;
-    height: 200px;
-    position: relative;
-    transform-style: preserve-3d;
-    transform: translateZ(-100px);
-    transition: transform 1s;
+  width: 200px;
+  height: 200px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: translateZ(-100px);
+  transition: transform 1s;
 }
 
-.blue  { transform: translateZ(-100px) rotateY(   0deg); }
-.red  { transform: translateZ(-100px) rotateY( -90deg); }
-.green   { transform: translateZ(-100px) rotateY(-180deg); }
-.orange  { transform: translateZ(-100px) rotateY(  90deg); }
-.yellow  { transform: translateZ(-100px) rotateX( -90deg); }
-.white { transform: translateZ(-100px) rotateX(  90deg); }
+.buttons {
+  text-align: center;
+  margin-top: 2rem;
+}

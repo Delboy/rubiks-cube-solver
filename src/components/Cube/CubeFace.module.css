@@ -21,10 +21,10 @@
     border-radius: 12px;
 }
 
-.cubeFace div:hover {
+/* .cubeFace div:hover {
     background-color: aliceblue;
     cursor: pointer;
-}
+} */
 
 .front {
     background-color: var(--color-blue);
