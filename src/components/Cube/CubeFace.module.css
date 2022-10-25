@@ -17,7 +17,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 3px solid var(--color-grey);
+    border: 1px solid var(--color-grey);
     border-radius: 12px;
 }
 
@@ -26,32 +26,32 @@
     cursor: pointer;
 } */
 
-.front {
+.blue {
     background-color: var(--color-blue);
     transform: rotateY(  0deg) translateZ(100px);
   }
   
-  .back {
+  .green {
     background-color: var(--color-green);
     transform: rotateY(180deg) translateZ(100px);
   }
   
-  .right {
+  .red {
       background-color: var(--color-red);
       transform: rotateY( 90deg) translateZ(100px);
   }
   
-  .left {
+  .orange {
       background-color: var(--color-orange);
       transform: rotateY(-90deg) translateZ(100px);
   }
   
-  .bottom {
+  .white {
       background-color: var(--color-white);
       transform: rotateX(-90deg) translateZ(100px);
   }
   
-  .top {
+  .yellow {
       background-color: var(--color-yellow);
       transform: rotateX( 90deg) translateZ(100px);
   }
