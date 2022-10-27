@@ -5,7 +5,7 @@ import CubeFace from "./CubeFace";
 const Cube = (props) => {
   const [disableButton, setDisableButton] = useState(false)
   const [currentFace, setCurrentFace] = useState("blue");
-  const [isBlueOnSide, setIsBlueOnSIde] = useState(false)
+  const [isBlueOnSide, setIsBlueOnSide] = useState(false)
   const [yAxis, setYaxis] = useState(0);
   const [xAxis, setXaxis] = useState(0);
   const [zAxis, setZaxis] = useState(0);
@@ -45,6 +45,7 @@ const Cube = (props) => {
 
   // Finds where the blue side
   useEffect(() => {
+    
 
   })
 
