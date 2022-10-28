@@ -22,18 +22,28 @@ const CubeFace = (props) => {
         props.onFaceChange(facing)
       }
 
-      if (props.face === 'blue' && height === 200 && width === 33){
-        setBlueIsOnSide(true)
-        props.upDateSide(blueIsOnSide)
-      } else if (props.face === 'blue'){
-        setBlueIsOnSide(false)
-        props.upDateSide(blueIsOnSide)
-      }
+      // if (props.face === 'blue' && height === 200 && width === 33){
+      //   setBlueIsOnSide(true)
+      //   props.upDateSide(blueIsOnSide)
+      // } else if (props.face === 'blue'){
+      //   setBlueIsOnSide(false)
+      //   props.upDateSide(blueIsOnSide)
+      // }
      
 
     },[props, facing, blueIsOnSide, setBlueIsOnSide]
   ); 
     
+  useEffect(() => {
+    const rightSideXcoord = Math.round(ref.current.getBoundingClientRect().x)
+    const side = {
+      face: props.face,
+      coord: rightSideXcoord
+    }
+    props.upDateSide(side)
+  },[props.xAxis, props.yAxis, props.zAxis])
+
+
   return (
     <div
       className={`${classes.cubeFace} ${cubeFaceClassName}`}

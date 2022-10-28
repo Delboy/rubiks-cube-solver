@@ -5,15 +5,23 @@ import CubeFace from "./CubeFace";
 const Cube = (props) => {
   const [disableButton, setDisableButton] = useState(false)
   const [currentFace, setCurrentFace] = useState("blue");
-  const [isBlueOnSide, setIsBlueOnSide] = useState(false)
+  // const [isBlueOnSide, setIsBlueOnSide] = useState(false)
   const [yAxis, setYaxis] = useState(0);
   const [xAxis, setXaxis] = useState(0);
   const [zAxis, setZaxis] = useState(0);
   const [yAxisOr, setYaxisOr] = useState(0);
   const [xAxisOr, setXaxisOr] = useState(0);
   const [zAxisOr, setZaxisOr] = useState(0);
+  const [coordArray, setCoordArray] = useState([
+    { face: 'blue', coord: 0 },
+    { face: 'red', coord: 0 },
+    { face: 'green', coord: 0 },
+    { face: 'orange', coord: 0 },
+    { face: 'yellow', coord: 0 },
+    { face: 'white', coord: 0 }
+  ])
 
-  
+
   // Takes coordinates and sets them to 360deg equivalent
   useEffect(() => {
     let yAxisOr = yAxis;
@@ -40,12 +48,12 @@ const Cube = (props) => {
     setXaxisOr(xAxisOr);
     setZaxisOr(zAxisOr);
 
-    
+
   }, [yAxis, xAxis, zAxis]);
 
   // Finds where the blue side
   useEffect(() => {
-    
+
 
   })
 
@@ -55,7 +63,7 @@ const Cube = (props) => {
 
   const buttonHandler = (e) => {
     setDisableButton(true)
-    
+
     setTimeout(() => {
       setDisableButton(false)
     }, 510)
@@ -84,13 +92,23 @@ const Cube = (props) => {
     setCurrentFace(face);
   };
 
-  const updateSideHandler = (boolean) => {
-    setIsBlueOnSIde(boolean)
+  const updateSideHandler = (side) => {
+    let newArray = coordArray
+
+    newArray.map(obj => {
+      if (obj.face === side.face) {
+        obj.coord = side.coord
+        return
+      } else {
+        return obj
+      }
+    })
+
+    setCoordArray(newArray)
   }
 
   const consoleHandler = () => {
-    console.log(currentFace)
-    console.log('Is blue one side?', isBlueOnSide)
+    console.log(coordArray)
   }
 
   return (
