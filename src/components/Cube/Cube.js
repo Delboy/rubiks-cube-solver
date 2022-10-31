@@ -81,11 +81,9 @@ const Cube = (props) => {
 
   // Sets the Right side face
   const updateSideHandler = (side) => {
-    console.log('face: ', side.face, 'coord: ', side.coord)
-    
     let newArray = coordArray
     
-    newArray.map(obj => {
+    newArray.forEach(obj => {
       if (obj.face === side.face) {
         obj.coord = side.coord
         return
@@ -94,12 +92,8 @@ const Cube = (props) => {
       }
     })
 
-    setCoordArray(newArray)
-  }
-  
-  useEffect(() => {
-    let newArray = coordArray
     newArray.sort(function(a, b){return b.coord - a.coord});
+
     if(newArray[0].coord === newArray[1].coord){
       if(newArray[0].face === currentFace || newArray[0].face === backFace){
         setRightSideFace(newArray[1].face)
@@ -109,8 +103,11 @@ const Cube = (props) => {
     } else {
       setRightSideFace(newArray[0].face)
     }
-  },[coordArray, currentFace, backFace])
 
+    setCoordArray(newArray)
+  }
+  
+  // Updates the css class name to change the cube orientation
   let rotation = {
     transform: `translateZ(-100px) rotateY(${yAxis}deg) rotateX(${xAxis}deg) rotateZ(${zAxis}deg)`,
   };
@@ -130,7 +127,7 @@ const Cube = (props) => {
       setXaxis(prevState => prevState - 45)
     }
     if (e.target.value === "y+") {
-      setYaxis(yAxis + 45);
+      setYaxis(prevState => prevState  + 45);
     }
     if (e.target.value === "y-") {
       setYaxis(prevState => prevState - 45)
