@@ -11,10 +11,5 @@
   position: relative;
   transform-style: preserve-3d;
   transform: translateZ(-100px);
-  transition: transform .5s;
-}
-
-.buttons {
-  text-align: center;
-  margin-top: 2rem;
+  transition: transform .4s;
 }

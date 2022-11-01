@@ -1,0 +1,11 @@
+.buttons {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.radio {
+  margin-bottom: 2rem;
+}

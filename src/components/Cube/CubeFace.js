@@ -3,29 +3,31 @@ import classes from "./CubeFace.module.css";
 
 const CubeFace = (props) => {
   const [facing, setFacing] = useState("");
-  const ref = useRef(props.face);
-
+  const ref = useRef(props.face)
   const cubeFaceClassName = classes[props.face];
 
   useEffect(
     () => {
-      const dimensions = ref.current.getBoundingClientRect();
-      const width = Math.round(dimensions.width);
-      const height = Math.round(dimensions.height);
-      const rightSideXcoord = Math.round(dimensions.x)
-      
-      const side = {
-        face: props.face,
-        coord: rightSideXcoord
-      }
-      props.upDateSide(side)
-      
-      if (width === 200 && height === 200) {
-        setFacing(props.face)
-        props.onFaceChange(facing)
-      }
+      setTimeout(()=> {
+        const dimensions = ref.current.getBoundingClientRect();
+        const width = Math.round(dimensions.width);
+        const height = Math.round(dimensions.height);
+        const rightSideXcoord = Math.round(dimensions.x)
+        
+        const side = {
+          face: props.face,
+          coord: rightSideXcoord
+        }
+        props.upDateSide(side)
+        console.log(props.face)
+        console.log(width, height)
+        if (width === 200 && height === 200) {
+          setFacing(props.face)
+          props.onFaceChange(facing)
+        }
+      }, 410)
 
-    },[props, facing, ]
+    },[props, facing]
   ); 
 
   return (
