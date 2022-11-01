@@ -1,8 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import { facesActions } from "../../orientation";
+import { useDispatch } from "react-redux";
+
 import classes from "./CubeFace.module.css";
 
 const CubeFace = (props) => {
-  const [facing, setFacing] = useState("");
+  const dispatch = useDispatch()
   const ref = useRef(props.face)
   const cubeFaceClassName = classes[props.face];
 
@@ -14,20 +17,19 @@ const CubeFace = (props) => {
         const height = Math.round(dimensions.height);
         const rightSideXcoord = Math.round(dimensions.x)
         
+        if (width === 200 && height === 200) {
+          dispatch(facesActions.updateCurrentFace(props.face))
+        }
+        
         const side = {
           face: props.face,
           coord: rightSideXcoord
         }
-        props.upDateSide(side)
-        console.log(props.face)
-        console.log(width, height)
-        if (width === 200 && height === 200) {
-          setFacing(props.face)
-          props.onFaceChange(facing)
-        }
+        dispatch(facesActions.updateCoord(side))
+       
       }, 410)
 
-    },[props, facing]
+    },[props, dispatch]
   ); 
 
   return (

@@ -6,9 +6,9 @@ import { useDispatch } from "react-redux";
 import classes from "./RadioInputs.module.css";
 
 const RadioInputs = (props) => {
-  const xAxis = useSelector((state) => state.xAxis);
-  const yAxis = useSelector((state) => state.yAxis);
-  const zAxis = useSelector((state) => state.zAxis);
+  const xAxis = useSelector(state => state.axises.xAxis)
+  const yAxis = useSelector(state => state.axises.yAxis)
+  const zAxis = useSelector(state => state.axises.zAxis)
   const [yAxisOr, setYaxisOr] = useState(0);
   const [xAxisOr, setXaxisOr] = useState(0);
   const [zAxisOr, setZaxisOr] = useState(0);
