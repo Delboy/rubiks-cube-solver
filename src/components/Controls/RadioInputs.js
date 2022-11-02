@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { axisActions } from "../../orientation";
+import { facesActions } from "../../orientation";
 import { useDispatch } from "react-redux";
 
 import classes from "./RadioInputs.module.css";
@@ -9,10 +10,14 @@ const RadioInputs = (props) => {
   const yAxisOr = useSelector((state) => state.axises.yAxisOr);
   const zAxisOr = useSelector((state) => state.axises.zAxisOr);
 
+  const currentFace = useSelector((state) => state.faces.currentFace);
+
   const dispatch = useDispatch();
 
   // Focuses selected Face
   const onChangeCurrentFace = (e) => {
+    dispatch(facesActions.updateCurrentFace(e.target.value))
+
     const currentX = xAxisOr;
     const currentY = yAxisOr;
     const currentZ = zAxisOr;
@@ -69,26 +74,56 @@ const RadioInputs = (props) => {
     dispatch(axisActions.updateZ(newZ));
   };
 
+
   return (
     <div className={classes.inputs} onChange={onChangeCurrentFace}>
       <label>
-        <input type="radio" name="cube-facing" value="blue" defaultChecked />{" "}
+        {currentFace === "blue" ? (
+          <input type="radio" name="cube-facing" value="blue" checked />
+        ) : (
+          <input type="radio" name="cube-facing" value="blue" />
+        )}
         Blue
       </label>
       <label>
-        <input type="radio" name="cube-facing" value="green" /> Green
+      {currentFace === "green" ? (
+          <input type="radio" name="cube-facing" value="green" checked />
+        ) : (
+          <input type="radio" name="cube-facing" value="green" />
+        )}
+        Green
       </label>
       <label>
-        <input type="radio" name="cube-facing" value="orange" /> Orange
+      {currentFace === "orange" ? (
+          <input type="radio" name="cube-facing" value="orange" checked />
+        ) : (
+          <input type="radio" name="cube-facing" value="orange" />
+        )}
+        Orange
       </label>
       <label>
-        <input type="radio" name="cube-facing" value="red" /> Red
+      {currentFace === "red" ? (
+          <input type="radio" name="cube-facing" value="red" checked />
+        ) : (
+          <input type="radio" name="cube-facing" value="red" />
+        )}
+        Red
       </label>
       <label>
-        <input type="radio" name="cube-facing" value="yellow" /> Yellow
+      {currentFace === "yellow" ? (
+          <input type="radio" name="cube-facing" value="yellow" checked />
+        ) : (
+          <input type="radio" name="cube-facing" value="yellow" />
+        )}
+         Yellow
       </label>
       <label>
-        <input type="radio" name="cube-facing" value="white" /> White
+      {currentFace === "white" ? (
+          <input type="radio" name="cube-facing" value="white" checked />
+        ) : (
+          <input type="radio" name="cube-facing" value="white" />
+        )}
+        White
       </label>
     </div>
   );
