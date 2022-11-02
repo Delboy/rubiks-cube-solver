@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { axisActions } from "../../orientation";
 import { useDispatch } from "react-redux";
@@ -6,42 +5,13 @@ import { useDispatch } from "react-redux";
 import classes from "./RadioInputs.module.css";
 
 const RadioInputs = (props) => {
-  const xAxis = useSelector(state => state.axises.xAxis)
-  const yAxis = useSelector(state => state.axises.yAxis)
-  const zAxis = useSelector(state => state.axises.zAxis)
-  const [yAxisOr, setYaxisOr] = useState(0);
-  const [xAxisOr, setXaxisOr] = useState(0);
-  const [zAxisOr, setZaxisOr] = useState(0);
+  const xAxisOr = useSelector((state) => state.axises.xAxisOr);
+  const yAxisOr = useSelector((state) => state.axises.yAxisOr);
+  const zAxisOr = useSelector((state) => state.axises.zAxisOr);
 
   const dispatch = useDispatch();
 
-  // Takes coordinates and sets them to 360deg equivalent
-  useEffect(() => {
-    let yAxisOr = yAxis;
-    let xAxisOr = xAxis;
-    let zAxisOr = zAxis;
-
-    // Converts all axis to positive number
-    if (yAxisOr < 0) {
-      yAxisOr = yAxisOr * -1;
-    }
-    if (xAxisOr < 0) {
-      yAxisOr = yAxisOr * -1;
-    }
-    if (zAxisOr < 0) {
-      zAxisOr = zAxisOr * -1;
-    }
-
-    // Takes the x and y axis number and coverts it into number between 0-360
-    yAxisOr = ((yAxisOr % 360) + 360) % 360;
-    xAxisOr = ((xAxisOr % 360) + 360) % 360;
-    zAxisOr = ((zAxisOr % 360) + 360) % 360;
-
-    setYaxisOr(yAxisOr);
-    setXaxisOr(xAxisOr);
-    setZaxisOr(zAxisOr);
-  }, [yAxis, xAxis, zAxis]);
-
+  // Focuses selected Face
   const onChangeCurrentFace = (e) => {
     const currentX = xAxisOr;
     const currentY = yAxisOr;
@@ -70,18 +40,30 @@ const RadioInputs = (props) => {
       default:
         break;
     }
-    
-    let newX = checkedFace.x - currentX
-    let newY = checkedFace.y - currentY
-    let newZ = checkedFace.z - currentZ
 
-    if(newX < -180){ newX += 360}
-    if(newX > 180){ newX -= 360}
-    if(newY < -180){ newY += 360}
-    if(newY > 180){ newY -= 360}
-    if(newZ < -180){ newZ += 360}
-    if(newZ > 180){ newZ -= 360}
-   
+    let newX = checkedFace.x - currentX;
+    let newY = checkedFace.y - currentY;
+    let newZ = checkedFace.z - currentZ;
+
+    if (newX < -180) {
+      newX += 360;
+    }
+    if (newX > 180) {
+      newX -= 360;
+    }
+    if (newY < -180) {
+      newY += 360;
+    }
+    if (newY > 180) {
+      newY -= 360;
+    }
+    if (newZ < -180) {
+      newZ += 360;
+    }
+    if (newZ > 180) {
+      newZ -= 360;
+    }
+
     dispatch(axisActions.updateX(newX));
     dispatch(axisActions.updateY(newY));
     dispatch(axisActions.updateZ(newZ));

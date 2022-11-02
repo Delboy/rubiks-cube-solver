@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { configureStore } from "@reduxjs/toolkit";
 
-const initialAxisState = { xAxis: 0, yAxis: 0, zAxis: 0 };
+const initialAxisState = { xAxis: 0, yAxis: 0, zAxis: 0, xAxisOr: 0, yAxisOr: 0, zAxisOr: 0 };
 
 const axisesSlice = createSlice({
   name: "axises",
@@ -16,8 +16,18 @@ const axisesSlice = createSlice({
     updateZ(state, action) {
       state.zAxis += action.payload;
     },
+    updateXOr(state, action){
+        state.xAxisOr = action.payload
+    },
+    updateYOr(state, action){
+        state.yAxisOr = action.payload
+    },
+    updateZOr(state, action){
+        state.zAxisOr = action.payload
+    },
   },
 });
+
 
 const initialFaceState = {
   currentFace: "blue",
