@@ -39,7 +39,7 @@ const Cube = (props) => {
 
   // Updates the css class name to change the cube orientation
   let rotation = {
-    transform: `translateZ(-100px) rotateY(${yAxis}deg) rotateX(${xAxis}deg) rotateZ(${zAxis}deg)`,
+    transform: `translateZ(-100px) rotateX(${xAxis}deg) rotateY(${yAxis}deg)  rotateZ(${zAxis}deg)`,
   };
 
   const consoleHandler = () => {
