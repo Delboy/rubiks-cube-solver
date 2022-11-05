@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { facesActions } from "../../orientation";
+import { axisActions, facesActions } from "../../orientation";
 import { useDispatch } from "react-redux";
 
 import classes from "./CubeFace.module.css";
@@ -32,10 +32,15 @@ const CubeFace = (props) => {
     },[props, dispatch]
   ); 
 
+  const faceClickHandler = () => {
+    dispatch(axisActions.changeFace(props.face))
+  }
+
   return (
     <div
       className={`${classes.cubeFace} ${cubeFaceClassName}`}
       ref={ref}
+      onClick={faceClickHandler}
     >
       <div>TL</div>
       <div>TM</div>
