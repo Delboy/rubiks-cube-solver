@@ -36,8 +36,6 @@ const axisesSlice = createSlice({
         const currentX = state.xAxisOr;
         const currentY = state.yAxisOr;
         const currentZ = state.zAxisOr;
-
-        console.log('cuurent:', currentX, currentY, currentZ)
   
         let checkedFace;
         switch (action.payload) {
@@ -66,8 +64,6 @@ const axisesSlice = createSlice({
         let newX = checkedFace.x - currentX;
         let newY = checkedFace.y - currentY;
         let newZ = checkedFace.z - currentZ;
-
-        console.log(newX, newY, newZ)
   
         if (newX < -180) {
           newX += 360;
@@ -96,17 +92,7 @@ const axisesSlice = createSlice({
 });
 
 const initialFaceState = {
-  currentFace: "blue",
-  rightSideFace: "red",
-  backFace: "green",
-  coords: [
-    { face: "blue", coord: 0 },
-    { face: "red", coord: 0 },
-    { face: "green", coord: 0 },
-    { face: "orange", coord: 0 },
-    { face: "yellow", coord: 0 },
-    { face: "white", coord: 0 },
-  ],
+  currentFace: "blue"
 };
 
 const facesSlice = createSlice({
@@ -115,60 +101,7 @@ const facesSlice = createSlice({
   reducers: {
     updateCurrentFace(state, action) {
       state.currentFace = action.payload;
-      switch (action.payload) {
-        case "blue":
-          state.backFace = "green";
-          break;
-        case "orange":
-          state.backFace = "red";
-          break;
-        case "green":
-          state.backFace = "blue";
-          break;
-        case "red":
-          state.backFace = "orange";
-          break;
-        case "white":
-          state.backFace = "yellow";
-          break;
-        case "yellow":
-          state.backFace = "white";
-          break;
-        default:
-          break;
-      }
-    },
-    updateCoord(state, action) {
-      let newArray = state.coords;
-
-      newArray.forEach((obj) => {
-        if (obj.face === action.payload.face) {
-          obj.coord = action.payload.coord;
-          return;
-        } else {
-          return obj;
-        }
-      });
-
-      newArray.sort(function (a, b) {
-        return b.coord - a.coord;
-      });
-
-      if (newArray[0].coord === newArray[1].coord) {
-        if (
-          newArray[0].face === state.currentFace ||
-          newArray[0].face === state.backFace
-        ) {
-          state.rightSideFace = newArray[1].face;
-        } else {
-          state.rightSideFace = newArray[0].face;
-        }
-      } else {
-        state.rightSideFace = newArray[0].face;
-      }
-
-      state.coords = newArray;
-    },
+    }
   },
 });
 

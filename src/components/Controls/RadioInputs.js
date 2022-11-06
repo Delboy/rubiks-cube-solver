@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { axisActions, facesActions } from "../../orientation";
+import { axisActions } from "../../orientation";
 import { useDispatch } from "react-redux";
 
 import classes from "./RadioInputs.module.css";
@@ -11,8 +11,6 @@ const RadioInputs = () => {
 
   // Focuses selected Face
   const onChangeCurrentFace = (e) => {
-    console.log(e.target.value)
-    // dispatch(facesActions.updateCurrentFace(e.target.value));
     dispatch(axisActions.changeFace(e.target.value))
   };
 

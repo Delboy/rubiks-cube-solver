@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { axisActions } from "../../orientation";
 import { useDispatch, useSelector } from "react-redux";
 import Radioinputs from "./RadioInputs";
@@ -7,17 +5,10 @@ import Radioinputs from "./RadioInputs";
 import classes from "./Buttons.module.css";
 
 const Buttons = () => {
-  const [disableButton, setDisableButton] = useState(false);
   const xAxisOr = useSelector((state) => state.axises.xAxisOr)
   const dispatch = useDispatch();
 
   const buttonHandler = (e) => {
-    setDisableButton(true);
-
-    setTimeout(() => {
-      setDisableButton(false);
-    }, 410);
-
     switch(e.target.value){
       case 'x+':
         dispatch(axisActions.updateX(45))
@@ -62,8 +53,6 @@ const Buttons = () => {
         dispatch(axisActions.updateY(-45));
       }
     }
-
-
   };
 
   return (
@@ -72,34 +61,34 @@ const Buttons = () => {
         <Radioinputs />
       </div>
       <div>
-        <button onClick={buttonHandler} disabled={disableButton} value="x+">
+        <button onClick={buttonHandler} value="x+">
           x+
         </button>
-        <button onClick={buttonHandler} disabled={disableButton} value="x-">
+        <button onClick={buttonHandler} value="x-">
           x-
         </button>
-        <button onClick={buttonHandler} disabled={disableButton} value="y+">
+        <button onClick={buttonHandler} value="y+">
           y+
         </button>
-        <button onClick={buttonHandler} disabled={disableButton} value="y-">
+        <button onClick={buttonHandler} value="y-">
           y-
         </button>
-        <button onClick={buttonHandler} disabled={disableButton} value="z+">
+        <button onClick={buttonHandler} value="z+">
           z+
         </button>
-        <button onClick={buttonHandler} disabled={disableButton} value="z-">
+        <button onClick={buttonHandler} value="z-">
           z-
         </button>
-        <button onClick={buttonHandler} disabled={disableButton} value="up">
+        <button onClick={buttonHandler} value="up">
           up
         </button>
-        <button onClick={buttonHandler} disabled={disableButton} value="down">
+        <button onClick={buttonHandler} value="down">
           down
         </button>
-        <button onClick={buttonHandler} disabled={disableButton} value="left">
+        <button onClick={buttonHandler} value="left">
           left
         </button>
-        <button onClick={buttonHandler} disabled={disableButton} value="right">
+        <button onClick={buttonHandler} value="right">
           right
         </button>
       </div>

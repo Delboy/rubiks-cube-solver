@@ -5,36 +5,26 @@ import { useDispatch } from "react-redux";
 import classes from "./CubeFace.module.css";
 
 const CubeFace = (props) => {
-  const dispatch = useDispatch()
-  const ref = useRef(props.face)
+  const dispatch = useDispatch();
+  const ref = useRef(props.face);
   const cubeFaceClassName = classes[props.face];
 
-  useEffect(
-    () => {
-      setTimeout(()=> {
-        const dimensions = ref.current.getBoundingClientRect();
-        const width = Math.round(dimensions.width);
-        const height = Math.round(dimensions.height);
-        const rightSideXcoord = Math.round(dimensions.x)
-        
-        if (width === 200 && height === 200) {
-          dispatch(facesActions.updateCurrentFace(props.face))
-        }
-        
-        const side = {
-          face: props.face,
-          coord: rightSideXcoord
-        }
-        dispatch(facesActions.updateCoord(side))
-       
-      }, 410)
+  // Works out which color face is facing the user
+  useEffect(() => {
+    setTimeout(() => {
+      const dimensions = ref.current.getBoundingClientRect();
+      const width = Math.round(dimensions.width);
+      const height = Math.round(dimensions.height);
 
-    },[props, dispatch]
-  ); 
+      if (width === 200 && height === 200) {
+        dispatch(facesActions.updateCurrentFace(props.face));
+      }
+    }, 410);
+  }, [props, dispatch]);
 
   const faceClickHandler = () => {
-    dispatch(axisActions.changeFace(props.face))
-  }
+    dispatch(axisActions.changeFace(props.face));
+  };
 
   return (
     <div
