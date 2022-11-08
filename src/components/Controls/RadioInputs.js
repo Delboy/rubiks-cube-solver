@@ -30,21 +30,21 @@ const RadioInputs = () => {
         <input
           type="radio"
           name="cube-facing"
-          value="green"
-          checked={currentFace === "green" ? true : false}
-          onChange={onChangeCurrentFace}
-        />
-        Green
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="cube-facing"
           value="orange"
           checked={currentFace === "orange" ? true : false}
           onChange={onChangeCurrentFace}
         />
         Orange
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="cube-facing"
+          value="green"
+          checked={currentFace === "green" ? true : false}
+          onChange={onChangeCurrentFace}
+        />
+        Green
       </label>
       <label>
         <input
