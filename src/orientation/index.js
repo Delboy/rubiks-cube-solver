@@ -92,7 +92,8 @@ const axisesSlice = createSlice({
 });
 
 const initialFaceState = {
-  currentFace: "blue"
+  currentFace: "blue",
+  colorSelected: null
 };
 
 const facesSlice = createSlice({
@@ -101,7 +102,11 @@ const facesSlice = createSlice({
   reducers: {
     updateCurrentFace(state, action) {
       state.currentFace = action.payload;
+    },
+    setColorSelected(state, action){
+      state.colorSelected = action.payload
     }
+
   },
 });
 

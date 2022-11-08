@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 
 import classes from "./Cube.module.css";
 import CubeFace from "./CubeFace";
-import Buttons from "../Controls/Buttons";
 import { useDispatch } from "react-redux";
 import { axisActions } from "../../orientation";
 import { useEffect } from "react";
@@ -11,13 +10,7 @@ const Cube = () => {
   const xAxis = useSelector((state) => state.axises.xAxis);
   const yAxis = useSelector((state) => state.axises.yAxis);
   const zAxis = useSelector((state) => state.axises.zAxis);
-  const xAxisOr = useSelector((state) => state.axises.xAxisOr);
-  const yAxisOr = useSelector((state) => state.axises.yAxisOr);
-  const zAxisOr = useSelector((state) => state.axises.zAxisOr);
-
-  const currentFace = useSelector((state) => state.faces.currentFace);
-  const rightSideFace = useSelector((state) => state.faces.rightSideFace);
-
+  
   const dispatch = useDispatch();
 
   // Takes coordinates and sets them to 360deg equivalent
@@ -39,12 +32,6 @@ const Cube = () => {
   // Updates the css class name to change the cube orientation
   let rotation = {
     transform: `translateZ(-100px) rotateX(${xAxis}deg) rotateY(${yAxis}deg) rotateZ(${zAxis}deg)`,
-  };
-
-  const consoleHandler = () => {
-    // console.log(coordArray);
-    console.log("current face: ", currentFace);
-    console.log("right side face: ", rightSideFace);
   };
 
   return (
