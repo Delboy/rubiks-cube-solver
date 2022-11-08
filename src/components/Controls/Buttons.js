@@ -62,37 +62,37 @@ const Buttons = () => {
   const rotateRightArrow = (
     <FontAwesomeIcon
       icon={faArrowRotateRight}
-      className={classes.noPointerEvents}
+      className='noPointerEvents'
     />
   );
   const rotateLeftArrow = (
     <FontAwesomeIcon
       icon={faArrowRotateLeft}
-      className={classes.noPointerEvents}
+      className='noPointerEvents'
     />
   );
   const upArrow = (
     <FontAwesomeIcon
       icon={faCircleArrowUp}
-      className={classes.noPointerEvents}
+      className='noPointerEvents'
     />
   );
   const downArrow = (
     <FontAwesomeIcon
       icon={faCircleArrowDown}
-      className={classes.noPointerEvents}
+      className='noPointerEvents'
     />
   );
   const leftArrow = (
     <FontAwesomeIcon
       icon={faCircleArrowLeft}
-      className={classes.noPointerEvents}
+      className='noPointerEvents'
     />
   );
   const rightArrow = (
     <FontAwesomeIcon
       icon={faCircleArrowRight}
-      className={classes.noPointerEvents}
+      className='noPointerEvents'
     />
   );
 

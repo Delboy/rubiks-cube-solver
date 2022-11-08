@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles&display=swap');
+
 html {
   box-sizing: border-box;
   margin: 0;
@@ -8,8 +10,10 @@ html {
   --color-green:  #C3E8B5;
   --color-yellow:  #FFFFBD;
   --color-orange: #F9D39D;
-  --color-white:   #FAF9ED;
+  /* --color-white:   #FAF9ED; */
+  --color-white:   #ffffff;
   --color-grey: rgb(171, 171, 171);
+  --color-darkgrey: rgb(100, 100, 100);
 
 }
 
@@ -25,4 +29,12 @@ body {
 
 *, *::before, *::after {
   box-sizing: inherit;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.noPointerEvents {
+  pointer-events: none;
 }

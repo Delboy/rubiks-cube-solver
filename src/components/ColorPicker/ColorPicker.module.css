@@ -1,0 +1,36 @@
+.colorPicker {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border: 2px solid var(--color-grey);
+  border-radius: 3rem;
+  width: 150px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.colorPicker h3 {
+  color: var(--color-darkgrey);
+  font-family: "fuzzy bubbles";
+  margin-bottom: 0;
+}
+
+.colorPicker ul {
+  margin-right: auto;
+  padding-left: 1rem;
+}
+
+.colorPicker li {
+  font-family: "fuzzy bubbles";
+  color: var(--color-darkgrey);
+  font-size: 1.25rem;
+}
+
+.colorPicker button {
+  background: none;
+  border: none;
+  color: rgb(100, 100, 100);
+  font-size: 1.1rem;
+}

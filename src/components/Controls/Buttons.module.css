@@ -8,21 +8,16 @@
   margin-top: 2rem;
 }
 
-button {
+.arrowButtons button {
   border: none;
   background: none;
   font-size: 1.5rem;
 }
 
-button:hover {
-  cursor: pointer;
-  
-}
-
 .arrowButtons {
   position: absolute;
   bottom: 100px;
-  left: 400px;
+  left: 325px;
   color: var(--color-grey)
 }
 
@@ -31,10 +26,6 @@ button:hover {
   text-align: center;
   align-items: center;
   
-}
-
-.noPointerEvents {
-  pointer-events: none;
 }
 
 .circle {

@@ -1,6 +1,12 @@
 .main {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     flex-direction: column;
     
+}
+
+.center {
+    display: flex;
+    align-items: center;
 }
