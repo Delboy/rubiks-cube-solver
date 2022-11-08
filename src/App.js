@@ -1,5 +1,6 @@
 import Header from "./components/Layout/Header";
 import Cube from "./components/Cube/Cube";
+import Buttons from './components/Controls/Buttons'
 
 import classes from "./App.module.css";
 
@@ -10,6 +11,7 @@ function App() {
       <div className={classes.main}>
         <Header />
         <Cube />
+        <Buttons />
       </div>
     </>
   );

@@ -58,16 +58,6 @@ const Cube = () => {
           <CubeFace key={5} face={"yellow"} />
           <CubeFace key={6} face={"white"} />
         </div>
-        <Buttons />
-        <button onClick={consoleHandler}>Console log</button>
-        <div>
-          <p>X = {xAxis}</p>
-          <p>Y = {yAxis}</p>
-          <p>z = {zAxis}</p>
-          <p>Xor = {xAxisOr}</p>
-          <p>Yor = {yAxisOr}</p>
-          <p>zor = {zAxisOr}</p>
-        </div>
       </div>
     </>
   );
