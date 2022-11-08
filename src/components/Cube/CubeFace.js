@@ -16,7 +16,7 @@ const CubeFace = (props) => {
       const width = Math.round(dimensions.width);
       const height = Math.round(dimensions.height);
 
-      if (width === 200 && height === 200) {
+      if ((width === 200 && height === 200) || (width === 283 && height === 283)){
         dispatch(facesActions.updateCurrentFace(props.face));
       }
     }, 410);

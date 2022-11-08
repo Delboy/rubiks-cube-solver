@@ -6,6 +6,41 @@
   margin-top: 2rem;
 }
 
+button {
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+}
+
+button:hover {
+  cursor: pointer;
+  
+}
+
+.arrowButtons {
+  position: absolute;
+  top: 125px;
+  left: 230px;
+  color: var(--color-grey)
+}
+
+.middleBtns, .middleBtns button {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  
+}
+
+.noPointerEvents {
+  pointer-events: none;
+}
+
+.circle {
+  font-size: 1rem;
+}
+
+
+
 .radio {
   margin-bottom: 2rem;
 }
