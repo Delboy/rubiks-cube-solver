@@ -1,5 +1,6 @@
 import ColorPickerListItem from "./ColorPickerListItem";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { facesActions } from "../../orientation";
 
 import classes from "./ColorPicker.module.css";
 
@@ -8,6 +9,8 @@ import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { faShuffle } from "@fortawesome/free-solid-svg-icons";
 
 const ColorPicker = () => {
+  const dispatch = useDispatch()
+
   const colorSelected = useSelector((state) => state.faces.colorSelected);
 
   const reset = (
@@ -23,6 +26,10 @@ const ColorPicker = () => {
     boxShadow = {boxShadow: `0 3px 15px var(--color-darkgrey)`}
   } else {
     boxShadow = {boxShadow: `0 3px 15px var(--color-${colorSelected})`}
+  }
+
+  const resetHandler = () => {
+    dispatch(facesActions.clearAllSegmentColors()) 
   }
 
   return (
@@ -41,7 +48,7 @@ const ColorPicker = () => {
         <ColorPickerListItem color={"clear"} />
       </ul>
       <div>
-        <button>{reset}</button>
+        <button onClick={resetHandler}>{reset}</button>
         <button>{shuffle}</button>
       </div>
     </div>

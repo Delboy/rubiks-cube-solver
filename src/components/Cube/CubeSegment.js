@@ -1,57 +1,54 @@
 import { useSelector, useDispatch } from "react-redux";
 import { facesActions } from "../../orientation";
-import { useState } from "react";
 
 const CubeSegment = (props) => {
   const colorSelected = useSelector((state) => state.faces.colorSelected);
   const colorCount = useSelector((state) => state.faces.colorCount);
-  const [backgroundColor, setBackgroundColor] = useState({});
+  const segmentColor = useSelector(state => state.faces.segmentState[props.position])
 
   const dispatch = useDispatch();
 
   const setColorHandler = (e) => {
     let colorSelecetedAmount = colorCount[colorSelected];
-    let backgroundColor = e.target.style.backgroundColor
-      .substring(12)
-      .slice(0, -1);
+    
+    const payload = {
+      position: props.position,
+      color: colorSelected
+    }
 
-    console.log(colorSelected)
     // If the color selected is the same as the segments color remove the color
-    if (colorSelected === backgroundColor) {
-      setBackgroundColor({ backgroundColor: null });
+    if (colorSelected === segmentColor) {
+      dispatch(facesActions.setSegmentColor({position: props.position, color: null}))
       dispatch(facesActions.removeFromColorCounter(colorSelected));
       return;
     }
 
-    // If the color selected is the same as segments color, do nothing
-    if (colorSelected === backgroundColor) {
-      return;
-    }
-
     // If the segment has a color, remove that color and replace with the color selcted
-    if (backgroundColor && colorSelecetedAmount < 8) {
-      setBackgroundColor({ backgroundColor: `var(--color-${colorSelected})` });
-      dispatch(facesActions.removeFromColorCounter(backgroundColor));
+    if (segmentColor && colorSelecetedAmount < 8) {
+      dispatch(facesActions.setSegmentColor(payload))
+      dispatch(facesActions.removeFromColorCounter(segmentColor));
       dispatch(facesActions.addToColorCounter(colorSelected));
       return;
     }
 
     // If the segment has no color, add the color selected
     if (colorSelecetedAmount < 8) {
-      setBackgroundColor({ backgroundColor: `var(--color-${colorSelected})` });
+      dispatch(facesActions.setSegmentColor(payload))
       dispatch(facesActions.addToColorCounter(colorSelected));
       return;
     }
 
     // If clear is selected color, remove the color 
     if (colorSelected === 'clear'){
-      setBackgroundColor({ backgroundColor: null });
-      dispatch(facesActions.removeFromColorCounter(backgroundColor));
+      dispatch(facesActions.setSegmentColor({position: props.position, color: null}))
+      dispatch(facesActions.removeFromColorCounter(segmentColor));
       return
     }
   };
 
-  return <div onClick={setColorHandler} style={backgroundColor}></div>;
+  const bgColor = {backgroundColor: `var(--color-${segmentColor})`}
+
+  return <div onClick={setColorHandler} style={bgColor}></div>;
 };
 
 export default CubeSegment;
