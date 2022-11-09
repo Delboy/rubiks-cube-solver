@@ -32,7 +32,7 @@ const ColorPicker = () => {
     >
       <h3>Select Color</h3>
       <ul>
-        <ColorPickerListItem color={"blue"} />
+        <ColorPickerListItem color={"blue"} disabled={true}/>
         <ColorPickerListItem color={"orange"} />
         <ColorPickerListItem color={"green"} />
         <ColorPickerListItem color={"red"} />

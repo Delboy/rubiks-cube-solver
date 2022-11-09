@@ -29,7 +29,6 @@ const CubeSegment = (props) => {
 
     // If the segment has a color, remove that color and replace with the color selcted
     if (backgroundColor && colorSelecetedAmount < 8) {
-      console.log("2");
       setBackgroundColor({ backgroundColor: `var(--color-${colorSelected})` });
       dispatch(facesActions.removeFromColorCounter(backgroundColor));
       dispatch(facesActions.addToColorCounter(colorSelected));
@@ -38,7 +37,6 @@ const CubeSegment = (props) => {
 
     // If the segment has no color, add the color selected
     if (colorSelecetedAmount < 8) {
-      console.log("3");
       setBackgroundColor({ backgroundColor: `var(--color-${colorSelected})` });
       dispatch(facesActions.addToColorCounter(colorSelected));
       return;
