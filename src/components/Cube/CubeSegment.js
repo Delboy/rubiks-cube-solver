@@ -15,6 +15,7 @@ const CubeSegment = (props) => {
       .substring(12)
       .slice(0, -1);
 
+    console.log(colorSelected)
     // If the color selected is the same as the segments color remove the color
     if (colorSelected === backgroundColor) {
       setBackgroundColor({ backgroundColor: null });
@@ -40,6 +41,13 @@ const CubeSegment = (props) => {
       setBackgroundColor({ backgroundColor: `var(--color-${colorSelected})` });
       dispatch(facesActions.addToColorCounter(colorSelected));
       return;
+    }
+
+    // If clear is selected color, remove the color 
+    if (colorSelected === 'clear'){
+      setBackgroundColor({ backgroundColor: null });
+      dispatch(facesActions.removeFromColorCounter(backgroundColor));
+      return
     }
   };
 
