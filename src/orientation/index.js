@@ -93,7 +93,21 @@ const axisesSlice = createSlice({
 
 const initialFaceState = {
   currentFace: "blue",
-  colorSelected: null
+  colorSelected: null,
+  colorCount: {
+    blue: 0,
+    orange: 0,
+    green: 0,
+    red: 0,
+    white: 0,
+    yellow: 0,
+  } 
+  // blueCount: 0,
+  // orangeCount: 0,
+  // greenCount: 0,
+  // redCount: 0,
+  // whiteCount: 0,
+  // yellowCount: 0,
 };
 
 const facesSlice = createSlice({
@@ -105,8 +119,13 @@ const facesSlice = createSlice({
     },
     setColorSelected(state, action){
       state.colorSelected = action.payload
-    }
-
+    },
+    addToColorCounter(state, action){
+        state.colorCount[action.payload] += 1
+    },
+    removeFromColorCounter(state, action){
+        state.colorCount[action.payload] -= 1
+    },
   },
 });
 
