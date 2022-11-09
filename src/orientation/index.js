@@ -107,8 +107,8 @@ const initialFaceState = {
     btl: null,
     btm: null,
     btr: null,
-    bml: null,
-    bmr: null,
+    bcl: null,
+    bcr: null,
     bbl: null,
     bbm: null,
     bbr: null,
@@ -116,8 +116,8 @@ const initialFaceState = {
     otl: null,
     otm: null,
     otr: null,
-    oml: null,
-    omr: null,
+    ocl: null,
+    ocr: null,
     obl: null,
     obm: null,
     obr: null,
@@ -125,8 +125,8 @@ const initialFaceState = {
     gtl: null,
     gtm: null,
     gtr: null,
-    gml: null,
-    gmr: null,
+    gcl: null,
+    gcr: null,
     gbl: null,
     gbm: null,
     gbr: null,
@@ -134,8 +134,8 @@ const initialFaceState = {
     rtl: null,
     rtm: null,
     rtr: null,
-    rml: null,
-    rmr: null,
+    rcl: null,
+    rcr: null,
     rbl: null,
     rbm: null,
     rbr: null,
@@ -143,8 +143,8 @@ const initialFaceState = {
     wtl: null,
     wtm: null,
     wtr: null,
-    wml: null,
-    wmr: null,
+    wcl: null,
+    wcr: null,
     wbl: null,
     wbm: null,
     wbr: null,
@@ -152,8 +152,8 @@ const initialFaceState = {
     ytl: null,
     ytm: null,
     ytr: null,
-    yml: null,
-    ymr: null,
+    ycl: null,
+    ycr: null,
     ybl: null,
     ybm: null,
     ybr: null,
@@ -182,6 +182,30 @@ const facesSlice = createSlice({
     clearAllSegmentColors(state){
       state.segmentState = initialFaceState.segmentState
       state.colorCount = initialFaceState.colorCount
+    },
+    shuffleAllSegmentColors(state){
+      let colors = ['blue', 'orange', 'green', 'red', 'yellow', 'white']
+      
+      Object.keys(state.segmentState).forEach(key => {
+        let x = 1
+        let randomColor = Math.floor(Math.random() * colors.length)
+        while(x < 7){
+          if(state.colorCount[colors[randomColor]] < 8){
+            state.segmentState[key] = colors[randomColor]
+            state.colorCount[colors[randomColor]] += 1
+            x += 6
+          } else {
+            if(randomColor === 5){
+              randomColor = 0
+              x += 1
+            } else {
+              randomColor += 1
+              x += 1
+            }
+          }
+        }
+      })
+      
     }
   },
 });

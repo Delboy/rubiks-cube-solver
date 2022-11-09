@@ -32,6 +32,11 @@ const ColorPicker = () => {
     dispatch(facesActions.clearAllSegmentColors()) 
   }
 
+  const shuffleHandler = () => {
+    dispatch(facesActions.clearAllSegmentColors())
+    dispatch(facesActions.shuffleAllSegmentColors()) 
+  }
+
   return (
     <div
       className={classes.colorPicker}
@@ -49,7 +54,7 @@ const ColorPicker = () => {
       </ul>
       <div>
         <button onClick={resetHandler}>{reset}</button>
-        <button>{shuffle}</button>
+        <button onClick={shuffleHandler}>{shuffle}</button>
       </div>
     </div>
   );
