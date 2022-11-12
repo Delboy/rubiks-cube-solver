@@ -5,7 +5,7 @@ const CubeSegment = (props) => {
   const colorSelected = useSelector((state) => state.faces.colorSelected);
   const colorCount = useSelector((state) => state.faces.colorCount);
   const segmentColor = useSelector(state => state.faces.segmentState[props.position])
-
+  
   const dispatch = useDispatch();
 
   const setColorHandler = (e) => {

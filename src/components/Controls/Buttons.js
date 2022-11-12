@@ -1,4 +1,4 @@
-import { axisActions } from "../../orientation";
+import { axisActions, facesActions } from "../../orientation";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import Radioinputs from "./RadioInputs";
@@ -22,78 +22,67 @@ const Buttons = () => {
 
   // Checks if user is facing the yellow or white face. This is used to render either a normal arrow or rotate arrow button.
   useEffect(() => {
-    if ( xAxisOr === 90 || xAxisOr === 270
-    ) {
+    if (xAxisOr === 90 || xAxisOr === 270) {
       setOnYellowOrWhite(true);
     } else {
       setOnYellowOrWhite(false);
     }
   }, [xAxisOr]);
 
+  // Handles button presses
   const buttonHandler = (e) => {
     switch (e.target.value) {
       case "up":
         dispatch(axisActions.updateX(45));
+        dispatch(facesActions.moveCubeMatrixUp())
         break;
       case "down":
         dispatch(axisActions.updateX(-45));
+        dispatch(facesActions.moveCubeMatrixDown())
         break;
       default:
         break;
     }
 
-    if (xAxisOr < 180) {
+    if (xAxisOr === 0 || xAxisOr === 45 || xAxisOr === 90 || xAxisOr === 315) {
       if (e.target.value === "left") {
         dispatch(axisActions.updateY(-45));
+        dispatch(facesActions.moveCubeMatrixLeft())
       }
       if (e.target.value === "right") {
         dispatch(axisActions.updateY(45));
+        dispatch(facesActions.moveCubeMatrixRight())
       }
     } else {
       if (e.target.value === "left") {
         dispatch(axisActions.updateY(45));
+        dispatch(facesActions.moveCubeMatrixRight())
       }
       if (e.target.value === "right") {
         dispatch(axisActions.updateY(-45));
+        dispatch(facesActions.moveCubeMatrixLeft())
       }
     }
-  };
+  }
 
+  // Font awesome icons
   const rotateRightArrow = (
-    <FontAwesomeIcon
-      icon={faArrowRotateRight}
-      className='noPointerEvents'
-    />
+    <FontAwesomeIcon icon={faArrowRotateRight} className="noPointerEvents" />
   );
   const rotateLeftArrow = (
-    <FontAwesomeIcon
-      icon={faArrowRotateLeft}
-      className='noPointerEvents'
-    />
+    <FontAwesomeIcon icon={faArrowRotateLeft} className="noPointerEvents" />
   );
   const upArrow = (
-    <FontAwesomeIcon
-      icon={faCircleArrowUp}
-      className='noPointerEvents'
-    />
+    <FontAwesomeIcon icon={faCircleArrowUp} className="noPointerEvents" />
   );
   const downArrow = (
-    <FontAwesomeIcon
-      icon={faCircleArrowDown}
-      className='noPointerEvents'
-    />
+    <FontAwesomeIcon icon={faCircleArrowDown} className="noPointerEvents" />
   );
   const leftArrow = (
-    <FontAwesomeIcon
-      icon={faCircleArrowLeft}
-      className='noPointerEvents'
-    />
+    <FontAwesomeIcon icon={faCircleArrowLeft} className="noPointerEvents" />
   );
   const rightArrow = (
-    <FontAwesomeIcon
-      icon={faCircleArrowRight}
-      className='noPointerEvents'
-    />
+    <FontAwesomeIcon icon={faCircleArrowRight} className="noPointerEvents" />
   );
 
   return (
@@ -104,17 +93,13 @@ const Buttons = () => {
         </button>
         <div className={classes.middleBtns}>
           <button onClick={buttonHandler} value="left">
-            {onYellowOrWhite
-              ? rotateLeftArrow
-              : leftArrow}
+            {onYellowOrWhite ? rotateLeftArrow : leftArrow}
           </button>
 
           <i className="fas fa-solid fa-circle"></i>
 
           <button onClick={buttonHandler} value="right">
-            {onYellowOrWhite
-              ? rotateRightArrow
-              : rightArrow}
+            {onYellowOrWhite ? rotateRightArrow : rightArrow}
           </button>
         </div>
         <button onClick={buttonHandler} value="down">
@@ -123,6 +108,8 @@ const Buttons = () => {
       </div>
       <div className={classes.radio}>
         <Radioinputs />
+      </div>
+      <div>
       </div>
     </div>
   );

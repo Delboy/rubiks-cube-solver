@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { axisActions } from "../../orientation";
+import { axisActions, facesActions } from "../../orientation";
 import { useDispatch } from "react-redux";
 
 import classes from "./RadioInputs.module.css";
@@ -9,9 +9,38 @@ const RadioInputs = () => {
 
   const dispatch = useDispatch();
 
-  // Focuses selected Face
+  // Focuses selected Face and updates cube matrix
   const onChangeCurrentFace = (e) => {
     dispatch(axisActions.changeFace(e.target.value))
+    dispatch(facesActions.resetCubeMatrix())
+    switch(e.target.value){
+      case 'blue':
+        break
+      case 'red':
+        dispatch(facesActions.moveCubeMatrixLeft())
+        dispatch(facesActions.moveCubeMatrixLeft())
+        break
+      case 'green':
+        dispatch(facesActions.moveCubeMatrixLeft())
+        dispatch(facesActions.moveCubeMatrixLeft())
+        dispatch(facesActions.moveCubeMatrixLeft())
+        dispatch(facesActions.moveCubeMatrixLeft())
+        break
+      case 'orange':
+        dispatch(facesActions.moveCubeMatrixRight())
+        dispatch(facesActions.moveCubeMatrixRight())
+        break
+      case 'yellow':
+        dispatch(facesActions.moveCubeMatrixDown())
+        dispatch(facesActions.moveCubeMatrixDown())
+        break
+      case 'white':
+        dispatch(facesActions.moveCubeMatrixUp())
+        dispatch(facesActions.moveCubeMatrixUp())
+        break
+      default:
+        break
+    }
   };
 
   return (
