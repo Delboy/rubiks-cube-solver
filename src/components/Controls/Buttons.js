@@ -21,6 +21,12 @@ const Buttons = () => {
   const rightOfCur = useSelector((state) => state.faces.rightOfCurrentFace);
   
   const currentFace = useSelector((state) => state.faces.currentFace);
+  const lastCurrentFace = useSelector((state) => state.faces.lastCurrentFace);
+  const lastBackFace = useSelector((state) => state.faces.lastBackFace);
+  const lastLeftFace = useSelector((state) => state.faces.lastLeftFace);
+  const lastRightFace = useSelector((state) => state.faces.lastRightFace);
+  const lastTopFace = useSelector((state) => state.faces.lastTopFace);
+  const lastBottomFace = useSelector((state) => state.faces.lastBottomFace);
   const backFace = useSelector((state) => state.faces.backFace);
   const leftFace = useSelector((state) => state.faces.leftFace);
   const rightFace = useSelector((state) => state.faces.rightFace);
@@ -75,79 +81,75 @@ const Buttons = () => {
         dispatch(facesActions.moveCubeMatrixLeft());
       }
     }
+
     let prime
     if(e.target.value.includes('-p')){prime=true}
 
-    if(e.target.parentElement.getAttribute('value') === 'moves'){
-      
-      if(currentFace !== 'edge'){  
-        switch(e.target.value){
-          case 'f':
-            dispatch(facesActions.rotatePrime({face: currentFace, prime: prime}))
-            break
-          case 'f-p':
-            dispatch(facesActions.rotatePrime({face: currentFace, prime: prime}))
-            break
-          case 'bp':
-            dispatch(facesActions.rotatePrime({face: backFace, prime: prime}))
-            break
-          case 'b-p':
-            dispatch(facesActions.rotatePrime({face: backFace, prime: prime}))
-            break
-          case 'l':
-            dispatch(facesActions.rotatePrime({face: leftFace, prime: prime}))
-            break
-          case 'l-p':
-            dispatch(facesActions.rotatePrime({face: leftFace, prime: prime}))
-            break
-          case 'r':
-            dispatch(facesActions.rotatePrime({face: rightFace, prime: prime}))
-            break
-          case 'r-p':
-            dispatch(facesActions.rotatePrime({face: rightFace, prime: prime}))
-            break
-          case 'u-p':
-            dispatch(facesActions.rotatePrime({face: topFace, prime: prime}))
-            break
-          case 'u':
-            dispatch(facesActions.rotatePrime({face: topFace, prime: prime}))
-            break
-          case 'd':
-            dispatch(facesActions.rotatePrime({face: bottomFace, prime: prime}))
-            break
-          case 'd-p':
-            dispatch(facesActions.rotatePrime({face: bottomFace, prime: prime}))
-            break
-          default: 
-            break
-        } 
-      } else {
-        switch(e.target.value){
-          case 'f-p':
-            dispatch(facesActions.rotatePrime())
-            break
-          case 'b-p':
-            dispatch(facesActions.rotatePrime(backFace))
-            break
-          case 'l-p':
-            dispatch(facesActions.rotatePrime(leftFace))
-            break
-          case 'r-p':
-            dispatch(facesActions.rotatePrime(rightFace))
-            break
-          case 'u-p':
-            dispatch(facesActions.rotatePrime(topFace))
-            break
-          case 'd-p':
-            dispatch(facesActions.rotatePrime(bottomFace))
-            break
-          default: 
-            break
-        } 
-      }
+    let frontWedge
+    let backWedge
+    let leftWedge
+    let rightWedge
+    let topWedge
+    let bottomWedge
+
+    if(currentFace !== 'edge'){
+      frontWedge = currentFace
+      backWedge = backFace
+      leftWedge = leftFace
+      rightWedge = rightFace
+      topWedge = topFace
+      bottomWedge = bottomFace
+    } else {
+      frontWedge = lastCurrentFace
+      backWedge = lastBackFace
+      leftWedge = lastLeftFace
+      rightWedge = lastRightFace
+      topWedge = lastTopFace
+      bottomWedge = lastBottomFace
     }
 
-
+    
+        switch(e.target.value){
+          case 'f':
+            dispatch(facesActions.rotateWedge({face: frontWedge, prime: prime}))
+            break
+          case 'f-p':
+            dispatch(facesActions.rotateWedge({face: frontWedge, prime: prime}))
+            break
+          case 'b':
+            dispatch(facesActions.rotateWedge({face: backWedge, prime: prime}))
+            break
+          case 'b-p':
+            dispatch(facesActions.rotateWedge({face: backWedge, prime: prime}))
+            break
+          case 'l':
+            dispatch(facesActions.rotateWedge({face: leftWedge, prime: prime}))
+            break
+          case 'l-p':
+            dispatch(facesActions.rotateWedge({face: leftWedge, prime: prime}))
+            break
+          case 'r':
+            dispatch(facesActions.rotateWedge({face: rightWedge, prime: prime}))
+            break
+          case 'r-p':
+            dispatch(facesActions.rotateWedge({face: rightWedge, prime: prime}))
+            break
+          case 'u-p':
+            dispatch(facesActions.rotateWedge({face: topWedge, prime: prime}))
+            break
+          case 'u':
+            dispatch(facesActions.rotateWedge({face: topWedge, prime: prime}))
+            break
+          case 'd':
+            dispatch(facesActions.rotateWedge({face: bottomWedge, prime: prime}))
+            break
+          case 'd-p':
+            dispatch(facesActions.rotateWedge({face: bottomWedge, prime: prime}))
+            break
+          default: 
+            break
+        } 
+    
   };
 
   // Font awesome icons

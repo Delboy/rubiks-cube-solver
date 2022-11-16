@@ -76,12 +76,17 @@ const axisesSlice = createSlice({
 
 const initialFaceState = {
   currentFace: "blue",
-  lastCurrentFace: null,
   backFace: "green",
   leftFace: "orange",
   rightFace: "red",
   topFace: "yellow",
   bottomFace: "white",
+  lastCurrentFace: null,
+  lastBackFace: null,
+  lastLeftFace: null,
+  lastRightFace: null,
+  lastTopFace: null,
+  lastBottomFace: null,
   leftOfCurrentFace: "edge",
   rightOfCurrentFace: "edge",
   colorSelected: null,
@@ -177,8 +182,13 @@ const facesSlice = createSlice({
     setCurrentFace(state, action) {
       state.currentFace = action.payload;
     },
-    setLastCurrentFace(state, action) {
-      state.lastCurrentFace = action.payload;
+    setLastCurrentFaces(state) {
+      state.lastCurrentFace = state.currentFace
+      state.lastBackFace = state.backFace
+      state.lastLeftFace = state.leftFace
+      state.lastRightFace = state.rightFace
+      state.lastTopFace = state.topFace
+      state.lastBottomFace = state.bottomFace
     },
     setBackFace(state, action) {
       state.backFace = action.payload;
@@ -263,8 +273,7 @@ const facesSlice = createSlice({
         }
       });
     },
-    rotatePrime(state, action) {
-      console.log(action.payload.face)
+    rotateWedge(state, action) {
       let wedges = {
         blueWedge: [
           // Top of blue wedge

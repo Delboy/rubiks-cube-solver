@@ -55,7 +55,7 @@ const Cube = () => {
   useEffect(() => {
     
     if(currentFace !== 'edge'){
-      dispatch(facesActions.setLastCurrentFace(currentFace))
+      dispatch(facesActions.setLastCurrentFaces())
     }
   }, [currentFace, dispatch])
 
