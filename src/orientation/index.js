@@ -454,12 +454,12 @@ const facesSlice = createSlice({
       const oldLeftWedge1 = state.segmentState[leftWedge1]
       const oldLeftWedge2 = state.segmentState[leftWedge2]
       const oldLeftWedge3 = state.segmentState[leftWedge3]
-      const oldRightWedge1 = state.segmentState[rightWedge1]
-      const oldRightWedge2 = state.segmentState[rightWedge2]
-      const oldRightWedge3 = state.segmentState[rightWedge3]
       const oldBottomWedge1 = state.segmentState[bottomWedge1]
       const oldBottomWedge2 = state.segmentState[bottomWedge2]
       const oldBottomWedge3 = state.segmentState[bottomWedge3]
+      const oldRightWedge1 = state.segmentState[rightWedge1]
+      const oldRightWedge2 = state.segmentState[rightWedge2]
+      const oldRightWedge3 = state.segmentState[rightWedge3]
 
       if(!action.payload.prime){
         state.segmentState[topWedge1] = oldLeftWedge1;
@@ -471,9 +471,9 @@ const facesSlice = createSlice({
         state.segmentState[bottomWedge1] = oldRightWedge1;
         state.segmentState[bottomWedge2] = oldRightWedge2;
         state.segmentState[bottomWedge3] = oldRightWedge3;
-        state.segmentState[rightWedge1] = oldBottomWedge1;
-        state.segmentState[rightWedge2] = oldBottomWedge2;
-        state.segmentState[rightWedge3] = oldBottomWedge3;
+        state.segmentState[rightWedge1] = oldTopWedge1;
+        state.segmentState[rightWedge2] = oldTopWedge2;
+        state.segmentState[rightWedge3] = oldTopWedge3;
       }
 
       if(action.payload.prime){
@@ -486,9 +486,9 @@ const facesSlice = createSlice({
         state.segmentState[bottomWedge1] = oldLeftWedge1;
         state.segmentState[bottomWedge2] = oldLeftWedge2;
         state.segmentState[bottomWedge3] = oldLeftWedge3;
-        state.segmentState[rightWedge1] = oldTopWedge1;
-        state.segmentState[rightWedge2] = oldTopWedge2;
-        state.segmentState[rightWedge3] = oldTopWedge3;
+        state.segmentState[rightWedge1] = oldBottomWedge1;
+        state.segmentState[rightWedge2] = oldBottomWedge2;
+        state.segmentState[rightWedge3] = oldBottomWedge3;
       }
 
       let faceToRotate = action.payload.face.charAt(0);

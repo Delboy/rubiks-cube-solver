@@ -19,7 +19,7 @@ const Buttons = () => {
   const xAxisOr = useSelector((state) => state.axises.xAxisOr);
   const leftOfCur = useSelector((state) => state.faces.leftOfCurrentFace);
   const rightOfCur = useSelector((state) => state.faces.rightOfCurrentFace);
-  
+
   const currentFace = useSelector((state) => state.faces.currentFace);
   const lastCurrentFace = useSelector((state) => state.faces.lastCurrentFace);
   const lastBackFace = useSelector((state) => state.faces.lastBackFace);
@@ -34,7 +34,6 @@ const Buttons = () => {
   const bottomFace = useSelector((state) => state.faces.bottomFace);
 
   const matrix = useSelector((state) => state.faces.cubeMatrix);
-  
 
   const [onYellowOrWhite, setOnYellowOrWhite] = useState(false);
 
@@ -82,74 +81,74 @@ const Buttons = () => {
       }
     }
 
-    let prime
-    if(e.target.value.includes('-p')){prime=true}
-
-    let frontWedge
-    let backWedge
-    let leftWedge
-    let rightWedge
-    let topWedge
-    let bottomWedge
-
-    if(currentFace !== 'edge'){
-      frontWedge = currentFace
-      backWedge = backFace
-      leftWedge = leftFace
-      rightWedge = rightFace
-      topWedge = topFace
-      bottomWedge = bottomFace
-    } else {
-      frontWedge = lastCurrentFace
-      backWedge = lastBackFace
-      leftWedge = lastLeftFace
-      rightWedge = lastRightFace
-      topWedge = lastTopFace
-      bottomWedge = lastBottomFace
+    let prime;
+    if (e.target.value.includes("-p")) {
+      prime = true;
     }
 
-    
-        switch(e.target.value){
-          case 'f':
-            dispatch(facesActions.rotateWedge({face: frontWedge, prime: prime}))
-            break
-          case 'f-p':
-            dispatch(facesActions.rotateWedge({face: frontWedge, prime: prime}))
-            break
-          case 'b':
-            dispatch(facesActions.rotateWedge({face: backWedge, prime: prime}))
-            break
-          case 'b-p':
-            dispatch(facesActions.rotateWedge({face: backWedge, prime: prime}))
-            break
-          case 'l':
-            dispatch(facesActions.rotateWedge({face: leftWedge, prime: prime}))
-            break
-          case 'l-p':
-            dispatch(facesActions.rotateWedge({face: leftWedge, prime: prime}))
-            break
-          case 'r':
-            dispatch(facesActions.rotateWedge({face: rightWedge, prime: prime}))
-            break
-          case 'r-p':
-            dispatch(facesActions.rotateWedge({face: rightWedge, prime: prime}))
-            break
-          case 'u-p':
-            dispatch(facesActions.rotateWedge({face: topWedge, prime: prime}))
-            break
-          case 'u':
-            dispatch(facesActions.rotateWedge({face: topWedge, prime: prime}))
-            break
-          case 'd':
-            dispatch(facesActions.rotateWedge({face: bottomWedge, prime: prime}))
-            break
-          case 'd-p':
-            dispatch(facesActions.rotateWedge({face: bottomWedge, prime: prime}))
-            break
-          default: 
-            break
-        } 
-    
+    let frontWedge;
+    let backWedge;
+    let leftWedge;
+    let rightWedge;
+    let topWedge;
+    let bottomWedge;
+
+    if (currentFace !== "edge") {
+      frontWedge = currentFace;
+      backWedge = backFace;
+      leftWedge = leftFace;
+      rightWedge = rightFace;
+      topWedge = topFace;
+      bottomWedge = bottomFace;
+    } else {
+      frontWedge = lastCurrentFace;
+      backWedge = lastBackFace;
+      leftWedge = lastLeftFace;
+      rightWedge = lastRightFace;
+      topWedge = lastTopFace;
+      bottomWedge = lastBottomFace;
+    }
+
+    switch (e.target.value) {
+      case "f":
+        dispatch(facesActions.rotateWedge({ face: frontWedge, prime: prime }));
+        break;
+      case "f-p":
+        dispatch(facesActions.rotateWedge({ face: frontWedge, prime: prime }));
+        break;
+      case "b":
+        dispatch(facesActions.rotateWedge({ face: backWedge, prime: prime }));
+        break;
+      case "b-p":
+        dispatch(facesActions.rotateWedge({ face: backWedge, prime: prime }));
+        break;
+      case "l":
+        dispatch(facesActions.rotateWedge({ face: leftWedge, prime: prime }));
+        break;
+      case "l-p":
+        dispatch(facesActions.rotateWedge({ face: leftWedge, prime: prime }));
+        break;
+      case "r":
+        dispatch(facesActions.rotateWedge({ face: rightWedge, prime: prime }));
+        break;
+      case "r-p":
+        dispatch(facesActions.rotateWedge({ face: rightWedge, prime: prime }));
+        break;
+      case "u-p":
+        dispatch(facesActions.rotateWedge({ face: topWedge, prime: prime }));
+        break;
+      case "u":
+        dispatch(facesActions.rotateWedge({ face: topWedge, prime: prime }));
+        break;
+      case "d":
+        dispatch(facesActions.rotateWedge({ face: bottomWedge, prime: prime }));
+        break;
+      case "d-p":
+        dispatch(facesActions.rotateWedge({ face: bottomWedge, prime: prime }));
+        break;
+      default:
+        break;
+    }
   };
 
   // Font awesome icons
@@ -173,8 +172,8 @@ const Buttons = () => {
   );
 
   const consoleLogHandler = () => {
-    console.log(matrix) 
-  }
+    console.log(matrix);
+  };
 
   return (
     <div className={classes.buttons}>
@@ -200,19 +199,43 @@ const Buttons = () => {
       <div className={classes.radio}>
         <Radioinputs />
       </div>
-      <div value={'moves'}>
-        <button onClick={buttonHandler} value={'l'}>l</button>
-        <button onClick={buttonHandler} value={'l-p'}>l'</button>
-        <button onClick={buttonHandler} value={'u'}>u</button>
-        <button onClick={buttonHandler} value={'u-p'}>u'</button>
-        <button onClick={buttonHandler} value={'f'}>f</button>
-        <button onClick={buttonHandler} value={'f-p'}>f'</button>
-        <button onClick={buttonHandler} value={'b'}>b</button>
-        <button onClick={buttonHandler} value={'b-p'}>b'</button>
-        <button onClick={buttonHandler} value={'d'}>d</button>
-        <button onClick={buttonHandler} value={'d-p'}>d'</button>
-        <button onClick={buttonHandler} value={'r'}>r</button>
-        <button onClick={buttonHandler} value={'r-p'}>r'</button>
+      <div value={"moves"}>
+        <button onClick={buttonHandler} value={"l"}>
+          l
+        </button>
+        <button onClick={buttonHandler} value={"l-p"}>
+          l'
+        </button>
+        <button onClick={buttonHandler} value={"u"}>
+          u
+        </button>
+        <button onClick={buttonHandler} value={"u-p"}>
+          u'
+        </button>
+        <button onClick={buttonHandler} value={"f"}>
+          f
+        </button>
+        <button onClick={buttonHandler} value={"f-p"}>
+          f'
+        </button>
+        <button onClick={buttonHandler} value={"b"}>
+          b
+        </button>
+        <button onClick={buttonHandler} value={"b-p"}>
+          b'
+        </button>
+        <button onClick={buttonHandler} value={"d"}>
+          d
+        </button>
+        <button onClick={buttonHandler} value={"d-p"}>
+          d'
+        </button>
+        <button onClick={buttonHandler} value={"r"}>
+          r
+        </button>
+        <button onClick={buttonHandler} value={"r-p"}>
+          r'
+        </button>
       </div>
       <div>
         <p>front: {currentFace}</p>
