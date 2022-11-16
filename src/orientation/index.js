@@ -264,7 +264,7 @@ const facesSlice = createSlice({
       });
     },
     rotatePrime(state, action) {
-
+      console.log(action.payload.face)
       let wedges = {
         blueWedge: [
           // Top of blue wedge
@@ -424,7 +424,7 @@ const facesSlice = createSlice({
         ],
       };
 
-      let wedgeName = action.payload + 'Wedge'
+      let wedgeName = action.payload.face + 'Wedge'
 
       const topWedge1 = wedges[`${wedgeName}`][0][0]
       const topWedge2 = wedges[`${wedgeName}`][0][1]
@@ -452,20 +452,37 @@ const facesSlice = createSlice({
       const oldBottomWedge2 = state.segmentState[bottomWedge2]
       const oldBottomWedge3 = state.segmentState[bottomWedge3]
 
-      state.segmentState[topWedge1] = oldRightWedge1;
-      state.segmentState[topWedge2] = oldRightWedge2;
-      state.segmentState[topWedge3] = oldRightWedge3;
-      state.segmentState[leftWedge1] = oldTopWedge1;
-      state.segmentState[leftWedge2] = oldTopWedge2;
-      state.segmentState[leftWedge3] = oldTopWedge3;
-      state.segmentState[bottomWedge1] = oldLeftWedge1;
-      state.segmentState[bottomWedge2] = oldLeftWedge2;
-      state.segmentState[bottomWedge3] = oldLeftWedge3;
-      state.segmentState[rightWedge1] = oldBottomWedge1;
-      state.segmentState[rightWedge2] = oldBottomWedge2;
-      state.segmentState[rightWedge3] = oldBottomWedge3;
+      if(!action.payload.prime){
+        state.segmentState[topWedge1] = oldLeftWedge1;
+        state.segmentState[topWedge2] = oldLeftWedge2;
+        state.segmentState[topWedge3] = oldLeftWedge3;
+        state.segmentState[leftWedge1] = oldBottomWedge1;
+        state.segmentState[leftWedge2] = oldBottomWedge2;
+        state.segmentState[leftWedge3] = oldBottomWedge3;
+        state.segmentState[bottomWedge1] = oldRightWedge1;
+        state.segmentState[bottomWedge2] = oldRightWedge2;
+        state.segmentState[bottomWedge3] = oldRightWedge3;
+        state.segmentState[rightWedge1] = oldBottomWedge1;
+        state.segmentState[rightWedge2] = oldBottomWedge2;
+        state.segmentState[rightWedge3] = oldBottomWedge3;
+      }
 
-      let faceToRotate = action.payload.charAt(0);
+      if(action.payload.prime){
+        state.segmentState[topWedge1] = oldRightWedge1;
+        state.segmentState[topWedge2] = oldRightWedge2;
+        state.segmentState[topWedge3] = oldRightWedge3;
+        state.segmentState[leftWedge1] = oldTopWedge1;
+        state.segmentState[leftWedge2] = oldTopWedge2;
+        state.segmentState[leftWedge3] = oldTopWedge3;
+        state.segmentState[bottomWedge1] = oldLeftWedge1;
+        state.segmentState[bottomWedge2] = oldLeftWedge2;
+        state.segmentState[bottomWedge3] = oldLeftWedge3;
+        state.segmentState[rightWedge1] = oldTopWedge1;
+        state.segmentState[rightWedge2] = oldTopWedge2;
+        state.segmentState[rightWedge3] = oldTopWedge3;
+      }
+
+      let faceToRotate = action.payload.face.charAt(0);
 
       const oldTopLeft = state.segmentState[`${faceToRotate}tl`];
       const oldTopMiddle = state.segmentState[`${faceToRotate}tm`];
@@ -476,14 +493,29 @@ const facesSlice = createSlice({
       const oldBottomMiddle = state.segmentState[`${faceToRotate}bm`];
       const oldBottomRight = state.segmentState[`${faceToRotate}br`];
 
-      state.segmentState[`${faceToRotate}tl`] = oldTopRight;
-      state.segmentState[`${faceToRotate}tm`] = oldCenterRight;
-      state.segmentState[`${faceToRotate}tr`] = oldBottomRight;
-      state.segmentState[`${faceToRotate}cl`] = oldTopMiddle;
-      state.segmentState[`${faceToRotate}cr`] = oldBottomMiddle;
-      state.segmentState[`${faceToRotate}bl`] = oldTopLeft;
-      state.segmentState[`${faceToRotate}bm`] = oldCenterLeft;
-      state.segmentState[`${faceToRotate}br`] = oldBottomLeft;
+      if(!action.payload.prime){
+        state.segmentState[`${faceToRotate}tl`] = oldBottomLeft;
+        state.segmentState[`${faceToRotate}tm`] = oldCenterLeft;
+        state.segmentState[`${faceToRotate}tr`] = oldTopLeft;
+        state.segmentState[`${faceToRotate}cl`] = oldBottomMiddle;
+        state.segmentState[`${faceToRotate}cr`] = oldTopMiddle;
+        state.segmentState[`${faceToRotate}bl`] = oldBottomRight;
+        state.segmentState[`${faceToRotate}bm`] = oldCenterRight;
+        state.segmentState[`${faceToRotate}br`] = oldTopRight;
+      }
+
+      if(action.payload.prime){
+        state.segmentState[`${faceToRotate}tl`] = oldTopRight;
+        state.segmentState[`${faceToRotate}tm`] = oldCenterRight;
+        state.segmentState[`${faceToRotate}tr`] = oldBottomRight;
+        state.segmentState[`${faceToRotate}cl`] = oldTopMiddle;
+        state.segmentState[`${faceToRotate}cr`] = oldBottomMiddle;
+        state.segmentState[`${faceToRotate}bl`] = oldTopLeft;
+        state.segmentState[`${faceToRotate}bm`] = oldCenterLeft;
+        state.segmentState[`${faceToRotate}br`] = oldBottomLeft;
+      }
+
+
     },
   },
 });

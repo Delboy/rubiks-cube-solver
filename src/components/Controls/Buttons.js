@@ -75,28 +75,48 @@ const Buttons = () => {
         dispatch(facesActions.moveCubeMatrixLeft());
       }
     }
+    let prime
+    if(e.target.value.includes('-p')){prime=true}
 
     if(e.target.parentElement.getAttribute('value') === 'moves'){
-      // dispatch(facesActions.rotatePrime(e.target.value))
-      if(currentFace !== 'edge'){
+      
+      if(currentFace !== 'edge'){  
         switch(e.target.value){
+          case 'f':
+            dispatch(facesActions.rotatePrime({face: currentFace, prime: prime}))
+            break
           case 'f-p':
-            dispatch(facesActions.rotatePrime(currentFace))
+            dispatch(facesActions.rotatePrime({face: currentFace, prime: prime}))
+            break
+          case 'bp':
+            dispatch(facesActions.rotatePrime({face: backFace, prime: prime}))
             break
           case 'b-p':
-            dispatch(facesActions.rotatePrime(backFace))
+            dispatch(facesActions.rotatePrime({face: backFace, prime: prime}))
+            break
+          case 'l':
+            dispatch(facesActions.rotatePrime({face: leftFace, prime: prime}))
             break
           case 'l-p':
-            dispatch(facesActions.rotatePrime(leftFace))
+            dispatch(facesActions.rotatePrime({face: leftFace, prime: prime}))
+            break
+          case 'r':
+            dispatch(facesActions.rotatePrime({face: rightFace, prime: prime}))
             break
           case 'r-p':
-            dispatch(facesActions.rotatePrime(rightFace))
+            dispatch(facesActions.rotatePrime({face: rightFace, prime: prime}))
             break
           case 'u-p':
-            dispatch(facesActions.rotatePrime(topFace))
+            dispatch(facesActions.rotatePrime({face: topFace, prime: prime}))
+            break
+          case 'u':
+            dispatch(facesActions.rotatePrime({face: topFace, prime: prime}))
+            break
+          case 'd':
+            dispatch(facesActions.rotatePrime({face: bottomFace, prime: prime}))
             break
           case 'd-p':
-            dispatch(facesActions.rotatePrime(bottomFace))
+            dispatch(facesActions.rotatePrime({face: bottomFace, prime: prime}))
             break
           default: 
             break
@@ -104,7 +124,7 @@ const Buttons = () => {
       } else {
         switch(e.target.value){
           case 'f-p':
-            dispatch(facesActions.rotatePrime(leftOfCur))
+            dispatch(facesActions.rotatePrime())
             break
           case 'b-p':
             dispatch(facesActions.rotatePrime(backFace))
