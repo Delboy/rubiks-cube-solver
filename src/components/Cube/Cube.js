@@ -11,6 +11,8 @@ import { useEffect } from "react";
 const Cube = () => {
   const xAxis = useSelector((state) => state.axises.xAxis);
   const yAxis = useSelector((state) => state.axises.yAxis);
+  const currentFace = useSelector((state) => state.faces.currentFace);
+  
   const cubeMatrix = useSelector((state) => state.faces.cubeMatrix);
  
   const dispatch = useDispatch();
@@ -21,7 +23,11 @@ const Cube = () => {
     dispatch(facesActions.setTopFace(cubeMatrix[2][0]))
     dispatch(facesActions.setBackFace(cubeMatrix[0][0]))
     dispatch(facesActions.setBottomFace(cubeMatrix[6][0]))
-
+    dispatch(facesActions.setLeftFace(cubeMatrix[4][6]))
+    dispatch(facesActions.setRightFace(cubeMatrix[4][2]))
+    dispatch(facesActions.setRightOfCurrentFace(cubeMatrix[4][1]))
+    dispatch(facesActions.setLeftOfCurrentFace(cubeMatrix[4][7]))
+    
     if (cubeMatrix[2][0] === "yellow") {
       dispatch(facesActions.setRightFace(cubeMatrix[4][2]));
       dispatch(facesActions.setLeftFace(cubeMatrix[4][6]));
@@ -34,12 +40,24 @@ const Cube = () => {
     if(cubeMatrix[4][0] === 'yellow'){
       dispatch(facesActions.setRightFace(cubeMatrix[2][6]));
       dispatch(facesActions.setLeftFace(cubeMatrix[2][2]));
+      dispatch(facesActions.setRightOfCurrentFace(cubeMatrix[3][6]))
+      dispatch(facesActions.setLeftOfCurrentFace(cubeMatrix[3][2]))
     }
     if(cubeMatrix[4][0] === 'white'){
       dispatch(facesActions.setRightFace(cubeMatrix[6][6]));
       dispatch(facesActions.setLeftFace(cubeMatrix[6][2]));
+      dispatch(facesActions.setRightOfCurrentFace(cubeMatrix[3][6]))
+      dispatch(facesActions.setLeftOfCurrentFace(cubeMatrix[3][2]))
     }
   },[cubeMatrix, dispatch])
+
+  // Updates previous current face. Used to help determine what face to rotate when clicking buttons.
+  useEffect(() => {
+    
+    if(currentFace !== 'edge'){
+      dispatch(facesActions.setLastCurrentFace(currentFace))
+    }
+  }, [currentFace, dispatch])
 
   // Takes coordinates and sets them to 360deg equivalent
   useEffect(() => {
