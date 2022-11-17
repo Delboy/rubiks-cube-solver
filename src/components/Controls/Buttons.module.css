@@ -8,36 +8,13 @@
   margin-top: 2rem;
 }
 
-.arrowButtons button {
-  border: none;
-  background: none;
-  font-size: 1.5rem;
-}
-
-.arrowButtons {
-  position: absolute;
-  bottom: 100px;
-  left: 325px;
-  color: var(--color-grey)
-}
-
-.middleBtns, .middleBtns button {
-  display: flex;
-  text-align: center;
-  align-items: center;
-  
-}
-
-.circle {
-  font-size: 1rem;
-}
-
-
-
 .radio {
   display: flex;
   justify-content: center;
   width: 100%;
   margin-bottom: 2rem;
-  
+}
+
+.wedges {
+  margin-top: 1rem;
 }

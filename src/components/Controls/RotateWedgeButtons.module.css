@@ -1,0 +1,25 @@
+.buttons button {
+    margin: .5rem;
+    height: 2rem;
+    width: 2rem;
+    border: 2px solid black;
+    border-radius: 50%;
+    box-shadow: 2px 2px var(--color-darkgrey);
+}
+
+.buttons button:hover {
+    box-shadow: 1px 1px var(--color-darkgrey);
+    
+}
+
+.middleBtns {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.frontAndBackBtns {
+    display: inline-block;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+    

@@ -1,0 +1,23 @@
+.arrowButtons button {
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+  }
+  
+  .arrowButtons {
+    position: absolute;
+    bottom: 125px;
+    left: 340px;
+    color: var(--color-grey)
+  }
+  
+  .middleBtns, .middleBtns button {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    
+  }
+  
+  .circle {
+    font-size: 1rem;
+  }
