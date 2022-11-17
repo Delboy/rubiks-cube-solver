@@ -17,21 +17,40 @@ const Buttons = () => {
   const dispatch = useDispatch();
 
   const xAxisOr = useSelector((state) => state.axises.xAxisOr);
-  const leftOfCur = useSelector((state) => state.faces.leftOfCurrentFace);
-  const rightOfCur = useSelector((state) => state.faces.rightOfCurrentFace);
 
+  // Current Faces
   const currentFace = useSelector((state) => state.faces.currentFace);
+  const backFace = useSelector((state) => state.faces.backFace);
+  const leftFace = useSelector((state) => state.faces.leftFace);
+  const rightFace = useSelector((state) => state.faces.rightFace);
+  const topFace = useSelector((state) => state.faces.topFace);
+  const bottomFace = useSelector((state) => state.faces.bottomFace);
+
+  // Previous Current Face
   const lastCurrentFace = useSelector((state) => state.faces.lastCurrentFace);
   const lastBackFace = useSelector((state) => state.faces.lastBackFace);
   const lastLeftFace = useSelector((state) => state.faces.lastLeftFace);
   const lastRightFace = useSelector((state) => state.faces.lastRightFace);
   const lastTopFace = useSelector((state) => state.faces.lastTopFace);
   const lastBottomFace = useSelector((state) => state.faces.lastBottomFace);
-  const backFace = useSelector((state) => state.faces.backFace);
-  const leftFace = useSelector((state) => state.faces.leftFace);
-  const rightFace = useSelector((state) => state.faces.rightFace);
-  const topFace = useSelector((state) => state.faces.topFace);
-  const bottomFace = useSelector((state) => state.faces.bottomFace);
+
+  // One above Current Face
+  const oneAboveCur = useSelector((state) => state.faces.oneAboveCurrentFace);
+  const oneAboveBack = useSelector((state) => state.faces.oneAboveBackFace);
+  const oneAboveLeft = useSelector((state) => state.faces.oneAboveLeftFace);
+  const oneAboveRight = useSelector((state) => state.faces.oneAboveRightFace);
+  const oneAboveTop = useSelector((state) => state.faces.oneAboveTopFace);
+  const oneAboveBottom = useSelector((state) => state.faces.oneAboveBottomFace);
+
+  // One bellow Current Face
+  const oneBellowCur = useSelector((state) => state.faces.oneBellowCurrentFace);
+  const oneBellowBack = useSelector((state) => state.faces.oneBellowBackFace);
+  const oneBellowLeft = useSelector((state) => state.faces.oneBellowLeftFace);
+  const oneBellowRight = useSelector((state) => state.faces.oneBellowRightFace);
+  const oneBellowTop = useSelector((state) => state.faces.oneBellowTopFace);
+  const oneBellowBottom = useSelector(
+    (state) => state.faces.oneBellowBottomFace
+  );
 
   const matrix = useSelector((state) => state.faces.cubeMatrix);
 
@@ -61,24 +80,13 @@ const Buttons = () => {
         break;
     }
 
-    if (xAxisOr === 0 || xAxisOr === 45 || xAxisOr === 90 || xAxisOr === 315) {
-      if (e.target.value === "left") {
-        dispatch(axisActions.updateY(-45));
-        dispatch(facesActions.moveCubeMatrixLeft());
-      }
-      if (e.target.value === "right") {
-        dispatch(axisActions.updateY(45));
-        dispatch(facesActions.moveCubeMatrixRight());
-      }
-    } else {
-      if (e.target.value === "left") {
-        dispatch(axisActions.updateY(45));
-        dispatch(facesActions.moveCubeMatrixRight());
-      }
-      if (e.target.value === "right") {
-        dispatch(axisActions.updateY(-45));
-        dispatch(facesActions.moveCubeMatrixLeft());
-      }
+    if (e.target.value === "left") {
+      dispatch(axisActions.updateY(-45));
+      dispatch(facesActions.moveCubeMatrixLeft());
+    }
+    if (e.target.value === "right") {
+      dispatch(axisActions.updateY(45));
+      dispatch(facesActions.moveCubeMatrixRight());
     }
 
     let prime;
@@ -93,20 +101,37 @@ const Buttons = () => {
     let topWedge;
     let bottomWedge;
 
-    if (currentFace !== "edge") {
+    if (currentFace !== "edge" || currentFace !== "faceEdge") {
       frontWedge = currentFace;
       backWedge = backFace;
       leftWedge = leftFace;
       rightWedge = rightFace;
       topWedge = topFace;
       bottomWedge = bottomFace;
-    } else {
+    }
+    if (currentFace === "edge") {
       frontWedge = lastCurrentFace;
       backWedge = lastBackFace;
       leftWedge = lastLeftFace;
       rightWedge = lastRightFace;
       topWedge = lastTopFace;
       bottomWedge = lastBottomFace;
+    }
+    if (currentFace === "faceEdge" && oneAboveCur === "yellow") {
+      frontWedge = oneBellowCur;
+      backWedge = oneBellowBack;
+      leftWedge = oneBellowLeft;
+      rightWedge = oneBellowRight;
+      topWedge = oneBellowTop;
+      bottomWedge = oneBellowBottom;
+    }
+    if (currentFace === "faceEdge" && oneBellowCur === "white") {
+      frontWedge = oneAboveCur;
+      backWedge = oneAboveBack;
+      leftWedge = oneAboveLeft;
+      rightWedge = oneAboveRight;
+      topWedge = oneAboveTop;
+      bottomWedge = oneAboveBottom;
     }
 
     switch (e.target.value) {
@@ -178,21 +203,38 @@ const Buttons = () => {
   return (
     <div className={classes.buttons}>
       <div className={classes.arrowButtons}>
-        <button className={classes.topBtn} onClick={buttonHandler} value="up" disabled={currentFace === 'white'}>
+        <button
+          className={classes.topBtn}
+          onClick={buttonHandler}
+          value="up"
+          disabled={currentFace === "white"}
+        >
           {upArrow}
         </button>
         <div className={classes.middleBtns}>
           <button onClick={buttonHandler} value="left">
-            {onYellowOrWhite ? rotateLeftArrow : leftArrow}
+            {onYellowOrWhite
+              ? currentFace === "yellow"
+                ? rotateRightArrow
+                : rotateLeftArrow
+              : leftArrow}
           </button>
 
           <i className="fas fa-solid fa-circle"></i>
 
           <button onClick={buttonHandler} value="right">
-            {onYellowOrWhite ? rotateRightArrow : rightArrow}
+            {onYellowOrWhite
+              ? currentFace === "yellow"
+                ? rotateLeftArrow
+                : rotateRightArrow
+              : rightArrow}
           </button>
         </div>
-        <button onClick={buttonHandler} value="down" disabled={currentFace === 'yellow'}>
+        <button
+          onClick={buttonHandler}
+          value="down"
+          disabled={currentFace === "yellow"}
+        >
           {downArrow}
         </button>
       </div>
@@ -238,14 +280,6 @@ const Buttons = () => {
         </button>
       </div>
       <div>
-        <p>front: {currentFace}</p>
-        <p>back: {backFace}</p>
-        <p>left: {leftFace}</p>
-        <p>right: {rightFace}</p>
-        <p>top: {topFace}</p>
-        <p>bottom: {bottomFace}</p>
-        <p>left of cur: {leftOfCur}</p>
-        <p>right of cur: {rightOfCur}</p>
         <button onClick={consoleLogHandler}>Console Log</button>
       </div>
     </div>

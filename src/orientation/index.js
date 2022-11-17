@@ -81,14 +81,24 @@ const initialFaceState = {
   rightFace: "red",
   topFace: "yellow",
   bottomFace: "white",
+  oneAboveCurrentFace: "faceEdge",
+  oneAboveBackFace: "faceEdge",
+  oneAboveLeftFace: "faceEdge",
+  oneAboveRightFace: "faceEdge",
+  oneAboveTopFace: "faceEdge",
+  oneAboveBottomFace: "faceEdge",
+  oneBellowCurrentFace: "faceEdge",
+  oneBellowBackFace: "faceEdge",
+  oneBellowLeftFace: "faceEdge",
+  oneBellowRightFace: "faceEdge",
+  oneBellowTopFace: "faceEdge",
+  oneBellowBottomFace: "faceEdge",
   lastCurrentFace: null,
   lastBackFace: null,
   lastLeftFace: null,
   lastRightFace: null,
   lastTopFace: null,
   lastBottomFace: null,
-  leftOfCurrentFace: "edge",
-  rightOfCurrentFace: "edge",
   colorSelected: null,
   colorCount: {
     blue: 0,
@@ -100,7 +110,7 @@ const initialFaceState = {
   },
   cubeMatrix: [
     ["green", "edge", "orange", "edge", "blue", "edge", "red", "edge"],
-    ["edge", "edge", "edge", "edge", "edge", "edge", "edge", "edge"],
+    ["faceEdge", "edge", "faceEdge", "edge", "faceEdge", "edge", "faceEdge", "edge"],
     [
       "yellow",
       "yellow",
@@ -111,11 +121,11 @@ const initialFaceState = {
       "yellow",
       "yellow",
     ],
-    ["edge", "edge", "edge", "edge", "edge", "edge", "edge", "edge"],
+    ["faceEdge", "edge", "faceEdge", "edge", "faceEdge", "edge", "faceEdge", "edge"],
     ["blue", "edge", "red", "edge", "green", "edge", "orange", "edge"],
-    ["edge", "edge", "edge", "edge", "edge", "edge", "edge", "edge"],
+    ["faceEdge", "edge", "faceEdge", "edge", "faceEdge", "edge", "faceEdge", "edge"],
     ["white", "white", "white", "white", "white", "white", "white", "white"],
-    ["edge", "edge", "edge", "edge", "edge", "edge", "edge", "edge"],
+    ["faceEdge", "edge", "faceEdge", "edge", "faceEdge", "edge", "faceEdge", "edge"],
   ],
   segmentState: {
     // blue
@@ -205,11 +215,41 @@ const facesSlice = createSlice({
     setBottomFace(state, action) {
       state.bottomFace = action.payload;
     },
-    setLeftOfCurrentFace(state, action) {
-      state.leftOfCurrentFace = action.payload;
+    setOneAboveCurrentFace(state, action){
+      state.oneAboveCurrentFace = action.payload
     },
-    setRightOfCurrentFace(state, action) {
-      state.rightOfCurrentFace = action.payload;
+    setOneAboveBackFace(state, action){
+      state.oneAboveBackFace = action.payload
+    },
+    setOneAboveLeftFace(state, action){
+      state.oneAboveLeftFace = action.payload
+    },
+    setOneAboveRightFace(state, action){
+      state.oneAboveRightFace = action.payload
+    },
+    setOneAboveTopFace(state, action){
+      state.oneAboveTopFace = action.payload
+    },
+    setOneAboveBottomFace(state, action){
+      state.oneAboveBottomFace = action.payload
+    },
+    setOneBellowCurrentFace(state, action){
+      state.oneBellowCurrentFace = action.payload
+    },
+    setOneBellowBackFace(state, action){
+      state.oneBellowBackFace = action.payload
+    },
+    setOneBellowLeftFace(state, action){
+      state.oneBellowLeftFace = action.payload
+    },
+    setOneBellowRightFace(state, action){
+      state.oneBellowRightFace = action.payload
+    },
+    setOneBellowTopFace(state, action){
+      state.oneBellowTopFace = action.payload
+    },
+    setOneBellowBottomFace(state, action){
+      state.oneBellowBottomFace = action.payload
     },
     moveCubeMatrixLeft(state) {
       state.cubeMatrix.forEach((face) => {

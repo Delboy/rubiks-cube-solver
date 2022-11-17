@@ -25,9 +25,23 @@ const Cube = () => {
     dispatch(facesActions.setBottomFace(cubeMatrix[6][0]))
     dispatch(facesActions.setLeftFace(cubeMatrix[4][6]))
     dispatch(facesActions.setRightFace(cubeMatrix[4][2]))
-    dispatch(facesActions.setRightOfCurrentFace(cubeMatrix[4][1]))
-    dispatch(facesActions.setLeftOfCurrentFace(cubeMatrix[4][7]))
-    
+
+    // One up from current faces
+    dispatch(facesActions.setOneAboveCurrentFace(cubeMatrix[3][0]))
+    dispatch(facesActions.setOneAboveTopFace(cubeMatrix[1][0]))
+    dispatch(facesActions.setOneAboveBackFace(cubeMatrix[7][0]))
+    dispatch(facesActions.setOneAboveBottomFace(cubeMatrix[5][0]))
+    dispatch(facesActions.setOneAboveLeftFace(cubeMatrix[3][6]))
+    dispatch(facesActions.setOneAboveRightFace(cubeMatrix[3][2]))
+
+    // One down from current faces
+    dispatch(facesActions.setOneBellowCurrentFace(cubeMatrix[5][0]))
+    dispatch(facesActions.setOneBellowTopFace(cubeMatrix[3][0]))
+    dispatch(facesActions.setOneBellowBackFace(cubeMatrix[1][0]))
+    dispatch(facesActions.setOneBellowBottomFace(cubeMatrix[7][0]))
+    dispatch(facesActions.setOneBellowLeftFace(cubeMatrix[5][6]))
+    dispatch(facesActions.setOneBellowRightFace(cubeMatrix[5][2]))
+
     if(cubeMatrix[4][0] === 'yellow'){
       dispatch(facesActions.setRightFace(cubeMatrix[2][6]));
       dispatch(facesActions.setLeftFace(cubeMatrix[2][2]));
@@ -40,12 +54,12 @@ const Cube = () => {
       dispatch(facesActions.setRightOfCurrentFace(cubeMatrix[3][6]))
       dispatch(facesActions.setLeftOfCurrentFace(cubeMatrix[3][2]))
     }
+ 
   },[cubeMatrix, dispatch])
 
   // Updates previous current face. Used to help determine what face to rotate when clicking buttons.
   useEffect(() => {
-    
-    if(currentFace !== 'edge'){
+    if(currentFace !== 'edge' && currentFace !== 'faceEdge'){
       dispatch(facesActions.setLastCurrentFaces())
     }
   }, [currentFace, dispatch])
