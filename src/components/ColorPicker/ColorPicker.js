@@ -12,7 +12,7 @@ const ColorPicker = () => {
   const dispatch = useDispatch()
 
   const colorSelected = useSelector((state) => state.faces.colorSelected);
-
+  
   const reset = (
     <FontAwesomeIcon icon={faArrowRotateRight} className="noPointerEvents" />
   );
@@ -33,8 +33,17 @@ const ColorPicker = () => {
   }
 
   const shuffleHandler = () => {
-    dispatch(facesActions.clearAllSegmentColors())
-    dispatch(facesActions.shuffleAllSegmentColors()) 
+    // Solves Cube then performs 20 random moves
+     dispatch(facesActions.solveCube())
+     let colorList = ["blue", "orange", "green", "red", "yellow", "white"];
+     let prime = [true, false]
+     let turns = 0
+     while(turns < 20){
+       let randomColor = Math.floor(Math.random() * colorList.length);
+       let randomPrime = Math.floor(Math.random() * prime.length)
+       dispatch(facesActions.rotateWedge({ face: colorList[randomColor], prime: prime[randomPrime] }));
+       turns += 1      
+      }
   }
 
   return (

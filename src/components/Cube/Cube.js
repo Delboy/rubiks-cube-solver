@@ -45,14 +45,10 @@ const Cube = () => {
     if(cubeMatrix[4][0] === 'yellow'){
       dispatch(facesActions.setRightFace(cubeMatrix[2][6]));
       dispatch(facesActions.setLeftFace(cubeMatrix[2][2]));
-      dispatch(facesActions.setRightOfCurrentFace(cubeMatrix[3][6]))
-      dispatch(facesActions.setLeftOfCurrentFace(cubeMatrix[3][2]))
     }
     if(cubeMatrix[4][0] === 'white'){
       dispatch(facesActions.setRightFace(cubeMatrix[6][6]));
       dispatch(facesActions.setLeftFace(cubeMatrix[6][2]));
-      dispatch(facesActions.setRightOfCurrentFace(cubeMatrix[3][6]))
-      dispatch(facesActions.setLeftOfCurrentFace(cubeMatrix[3][2]))
     }
  
   },[cubeMatrix, dispatch])

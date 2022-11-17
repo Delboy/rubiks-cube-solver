@@ -290,28 +290,15 @@ const facesSlice = createSlice({
       state.segmentState = initialFaceState.segmentState;
       state.colorCount = initialFaceState.colorCount;
     },
-    shuffleAllSegmentColors(state) {
-      let colors = ["blue", "orange", "green", "red", "yellow", "white"];
-
+    solveCube(state){
+      console.log('hit')
+      // set all colors to solved
+      const colors = {b: "blue", o: "orange", g: "green", r: "red", y: "yellow", w: "white"}
       Object.keys(state.segmentState).forEach((key) => {
-        let x = 1;
-        let randomColor = Math.floor(Math.random() * colors.length);
-        while (x < 7) {
-          if (state.colorCount[colors[randomColor]] < 8) {
-            state.segmentState[key] = colors[randomColor];
-            state.colorCount[colors[randomColor]] += 1;
-            x += 6;
-          } else {
-            if (randomColor === 5) {
-              randomColor = 0;
-              x += 1;
-            } else {
-              randomColor += 1;
-              x += 1;
-            }
-          }
-        }
-      });
+        let colorKey = key.charAt(0)
+        let color = colors[colorKey]
+        state.segmentState[key] = color
+      })
     },
     rotateWedge(state, action) {
       let wedges = {
