@@ -178,7 +178,7 @@ const Buttons = () => {
   return (
     <div className={classes.buttons}>
       <div className={classes.arrowButtons}>
-        <button className={classes.topBtn} onClick={buttonHandler} value="up">
+        <button className={classes.topBtn} onClick={buttonHandler} value="up" disabled={currentFace === 'white'}>
           {upArrow}
         </button>
         <div className={classes.middleBtns}>
@@ -192,7 +192,7 @@ const Buttons = () => {
             {onYellowOrWhite ? rotateRightArrow : rightArrow}
           </button>
         </div>
-        <button onClick={buttonHandler} value="down">
+        <button onClick={buttonHandler} value="down" disabled={currentFace === 'yellow'}>
           {downArrow}
         </button>
       </div>

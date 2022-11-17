@@ -28,15 +28,6 @@ const Cube = () => {
     dispatch(facesActions.setRightOfCurrentFace(cubeMatrix[4][1]))
     dispatch(facesActions.setLeftOfCurrentFace(cubeMatrix[4][7]))
     
-    if (cubeMatrix[2][0] === "yellow") {
-      dispatch(facesActions.setRightFace(cubeMatrix[4][2]));
-      dispatch(facesActions.setLeftFace(cubeMatrix[4][6]));
-    }
-    if (cubeMatrix[2][0] === "white") {
-      dispatch(facesActions.setRightFace(cubeMatrix[4][6]));
-      dispatch(facesActions.setLeftFace(cubeMatrix[4][2]));
-    }
-
     if(cubeMatrix[4][0] === 'yellow'){
       dispatch(facesActions.setRightFace(cubeMatrix[2][6]));
       dispatch(facesActions.setLeftFace(cubeMatrix[2][2]));
