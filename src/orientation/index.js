@@ -291,7 +291,6 @@ const facesSlice = createSlice({
       state.colorCount = initialFaceState.colorCount;
     },
     solveCube(state){
-      console.log('hit')
       // set all colors to solved
       const colors = {b: "blue", o: "orange", g: "green", r: "red", y: "yellow", w: "white"}
       Object.keys(state.segmentState).forEach((key) => {

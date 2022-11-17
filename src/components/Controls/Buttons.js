@@ -5,6 +5,7 @@ import RotateWedgeButtons from "./RotateWedgeButtons";
 import RotateCubeButtons from "./RotateCubeButtons";
 
 import classes from "./Buttons.module.css";
+import { useEffect } from "react";
 
 const Buttons = () => {
   const dispatch = useDispatch();
@@ -43,10 +44,43 @@ const Buttons = () => {
     (state) => state.faces.oneBellowBottomFace
   );
 
+  // Handles Keypresses
+  const keypressHandler = (e) => {
+    if (
+      (currentFace === "yellow" && e.key === "s") ||
+      (currentFace === "white" && e.key === "w")
+    ) {
+    } else {
+      buttonHandler(e);
+    }
+  };
+
+  // listens for keypresses
+  useEffect(() => {
+    window.addEventListener("keydown", keypressHandler);
+    return () => {
+      window.removeEventListener("keydown", keypressHandler);
+    };
+  }, [currentFace]);
+
   // Handles button presses
   const buttonHandler = (e) => {
-    switch (e.target.value) {
+    let buttonPressed;
+    let prime;
+
+    if (e.target.value) {
+      buttonPressed = e.target.value;
+    }
+    if (e.key) {
+      buttonPressed = e.key;
+    }
+    
+    switch (buttonPressed) {
       case "up":
+        dispatch(axisActions.updateX(45));
+        dispatch(facesActions.moveCubeMatrixUp());
+        break;
+      case "w":
         dispatch(axisActions.updateX(45));
         dispatch(facesActions.moveCubeMatrixUp());
         break;
@@ -54,22 +88,36 @@ const Buttons = () => {
         dispatch(axisActions.updateX(-45));
         dispatch(facesActions.moveCubeMatrixDown());
         break;
+      case "s":
+        dispatch(axisActions.updateX(-45));
+        dispatch(facesActions.moveCubeMatrixDown());
+        break;
+      case "left":
+        dispatch(axisActions.updateY(-45));
+        dispatch(facesActions.moveCubeMatrixLeft());
+        break;
+      case "a":
+        dispatch(axisActions.updateY(-45));
+        dispatch(facesActions.moveCubeMatrixLeft());
+        break;
+      case "right":
+        dispatch(axisActions.updateY(45));
+        dispatch(facesActions.moveCubeMatrixRight());
+        break;
+      case "d":
+        dispatch(axisActions.updateY(45));
+        dispatch(facesActions.moveCubeMatrixRight());
+        break;
       default:
         break;
     }
 
-    if (e.target.value === "left") {
-      dispatch(axisActions.updateY(-45));
-      dispatch(facesActions.moveCubeMatrixLeft());
-    }
-    if (e.target.value === "right") {
-      dispatch(axisActions.updateY(45));
-      dispatch(facesActions.moveCubeMatrixRight());
-    }
-
-    let prime;
-    if (e.target.value.includes("-p")) {
+    if (buttonPressed.includes("-p")) {
       prime = true;
+    }
+    
+    if(e.shiftKey){
+      prime = true
     }
 
     let frontWedge;
@@ -112,20 +160,35 @@ const Buttons = () => {
       bottomWedge = oneAboveBottom;
     }
 
-    switch (e.target.value) {
+    switch (buttonPressed) {
       case "f":
         dispatch(facesActions.rotateWedge({ face: frontWedge, prime: prime }));
+        break;
+      case "e":
+        dispatch(facesActions.rotateWedge({ face: frontWedge, prime: false }));
         break;
       case "f-p":
         dispatch(facesActions.rotateWedge({ face: frontWedge, prime: prime }));
         break;
+      case "q":
+        dispatch(facesActions.rotateWedge({ face: frontWedge, prime: true }));
+        break;
       case "b":
         dispatch(facesActions.rotateWedge({ face: backWedge, prime: prime }));
+        break;
+      case "E":
+        dispatch(facesActions.rotateWedge({ face: backWedge, prime: false }));
         break;
       case "b-p":
         dispatch(facesActions.rotateWedge({ face: backWedge, prime: prime }));
         break;
+      case "Q":
+        dispatch(facesActions.rotateWedge({ face: backWedge, prime: true }));
+        break;
       case "l":
+        dispatch(facesActions.rotateWedge({ face: leftWedge, prime: prime }));
+        break;
+      case "ArrowLeft":
         dispatch(facesActions.rotateWedge({ face: leftWedge, prime: prime }));
         break;
       case "l-p":
@@ -134,16 +197,25 @@ const Buttons = () => {
       case "r":
         dispatch(facesActions.rotateWedge({ face: rightWedge, prime: prime }));
         break;
-      case "r-p":
+      case "ArrowRight":
         dispatch(facesActions.rotateWedge({ face: rightWedge, prime: prime }));
         break;
-      case "u-p":
-        dispatch(facesActions.rotateWedge({ face: topWedge, prime: prime }));
+      case "r-p":
+        dispatch(facesActions.rotateWedge({ face: rightWedge, prime: prime }));
         break;
       case "u":
         dispatch(facesActions.rotateWedge({ face: topWedge, prime: prime }));
         break;
-      case "d":
+      case "ArrowUp":
+        dispatch(facesActions.rotateWedge({ face: topWedge, prime: prime }));
+        break;
+      case "u-p":
+        dispatch(facesActions.rotateWedge({ face: topWedge, prime: prime }));
+        break;
+      case "dw":
+        dispatch(facesActions.rotateWedge({ face: bottomWedge, prime: prime }));
+        break;
+      case "ArrowDown":
         dispatch(facesActions.rotateWedge({ face: bottomWedge, prime: prime }));
         break;
       case "d-p":

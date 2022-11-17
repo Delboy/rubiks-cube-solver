@@ -40,7 +40,7 @@ const RotateWedgeButtons = (props) => {
         </button>
       </div>
       <div className={classes.bottomBtns}>
-        <button onClick={props.onButtonPress} value={"d"}>
+        <button onClick={props.onButtonPress} value={"dw"}>
           D
         </button>
         <button onClick={props.onButtonPress} value={"d-p"}>
