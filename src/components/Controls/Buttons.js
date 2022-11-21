@@ -61,7 +61,7 @@ const Buttons = () => {
     return () => {
       window.removeEventListener("keydown", keypressHandler);
     };
-  }, [currentFace]);
+  });
 
   // Handles button presses
   const buttonHandler = (e) => {
@@ -137,6 +137,14 @@ const Buttons = () => {
     }
     if (currentFace === "edge") {
       frontWedge = lastCurrentFace;
+      backWedge = lastBackFace;
+      leftWedge = lastLeftFace;
+      rightWedge = lastRightFace;
+      topWedge = lastTopFace;
+      bottomWedge = lastBottomFace;
+    }
+    if ((currentFace === 'white' || currentFace === 'yellow') && (leftFace === 'edge')){
+      frontWedge = currentFace
       backWedge = lastBackFace;
       leftWedge = lastLeftFace;
       rightWedge = lastRightFace;
@@ -235,6 +243,12 @@ const Buttons = () => {
       <div className={classes.wedges}>
         <RotateWedgeButtons onButtonPress={buttonHandler} />
       </div>
+      <p>currentFace: {currentFace}</p>
+      <p>leftFace: {leftFace}</p>
+      <p>rightFace: {rightFace}</p>
+      <p>topFace: {topFace}</p>
+      <p>bottomFace: {bottomFace}</p>
+      <p>backFace: {backFace}</p>
     </div>
   );
 };
