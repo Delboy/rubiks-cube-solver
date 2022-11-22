@@ -243,12 +243,6 @@ const Buttons = () => {
       <div className={classes.wedges}>
         <RotateWedgeButtons onButtonPress={buttonHandler} />
       </div>
-      <p>currentFace: {currentFace}</p>
-      <p>leftFace: {leftFace}</p>
-      <p>rightFace: {rightFace}</p>
-      <p>topFace: {topFace}</p>
-      <p>bottomFace: {bottomFace}</p>
-      <p>backFace: {backFace}</p>
     </div>
   );
 };
