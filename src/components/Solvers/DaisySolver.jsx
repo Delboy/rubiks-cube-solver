@@ -2,20 +2,20 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 
 const DaisySolver = () => {
+  const [stringToPrint, setStringToPrint] = useState("");
+
+  // Checks if 'petals' on yellow face are solved
   const [daisySolved, setDaisySolved] = useState(false);
   const [petalOneSolved, setPetalOneSolved] = useState(false);
   const [petalTwoSolved, setPetalTwoSolved] = useState(false);
   const [petalThreeSolved, setPetalThreeSolved] = useState(false);
   const [petalFourSolved, setPetalFourSolved] = useState(false);
 
-  const [stringToPrint, setStringToPrint] = useState("");
-
   const petal1 = useSelector((state) => state.faces.segmentState.ytm);
   const petal2 = useSelector((state) => state.faces.segmentState.ycl);
   const petal3 = useSelector((state) => state.faces.segmentState.ycr);
   const petal4 = useSelector((state) => state.faces.segmentState.ybm);
 
-  // Checks if 'petals' on yellow face are solved
   useEffect(() => {
     if (petal1 === "white") {
       setPetalOneSolved(true);
@@ -53,32 +53,84 @@ const DaisySolver = () => {
   const redBottomEdge = useSelector((state) => state.faces.segmentState.rbm);
   const greenBottomEdge = useSelector((state) => state.faces.segmentState.gbm);
   const orangeBottomEdge = useSelector((state) => state.faces.segmentState.obm);
+  const blueTopPair = useSelector((state) => state.faces.segmentState.wtm)
+  const redTopPair = useSelector((state) => state.faces.segmentState.wcr)
+  const greenTopPair = useSelector((state) => state.faces.segmentState.wbm)
+  const orangeTopPair = useSelector((state) => state.faces.segmentState.wcl)
+  const blueBottomPair = useSelector((state) => state.faces.segmentState.ybm)
+  const redBottomPair = useSelector((state) => state.faces.segmentState.ycr)
+  const greenBottomPair = useSelector((state) => state.faces.segmentState.ytm)
+  const orangeBottomPair = useSelector((state) => state.faces.segmentState.ycl)
 
   useEffect(() => {
-    const topAndBottomArray = {
-      blueTopEdge,
-      blueBottomEdge,
-      redTopEdge,
-      redBottomEdge,
-      greenTopEdge,
-      greenBottomEdge,
-      orangeTopEdge,
-      orangeBottomEdge,
-    };
-
-    Object.keys(topAndBottomArray).forEach((key) => {
-      if (topAndBottomArray[key] === "white") {
-        let faceToRotate;
-        let strippedEdge = key.replace("Edge", "");
-        if (strippedEdge.includes("Top")) {
-          faceToRotate = strippedEdge.replace("Top", "");
+    const topAndBottomArray = [
+    {
+      edge: blueTopEdge,
+      face: "blue",
+      pos: "top",
+      pair: blueTopPair
+    },
+    {
+      edge: redTopEdge,
+      face: "red",
+      pos: "top",
+      pair: redTopPair
+    },
+    {
+      edge: greenTopEdge,
+      face: "green",
+      pos: "top",
+      pair: greenTopPair
+    },
+    {
+      edge: orangeTopEdge,
+      face: "orange",
+      pos: "top",
+      pair: orangeTopPair
+    },
+    {
+      edge: blueBottomEdge,
+      face: "blue",
+      pos: "bottom",
+      pair: blueBottomPair
+    },
+    {
+      edge: redBottomEdge,
+      face: "red",
+      pos: "bottom",
+      pair: redBottomPair
+    },
+    {
+      edge: greenBottomEdge,
+      face: "green",
+      pos: "bottom",
+      pair: greenBottomPair
+    },
+    {
+      edge: orangeBottomEdge,
+      face: "orange",
+      pos: "bottom",
+      pair: orangeBottomPair
+    },
+  ]
+    
+    topAndBottomArray.forEach((seg) => {
+      if (seg.edge === "white" && seg.pair === "white"){
+        if(seg.pos === 'top'){
+          setStringToPrint('Rotate bottom once MAGIC')
         }
-        if (strippedEdge.includes("Bottom")) {
-          faceToRotate = strippedEdge.replace("Bottom", "");
+        if(seg.pos === 'bottom'){
+          setStringToPrint('Rotate top once MAGIC')
         }
-        setStringToPrint(`Rotate ${faceToRotate} face either direction`);
       }
-    });
+  
+      if(seg.edge === "white" && seg.pair !== 'white'){
+  
+        setStringToPrint(`Rotate ${seg.face} face clockwise`);
+      }
+        
+    }    
+    )    
   }, [
     blueTopEdge,
     blueBottomEdge,
@@ -88,6 +140,14 @@ const DaisySolver = () => {
     greenBottomEdge,
     orangeTopEdge,
     orangeBottomEdge,
+    blueTopPair,
+    redTopPair,
+    greenTopPair,
+    orangeTopPair,
+    blueBottomPair,
+    redBottomPair,
+    greenBottomPair,
+    orangeBottomPair
   ]);
 
   // Checks for white segments in center layer and if so rotates them to the top
@@ -182,7 +242,7 @@ const DaisySolver = () => {
     leftAndRightArray.forEach((seg) => {
       if (seg.edge === "white" && seg.top === "white") {
         setStringToPrint("Rotate top Once");
-      } else if (seg.edge === "white") {
+      } else if (seg.edge === "white" && seg.top !== "white") {
         setStringToPrint(
           `Rotate ${seg.pos} side of ${seg.face} face away from you once`
         );
@@ -207,7 +267,7 @@ const DaisySolver = () => {
     omlTopPair,
   ]);
 
-  // Checks if any white edges on bottom face and if so rotates them to top 
+  // Checks if any white edges on bottom face and if so rotates them to top
 
   // Bottom Edges
   const blueWedgeBottomEdge = useSelector(
@@ -226,45 +286,51 @@ const DaisySolver = () => {
   // Top Edges
   const blueWedgeTopEdge = useSelector((state) => state.faces.segmentState.ybm);
   const redWedgeTopEdge = useSelector((state) => state.faces.segmentState.ycr);
-  const greenWedgeTopEdge = useSelector((state) => state.faces.segmentState.ytm);
-  const orangeWedgeTopEdge = useSelector((state) => state.faces.segmentState.ycl);
+  const greenWedgeTopEdge = useSelector(
+    (state) => state.faces.segmentState.ytm
+  );
+  const orangeWedgeTopEdge = useSelector(
+    (state) => state.faces.segmentState.ycl
+  );
 
   useEffect(() => {
     const topAndBottomArray = [
-        {
-          top: blueWedgeTopEdge,
-          bottom: blueWedgeBottomEdge,
-          face: 'blue'
-        },
-        {
-          top: redWedgeTopEdge,
-          bottom: redWedgeBottomEdge,
-          face: 'red'
-        },
-        {
-          top: greenWedgeTopEdge,
-          bottom:greenWedgeBottomEdge,
-          face: 'green'
-        },
-        {
-          top: orangeWedgeTopEdge,
-          bottom: orangeWedgeBottomEdge,
-          face: 'orange'
-        },
-      ];
+      {
+        top: blueWedgeTopEdge,
+        bottom: blueWedgeBottomEdge,
+        face: "blue",
+      },
+      {
+        top: redWedgeTopEdge,
+        bottom: redWedgeBottomEdge,
+        face: "red",
+      },
+      {
+        top: greenWedgeTopEdge,
+        bottom: greenWedgeBottomEdge,
+        face: "green",
+      },
+      {
+        top: orangeWedgeTopEdge,
+        bottom: orangeWedgeBottomEdge,
+        face: "orange",
+      },
+    ];
 
-      topAndBottomArray.forEach((pair) => {
-        if (pair.bottom === "white" && pair.top === "white") {
-          setStringToPrint("Rotate top Once");
-        } else if (pair.bottom === "white") {
-          setStringToPrint(
-            `Rotate ${pair.face} face twice`
-          );
-        }
-      });
+    topAndBottomArray.forEach((pair) => {
+      if (pair.bottom === "white" && pair.top === "white") {
+        setStringToPrint("Rotate top Once");
+      } else if (pair.bottom === "white") {
+        setStringToPrint(`Rotate ${pair.face} face twice`);
+      }
+    });
   });
 
-  return <p>command: {stringToPrint}</p>;
+  return (
+    <div>
+      <p>command: {stringToPrint}</p>
+    </div>
+  );
 };
 
 export default DaisySolver;

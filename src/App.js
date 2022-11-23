@@ -1,5 +1,5 @@
 import Header from "./components/Layout/Header";
-import DaisySolver from "./components/Solvers/DaisySolver";
+import Solvers from "./components/Solvers/Solvers";
 import Cube from "./components/Cube/Cube";
 import Buttons from "./components/Controls/Buttons";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
@@ -14,7 +14,7 @@ function App() {
         <Header />
         <div className={classes.center}>
           <div>
-            <DaisySolver />
+            <Solvers />
             <Cube />
             <Buttons />
           </div>
