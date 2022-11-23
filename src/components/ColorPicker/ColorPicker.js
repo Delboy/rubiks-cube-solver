@@ -35,6 +35,7 @@ const ColorPicker = () => {
   const shuffleHandler = () => {
     // Solves Cube then performs 20 random moves
      dispatch(facesActions.solveCube())
+     dispatch(facesActions.setAllColorCounterToMax())
      let colorList = ["blue", "orange", "green", "red", "yellow", "white"];
      let prime = [true, false]
      let turns = 0

@@ -277,6 +277,14 @@ const facesSlice = createSlice({
     setColorSelected(state, action) {
       state.colorSelected = action.payload;
     },
+    setAllColorCounterToMax(state){
+      state.colorCount.blue = 8
+      state.colorCount.red = 8
+      state.colorCount.green = 8
+      state.colorCount.orange = 8
+      state.colorCount.white = 8
+      state.colorCount.yellow = 8
+    },
     addToColorCounter(state, action) {
       state.colorCount[action.payload] += 1;
     },
