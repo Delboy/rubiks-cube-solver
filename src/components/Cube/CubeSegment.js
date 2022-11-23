@@ -9,14 +9,24 @@ const CubeSegment = (props) => {
     (state) => state.faces.segmentState[props.position]
   );
   const [pairsPos, setPairsPos] = useState(null);
+  const [cornerSecondPos, setCornerSecondPos] = useState(null);
+  const [cornerThirdPos, setCornerThirdPos] = useState(null);
+
   const pairsColor = useSelector((state) => state.faces.segmentState[pairsPos]);
-  const [cursor, setCursor] = useState('')
+  const cornerSecondColor = useSelector(
+    (state) => state.faces.segmentState[cornerSecondPos]
+  );
+  const cornerThirdColor = useSelector(
+    (state) => state.faces.segmentState[cornerThirdPos]
+  );
+
+  const [cursor, setCursor] = useState("");
 
   const dispatch = useDispatch();
 
   const setColorHandler = (e) => {
-    if(cursor === 'not-allowed'){
-      return
+    if (cursor === "not-allowed") {
+      return;
     }
     let colorSelecetedAmount = colorCount[colorSelected];
 
@@ -61,20 +71,20 @@ const CubeSegment = (props) => {
 
   const hoverHandler = () => {
     // is position in corner?
-    const position = props.position.slice(1);
+    // const position = props.position.slice(1);
 
-    let seg;
-    if (
-      position.includes("tr") ||
-      position.includes("tl") ||
-      position.includes("bl") ||
-      position.includes("br")
-    ) {
-      seg = "corner";
-    } else {
-      seg = "edge";
-    }
-    // Edge Pieces
+    // let seg;
+    // if (
+    //   position.includes("tr") ||
+    //   position.includes("tl") ||
+    //   position.includes("bl") ||
+    //   position.includes("br")
+    // ) {
+    //   seg = "corner";
+    // } else {
+    //   seg = "edge";
+    // }
+    // // Edge Pieces
 
     const edges = [
       ["btm", "ybm"],
@@ -97,23 +107,63 @@ const CubeSegment = (props) => {
         let second = edge[1];
 
         if (first === props.position) {
-          console.log("1");
           setPairsPos(second);
         } else {
-          console.log("2");
           setPairsPos(first);
         }
       }
     });
 
-    if(pairsColor === colorSelected){
-      setCursor('not-allowed')
+    if (pairsColor === colorSelected) {
+      setCursor("not-allowed");
     } else {
-      setCursor('')
+      setCursor("");
     }
+
+    const corners = [
+      ["btl", "ybl", "otr"],
+      ["btr", "ybr", "rtl"],
+      ["bbl", "wtl", "obr"],
+      ["bbr", "wtr", "rbl"],
+      ["gtl", "ytr", "rtr"],
+      ["gtr", "ytl", "otl"],
+      ["gbl", "wbr", "rbr"],
+      ["gbr", "wbl", "obl"],
+    ];
+
+    corners.forEach((corner) => {
+      if (corner.includes(props.position)) {
+        let firstCnr = corner[0];
+        let secondCnr = corner[1];
+        let thirdCnr = corner[2];
+
+        if (firstCnr === props.position) {
+          setCornerSecondPos(secondCnr);
+          setCornerThirdPos(thirdCnr);
+        } else if (secondCnr === props.position) {
+          setCornerSecondPos(firstCnr);
+          setCornerThirdPos(thirdCnr);
+        } else {
+          setCornerSecondPos(firstCnr);
+          setCornerThirdPos(secondCnr);
+        }
+
+        if (
+          cornerSecondColor === colorSelected ||
+          cornerThirdColor === colorSelected
+        ) {
+          setCursor("not-allowed");
+        } else {
+          setCursor("");
+        }
+      }
+    });
   };
 
-  const bgColor = { backgroundColor: `var(--color-${segmentColor})`, cursor: `${cursor}`};
+  const bgColor = {
+    backgroundColor: `var(--color-${segmentColor})`,
+    cursor: `${cursor}`,
+  };
 
   return (
     <div
