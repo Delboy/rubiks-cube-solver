@@ -117,10 +117,10 @@ const DaisySolver = () => {
     topAndBottomArray.forEach((seg) => {
       if (seg.edge === "white" && seg.pair === "white"){
         if(seg.pos === 'top'){
-          setStringToPrint('Rotate bottom once MAGIC')
+          setStringToPrint('Rotate bottom once')
         }
         if(seg.pos === 'bottom'){
-          setStringToPrint('Rotate top once MAGIC')
+          setStringToPrint('Rotate top once')
         }
       }
   
