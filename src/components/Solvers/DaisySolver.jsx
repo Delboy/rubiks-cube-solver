@@ -147,7 +147,8 @@ const DaisySolver = (props) => {
     blueBottomPair,
     redBottomPair,
     greenBottomPair,
-    orangeBottomPair
+    orangeBottomPair,
+    props
   ]);
 
   // Checks for white segments in center layer and if so rotates them to the top
@@ -265,6 +266,7 @@ const DaisySolver = (props) => {
     gmlTopPair,
     omrTopPair,
     omlTopPair,
+    props
   ]);
 
   // Checks if any white edges on bottom face and if so rotates them to top
