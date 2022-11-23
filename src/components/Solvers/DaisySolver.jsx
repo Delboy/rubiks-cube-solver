@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 
-const DaisySolver = () => {
+const DaisySolver = (props) => {
   const [stringToPrint, setStringToPrint] = useState("");
 
   // Checks if 'petals' on yellow face are solved
@@ -40,9 +40,9 @@ const DaisySolver = () => {
       petalFourSolved
     ) {
       setDaisySolved(true);
-      setStringToPrint("Daisy Solved!");
+      props.onCommandSet("Daisy Solved!")
     }
-  }, [petalOneSolved, petalTwoSolved, petalThreeSolved, petalFourSolved]);
+  }, [props, petalOneSolved, petalTwoSolved, petalThreeSolved, petalFourSolved]);
 
   // Checks each face to see if top or bottom middle segments are white and if so rotates them into middle layer
   const blueTopEdge = useSelector((state) => state.faces.segmentState.btm);
@@ -117,16 +117,16 @@ const DaisySolver = () => {
     topAndBottomArray.forEach((seg) => {
       if (seg.edge === "white" && seg.pair === "white"){
         if(seg.pos === 'top'){
-          setStringToPrint('Rotate bottom once')
+          props.onCommandSet('Rotate bottom once')
         }
         if(seg.pos === 'bottom'){
-          setStringToPrint('Rotate top once')
+          props.onCommandSet('Rotate top once')
         }
       }
   
       if(seg.edge === "white" && seg.pair !== 'white'){
   
-        setStringToPrint(`Rotate ${seg.face} face clockwise`);
+        props.onCommandSet(`Rotate ${seg.face} face clockwise`);
       }
         
     }    
@@ -241,9 +241,9 @@ const DaisySolver = () => {
 
     leftAndRightArray.forEach((seg) => {
       if (seg.edge === "white" && seg.top === "white") {
-        setStringToPrint("Rotate top Once");
+        props.onCommandSet("Rotate top Once");
       } else if (seg.edge === "white" && seg.top !== "white") {
-        setStringToPrint(
+        props.onCommandSet(
           `Rotate ${seg.pos} side of ${seg.face} face away from you once`
         );
       }
@@ -319,18 +319,12 @@ const DaisySolver = () => {
 
     topAndBottomArray.forEach((pair) => {
       if (pair.bottom === "white" && pair.top === "white") {
-        setStringToPrint("Rotate top Once");
+        props.onCommandSet("Rotate top Once");
       } else if (pair.bottom === "white") {
-        setStringToPrint(`Rotate ${pair.face} face twice`);
+        props.onCommandSet(`Rotate ${pair.face} face twice`);
       }
     });
   });
-
-  return (
-    <div>
-      <p>command: {stringToPrint}</p>
-    </div>
-  );
 };
 
 export default DaisySolver;

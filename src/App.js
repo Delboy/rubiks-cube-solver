@@ -12,9 +12,9 @@ function App() {
     <>
       <div className={classes.main}>
         <Header />
+        <Solvers />
         <div className={classes.center}>
           <div>
-            <Solvers />
             <Cube />
             <Buttons />
           </div>

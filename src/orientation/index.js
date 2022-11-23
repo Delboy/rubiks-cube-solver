@@ -557,8 +557,6 @@ const facesSlice = createSlice({
         state.segmentState[`${faceToRotate}bm`] = oldCenterLeft;
         state.segmentState[`${faceToRotate}br`] = oldBottomLeft;
       }
-
-
     },
   },
 });
