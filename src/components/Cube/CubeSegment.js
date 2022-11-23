@@ -70,22 +70,7 @@ const CubeSegment = (props) => {
   };
 
   const hoverHandler = () => {
-    // is position in corner?
-    // const position = props.position.slice(1);
-
-    // let seg;
-    // if (
-    //   position.includes("tr") ||
-    //   position.includes("tl") ||
-    //   position.includes("bl") ||
-    //   position.includes("br")
-    // ) {
-    //   seg = "corner";
-    // } else {
-    //   seg = "edge";
-    // }
-    // // Edge Pieces
-
+    // Disables cursor if user is trying to create an impossible edge or corner
     const edges = [
       ["btm", "ybm"],
       ["bcl", "ocr"],
@@ -114,12 +99,6 @@ const CubeSegment = (props) => {
       }
     });
 
-    if (pairsColor === colorSelected) {
-      setCursor("not-allowed");
-    } else {
-      setCursor("");
-    }
-
     const corners = [
       ["btl", "ybl", "otr"],
       ["btr", "ybr", "rtl"],
@@ -147,17 +126,24 @@ const CubeSegment = (props) => {
           setCornerSecondPos(firstCnr);
           setCornerThirdPos(secondCnr);
         }
-
-        if (
-          cornerSecondColor === colorSelected ||
-          cornerThirdColor === colorSelected
-        ) {
-          setCursor("not-allowed");
-        } else {
-          setCursor("");
-        }
       }
     });
+
+    if (
+      pairsColor === colorSelected ||
+      cornerSecondColor === colorSelected ||
+      cornerThirdColor === colorSelected ||
+      (colorSelected === 'green' && (cornerSecondColor === 'blue' || cornerThirdColor === 'blue')) ||
+      (colorSelected === 'blue' && (cornerSecondColor === 'green' || cornerThirdColor === 'green')) ||
+      (colorSelected === 'red' && (cornerSecondColor === 'orange' || cornerThirdColor === 'orange')) ||
+      (colorSelected === 'orange' && (cornerSecondColor === 'red' || cornerThirdColor === 'red')) ||
+      (colorSelected === 'white' && (cornerSecondColor === 'yellow' || cornerThirdColor === 'yellow')) ||
+      (colorSelected === 'yellow' && (cornerSecondColor === 'white' || cornerThirdColor === 'white'))
+    ) {
+      setCursor("not-allowed");
+    } else {
+      setCursor("");
+    }
   };
 
   const bgColor = {
