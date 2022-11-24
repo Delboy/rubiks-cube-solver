@@ -133,6 +133,12 @@ const CubeSegment = (props) => {
       pairsColor === colorSelected ||
       cornerSecondColor === colorSelected ||
       cornerThirdColor === colorSelected ||
+      (colorSelected === 'blue' && pairsColor === 'green') ||
+      (colorSelected === 'green' && pairsColor === 'blue') ||
+      (colorSelected === 'red' && pairsColor === 'orange') ||
+      (colorSelected === 'orange' && pairsColor === 'red') ||
+      (colorSelected === 'white' && pairsColor === 'yellow') ||
+      (colorSelected === 'yellow' && pairsColor === 'white') ||
       (colorSelected === 'green' && (cornerSecondColor === 'blue' || cornerThirdColor === 'blue')) ||
       (colorSelected === 'blue' && (cornerSecondColor === 'green' || cornerThirdColor === 'green')) ||
       (colorSelected === 'red' && (cornerSecondColor === 'orange' || cornerThirdColor === 'orange')) ||
