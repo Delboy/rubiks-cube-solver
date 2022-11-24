@@ -1,0 +1,64 @@
+.overlay {
+    position: absolute !important;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 99998;
+    background-color: black;
+    opacity: .5;
+}
+
+.buttonLayout {
+    position: absolute !important;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99999;
+    border: 2px solid var(--color-grey);
+    border-radius: 32px;
+    width: 650px;
+    background-color: wheat;
+    box-shadow: 0 3px 15px var(--color-darkgrey);
+    padding: 2rem;
+    padding-top: 0;
+}
+
+.exitBtn {
+    position: absolute;
+    left: 600px;
+    width: 16px;
+    cursor: pointer;
+}
+
+.columns {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+.columns ul {
+    padding: 0;
+}
+
+.leftColumn {
+    width: 50%;
+}
+
+.rightColumn {
+    width: 50%;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.rule {
+    width: 125px;
+    background-color:var(--color-darkgrey);
+    border: 1px solid var(--color-darkgrey)
+}
+
+.layoutList li {
+    list-style-type: none;
+}

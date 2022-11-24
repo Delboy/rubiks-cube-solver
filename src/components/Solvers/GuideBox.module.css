@@ -11,12 +11,21 @@
     box-shadow: 0 3px 15px var(--color-darkgrey)
   }
 
-.button {
+.startBtn {
     width: fit-content;
     font-family: 'fuzzy bubbles';
     border: 2px solid var(--color-grey);
     border-radius: 15px;
     padding: .5rem;
+    margin-top: 1rem;
+}
+
+.nextBtn {
+    width: 56px;
+    font-family: 'fuzzy bubbles';
+    border: 2px solid var(--color-grey);
+    border-radius: 15px;
+    padding: .25rem;
     margin-top: 1rem;
 }
 
@@ -38,4 +47,17 @@ button:hover {
 
 .exitButton:hover {
     background: none;
+}
+
+.list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.list li {
+    list-style-type: circle;
+    line-height: 32px;
 }

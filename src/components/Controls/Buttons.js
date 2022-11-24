@@ -179,13 +179,13 @@ const Buttons = () => {
         dispatch(facesActions.rotateWedge({ face: frontWedge, prime: prime }));
         break;
       case "q":
-        dispatch(facesActions.rotateWedge({ face: frontWedge, prime: true }));
+        dispatch(facesActions.rotateWedge({ face: backWedge, prime: false }));
         break;
       case "b":
         dispatch(facesActions.rotateWedge({ face: backWedge, prime: prime }));
         break;
       case "E":
-        dispatch(facesActions.rotateWedge({ face: backWedge, prime: false }));
+        dispatch(facesActions.rotateWedge({ face: frontWedge, prime: true }));
         break;
       case "b-p":
         dispatch(facesActions.rotateWedge({ face: backWedge, prime: prime }));
