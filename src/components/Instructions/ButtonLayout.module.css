@@ -24,15 +24,6 @@
     background: rgba(0, 0, 0, 0.75);
   }
   
-  .modal {
-    position: fixed;
-    top: 30vh;
-    left: 10%;
-    width: 80%;
-    z-index: 100;
-    overflow: hidden;
-  }
-
 .exitBtn {
     position: absolute;
     left: 600px;

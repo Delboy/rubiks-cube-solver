@@ -20,13 +20,15 @@
     margin-top: 1rem;
 }
 
-.nextBtn {
+.guideBtn {
     width: 56px;
     font-family: 'fuzzy bubbles';
     border: 2px solid var(--color-grey);
     border-radius: 15px;
     padding: .25rem;
     margin-top: 1rem;
+    margin-left: .2rem;
+    margin-right: .2rem;
 }
 
 button:hover {
@@ -66,4 +68,66 @@ button:hover {
     cursor: pointer;
     list-style-type: disc;
     color: var(--color-darkgrey);
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.steps {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.steps ol {
+    margin: 0;
+    width: fit-content;
+}
+
+.steps li {
+    padding: .5rem;
+}
+
+.daisyBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.scene {
+    margin: 1rem;
+    width: 150px;
+    height: 150px;
+  }
+
+.daisyFace {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    background-color: var(--color-grey);
+}
+
+.daisyFace div {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 3px solid var(--color-darkgrey)
+}
+
+
+.white {
+    background-color: white;
+}
+
+.yellow {
+    background-color: var(--color-yellow);
 }
