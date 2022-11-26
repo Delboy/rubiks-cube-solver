@@ -61,3 +61,9 @@ button:hover {
     list-style-type: circle;
     line-height: 32px;
 }
+
+.list li:hover {
+    cursor: pointer;
+    list-style-type: disc;
+    color: var(--color-darkgrey);
+}
