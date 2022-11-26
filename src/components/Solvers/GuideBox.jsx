@@ -1,11 +1,13 @@
 import { useState } from "react";
 import ButtonLayout from "./ButtonLayout";
+import CubeNotation from "./CubeNotation";
 import classes from "./GuideBox.module.css";
 
 const GuideBox = (props) => {
   const [guideVisible, setGuideVisible] = useState(false);
   const [messageNo, setMessageNo] = useState(0);
   const [showButtonLayout, setShowButtonLayout] = useState(false)
+  const [showCubeNotation, setShowCubeNotation] = useState(false)
 
   // const messages = Messages;
 
@@ -21,6 +23,10 @@ const GuideBox = (props) => {
     setShowButtonLayout(prevState => !prevState) 
   }
 
+  const showCubeNotationHandler = () => {
+    setShowCubeNotation(prevState => !prevState) 
+  }
+
   const messages = [
     [
       <div>
@@ -31,12 +37,18 @@ const GuideBox = (props) => {
       <div>
         <p>
           To begin there's a couple things you need to know before we get
-          started.
+          started. 
+        </p>
+        <p>
+        Make sure you're familiar with the following:
         </p>
         <div className={classes.list}>
-          <ul>
-            <li>Cube Notation</li>
-            <li onClick={showButtonLayoutHandler}>Button Layout</li>
+          <ul className={classes.guideList}>
+            
+            <li className={classes.guideListItem} onClick={showCubeNotationHandler}>Cube Notation</li>
+            {showCubeNotation && <CubeNotation onCloseBtnClick={showCubeNotationHandler} />}
+
+            <li className={classes.guideListItem} onClick={showButtonLayoutHandler}>Button Layout</li>
             {showButtonLayout && <ButtonLayout onCloseBtnClick={showButtonLayoutHandler} />}
           </ul>
         </div>

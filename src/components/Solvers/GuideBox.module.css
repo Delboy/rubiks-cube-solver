@@ -57,12 +57,12 @@ button:hover {
     text-align: center;
 }
 
-.list li {
+.guideListItem {
     list-style-type: circle;
     line-height: 32px;
 }
 
-.list li:hover {
+.guideListItem:hover {
     cursor: pointer;
     list-style-type: disc;
     color: var(--color-darkgrey);

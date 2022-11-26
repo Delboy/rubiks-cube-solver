@@ -1,4 +1,4 @@
-.buttonLayout {
+.cubeNotation {
     position: fixed !important;
     left: 50%;
     top: 50vh;
@@ -23,15 +23,6 @@
     z-index: 10;
     background: rgba(0, 0, 0, 0.75);
   }
-  
-  .modal {
-    position: fixed;
-    top: 30vh;
-    left: 10%;
-    width: 80%;
-    z-index: 100;
-    overflow: hidden;
-  }
 
 .exitBtn {
     position: absolute;
@@ -40,35 +31,18 @@
     cursor: pointer;
 }
 
-.columns {
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-}
-
-.columns ul {
-    padding: 0;
-}
-
-.leftColumn {
-    width: 50%;
-}
-
-.rightColumn {
-    width: 50%;
-}
-
 .bold {
     font-weight: bold;
 }
 
-.rule {
-    width: 125px;
-    background-color:var(--color-darkgrey);
-    border: 1px solid var(--color-darkgrey)
+.imageBox {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    border: 5px solid var(--color-darkgrey);
+    border-radius: 16px;
+    background: white;
 }
 
-.layoutList li {
-    list-style-type: none !important;
-    padding: .25rem;;
+.img {
+   padding: .5rem;
 }
