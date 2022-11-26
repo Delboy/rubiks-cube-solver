@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ButtonLayout from "./ButtonLayout";
-import CubeNotation from "./CubeNotation";
+import ButtonLayout from "../Instructions/ButtonLayout";
+import CubeNotation from "../Instructions/CubeNotation";
 import classes from "./GuideBox.module.css";
 
 const GuideBox = (props) => {
@@ -54,6 +54,7 @@ const GuideBox = (props) => {
         </div>
       </div>,
     ],
+    
   ];
 
   return (
