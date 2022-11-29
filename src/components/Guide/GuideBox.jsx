@@ -8,10 +8,10 @@ const GuideBox = (props) => {
   const [guideVisible, setGuideVisible] = useState(false);
   const [messageNo, setMessageNo] = useState(0);
   const [disableNextBtn, setDisableNextBtn] = useState(false)
-  const [enableBackBtn, setEnableBackBtn] = useState(false)
+  const [disableBackBtn, setDisableBackBtn] = useState(false)
 
-  const enableBackBtnHandler = (bool) => {
-    setEnableBackBtn(bool) 
+  const disableBackBtnHandler = (bool) => {
+    setDisableBackBtn(bool) 
   }
 
   const disableNextBtnHandler = (bool) => {
@@ -56,7 +56,7 @@ const GuideBox = (props) => {
             command={props.command}
             messageNo={messageNo}
             clearMessageNo={clearMessageNo}
-            onBackEnable={enableBackBtnHandler}
+            onBackDisable={disableBackBtnHandler}
             onNextDisable={disableNextBtnHandler}
             
           />
@@ -65,7 +65,7 @@ const GuideBox = (props) => {
               onClick={buttonHandler}
               className={classes.guideBtn}
               value="back"
-              disabled={!enableBackBtn}
+              disabled={disableBackBtn}
             >
               Back
             </button>

@@ -27,8 +27,10 @@ const Guides = (props) => {
   };
 
   useEffect(() => {
-    if (currentGuide === 0 && props.messageNo === 1) {
-      props.onBackEnable(true);
+    if (currentGuide === 0 && props.messageNo === 0) {
+      props.onBackDisable(true);
+    } else {
+      props.onBackDisable(false)
     }
 
     if (currentGuide === 1 && props.messageNo === 1) {

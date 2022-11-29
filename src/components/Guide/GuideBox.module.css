@@ -31,10 +31,12 @@
     margin-right: .2rem;
 }
 
-button:hover {
+
+button:hover:enabled {
     background-color: var(--color-grey);
     border-color: var(--color-darkgrey);
 }
+
 
 .exitButton {
     font-family: 'fuzzy bubbles';

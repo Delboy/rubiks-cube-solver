@@ -120,9 +120,23 @@ const Introduction = (props) => {
         props.updateGuide('prev')
     }
   },[props, messages.length])
+
+  const skipTutorialHandler = () => {
+    props.updateGuide('next')
+    props.setCurrentGuideMsgLength(messages.length)
+  }
+
   return (
+    <>
     <div className={classes.guideArea}>{messages[props.messageNo]}</div>
+    <button className={classes.skipBtn} onClick={skipTutorialHandler}>skip introduction</button>
+
+    </>
+
   )
+
+    
+
 };
 
 export default Introduction;
