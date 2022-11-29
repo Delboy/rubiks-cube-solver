@@ -49,8 +49,12 @@ const Buttons = () => {
     if (
       (currentFace === "yellow" && e.key === "s") ||
       (currentFace === "white" && e.key === "w")
-    ) {
+    ) 
+    {
+      // do nothing
     } else {
+      console.log(e)
+      e.preventDefault()
       buttonHandler(e);
     }
   };
