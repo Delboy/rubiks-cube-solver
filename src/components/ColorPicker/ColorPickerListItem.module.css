@@ -10,6 +10,10 @@
     line-height: 2rem;
 }
 
+.listItem li:hover {
+    cursor: pointer;
+}
+
 .circle {
     display: inline-block;
     height: 1.5rem;

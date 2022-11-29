@@ -23,9 +23,9 @@ const ColorPicker = () => {
 
   let boxShadow
   if(colorSelected === 'white'){
-    boxShadow = {boxShadow: `0 3px 15px var(--color-darkgrey)`}
+    boxShadow = {boxShadow: `0 3px 50px var(--color-darkgrey)`}
   } else {
-    boxShadow = {boxShadow: `0 3px 15px var(--color-${colorSelected})`}
+    boxShadow = {boxShadow: `0 3px 50px var(--color-${colorSelected})`}
   }
 
   const resetHandler = () => {
@@ -54,7 +54,7 @@ const ColorPicker = () => {
     >
       <h3>Select Color</h3>
       <ul>
-        <ColorPickerListItem color={"blue"} disabled={true}/>
+        <ColorPickerListItem color={"blue"}/>
         <ColorPickerListItem color={"orange"} />
         <ColorPickerListItem color={"green"} />
         <ColorPickerListItem color={"red"} />
