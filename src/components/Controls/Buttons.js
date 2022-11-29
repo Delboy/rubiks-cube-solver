@@ -53,7 +53,6 @@ const Buttons = () => {
     {
       // do nothing
     } else {
-      console.log(e)
       e.preventDefault()
       buttonHandler(e);
     }
