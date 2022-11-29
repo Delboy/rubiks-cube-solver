@@ -4,7 +4,8 @@ import { facesActions } from "../../orientation";
 
 const CubeSegment = (props) => {
   const colorSelected = useSelector((state) => state.faces.colorSelected);
-  const colorCount = useSelector((state) => state.faces.colorCount);
+  const cornerColorCount = useSelector((state) => state.faces.cornerColorCount);
+  const edgeColorCount = useSelector((state) => state.faces.edgeColorCount);
   const segmentColor = useSelector(
     (state) => state.faces.segmentState[props.position]
   );
@@ -24,11 +25,24 @@ const CubeSegment = (props) => {
 
   const dispatch = useDispatch();
 
+  let isCorner = false
+    if(
+      props.position.slice(1) === 'tl' ||
+      props.position.slice(1) === 'tr' ||
+      props.position.slice(1) === 'bl' ||
+      props.position.slice(1) === 'br' 
+    ){
+      isCorner = true
+    }
+
+    let totalEdgeColor = edgeColorCount[colorSelected]
+    let totalCornerColor = cornerColorCount[colorSelected]
+
   const setColorHandler = (e) => {
     if (cursor === "not-allowed") {
       return;
     }
-    let colorSelecetedAmount = colorCount[colorSelected];
+    
 
     const payload = {
       position: props.position,
@@ -40,23 +54,39 @@ const CubeSegment = (props) => {
       dispatch(
         facesActions.setSegmentColor({ position: props.position, color: null })
       );
-      dispatch(facesActions.removeFromColorCounter(colorSelected));
+      if(isCorner){
+        dispatch(facesActions.removeFromCornerColorCounter(colorSelected));
+      } else {
+        dispatch(facesActions.removeFromEdgeColorCounter(colorSelected));
+      }
       return;
     }
 
     // If the segment has a color, remove that color and replace with the color selcted
-    if (segmentColor && colorSelecetedAmount < 8) {
-      dispatch(facesActions.setSegmentColor(payload));
-      dispatch(facesActions.removeFromColorCounter(segmentColor));
-      dispatch(facesActions.addToColorCounter(colorSelected));
-      return;
-    }
+      if(isCorner && segmentColor && (totalCornerColor < 4)){
+        dispatch(facesActions.setSegmentColor(payload));
+        dispatch(facesActions.removeFromCornerColorCounter(segmentColor))
+        dispatch(facesActions.addToCornerColorCounter(colorSelected))
+        return
+      }
+  
+      if(!isCorner && segmentColor && (totalEdgeColor < 4)){
+        dispatch(facesActions.setSegmentColor(payload));
+        dispatch(facesActions.removeFromEdgeColorCounter(segmentColor));
+        dispatch(facesActions.addToEdgeColorCounter(colorSelected));
+        return
+      }
 
     // If the segment has no color, add the color selected
-    if (colorSelecetedAmount < 8) {
+    if(isCorner && (totalCornerColor < 4)){
       dispatch(facesActions.setSegmentColor(payload));
-      dispatch(facesActions.addToColorCounter(colorSelected));
-      return;
+      dispatch(facesActions.addToCornerColorCounter(colorSelected));
+      return
+    }
+    if(!isCorner && (totalEdgeColor < 4)){
+      dispatch(facesActions.setSegmentColor(payload));
+      dispatch(facesActions.addToEdgeColorCounter(colorSelected));
+      return
     }
 
     // If clear is selected color, remove the color
@@ -64,7 +94,11 @@ const CubeSegment = (props) => {
       dispatch(
         facesActions.setSegmentColor({ position: props.position, color: null })
       );
-      dispatch(facesActions.removeFromColorCounter(segmentColor));
+      if(isCorner){
+        dispatch(facesActions.removeFromCornerColorCounter(segmentColor));
+      } else {
+        dispatch(facesActions.removeFromEdgeColorCounter(segmentColor));
+      }
       return;
     }
   };
@@ -133,6 +167,8 @@ const CubeSegment = (props) => {
       pairsColor === colorSelected ||
       cornerSecondColor === colorSelected ||
       cornerThirdColor === colorSelected ||
+      (isCorner && (totalCornerColor === 4)) || 
+      (!isCorner && (totalEdgeColor === 4)) ||
       (colorSelected === 'blue' && pairsColor === 'green') ||
       (colorSelected === 'green' && pairsColor === 'blue') ||
       (colorSelected === 'red' && pairsColor === 'orange') ||

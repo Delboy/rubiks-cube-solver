@@ -6,14 +6,15 @@ import classes from "./ColorPickerListItem.module.css";
 const ColorPickerListItem = (props) => {
   const dispatch = useDispatch();
 
-  const colorCount = useSelector((state) => state.faces.colorCount);
+  const colorEdgeCount = useSelector((state) => state.faces.edgeColorCount);
+  const colorCornerCount = useSelector((state) => state.faces.cornerColorCount);
 
   const colorPickerHandler = () => {
     dispatch(facesActions.setColorSelected(props.color));
   };
 
   let maxed
-  if (colorCount[props.color] === 8) {
+  if ((colorEdgeCount[props.color] + colorCornerCount[props.color]) === 8) {
     maxed = `${classes.maxed}`;
   }
   

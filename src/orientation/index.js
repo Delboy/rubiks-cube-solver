@@ -100,7 +100,15 @@ const initialFaceState = {
   lastTopFace: null,
   lastBottomFace: null,
   colorSelected: null,
-  colorCount: {
+  edgeColorCount: {
+    blue: 0,
+    orange: 0,
+    green: 0,
+    red: 0,
+    white: 0,
+    yellow: 0,
+  },
+  cornerColorCount: {
     blue: 0,
     orange: 0,
     green: 0,
@@ -278,12 +286,18 @@ const facesSlice = createSlice({
       state.colorSelected = action.payload;
     },
     setAllColorCounterToMax(state){
-      state.colorCount.blue = 8
-      state.colorCount.red = 8
-      state.colorCount.green = 8
-      state.colorCount.orange = 8
-      state.colorCount.white = 8
-      state.colorCount.yellow = 8
+      state.edgeColorCount.blue = 4
+      state.edgeColorCount.red = 4
+      state.edgeColorCount.green = 4
+      state.edgeColorCount.orange = 4
+      state.edgeColorCount.white = 4
+      state.edgeColorCount.yellow = 4
+      state.cornerColorCount.blue = 4
+      state.cornerColorCount.red = 4
+      state.cornerColorCount.green = 4
+      state.cornerColorCount.orange = 4
+      state.cornerColorCount.white = 4
+      state.cornerColorCount.yellow = 4
     },
     addToColorCounter(state, action) {
       state.colorCount[action.payload] += 1;
@@ -291,12 +305,26 @@ const facesSlice = createSlice({
     removeFromColorCounter(state, action) {
       state.colorCount[action.payload] -= 1;
     },
+    addToEdgeColorCounter(state, action) {
+      state.edgeColorCount[action.payload] += 1;
+    },
+    removeFromEdgeColorCounter(state, action) {
+      state.edgeColorCount[action.payload] -= 1;
+    },
+    addToCornerColorCounter(state, action) {
+      state.cornerColorCount[action.payload] += 1;
+    },
+    removeFromCornerColorCounter(state, action) {
+      state.cornerColorCount[action.payload] -= 1;
+    },
     setSegmentColor(state, action) {
       state.segmentState[action.payload.position] = action.payload.color;
     },
     clearAllSegmentColors(state) {
       state.segmentState = initialFaceState.segmentState;
-      state.colorCount = initialFaceState.colorCount;
+      // state.colorCount = initialFaceState.colorCount;
+      state.edgeColorCount = initialFaceState.edgeColorCount
+      state.cornerColorCount = initialFaceState.cornerColorCount
     },
     solveCube(state){
       // set all colors to solved

@@ -14,7 +14,7 @@ const Cube = () => {
   const currentFace = useSelector((state) => state.faces.currentFace);
   
   const cubeMatrix = useSelector((state) => state.faces.cubeMatrix);
- 
+
   const dispatch = useDispatch();
 
   // Uses the cube matrix to set which face is which color
