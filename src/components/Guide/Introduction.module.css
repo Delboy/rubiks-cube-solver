@@ -1,0 +1,38 @@
+.list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.guideListItem {
+    list-style-type: circle;
+    line-height: 32px;
+}
+
+.guideListItem:hover {
+    cursor: pointer;
+    list-style-type: disc;
+    color: var(--color-darkgrey);
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.steps {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.steps ol {
+    margin: 0;
+    width: fit-content;
+}
+
+.steps li {
+    padding: .5rem;
+}

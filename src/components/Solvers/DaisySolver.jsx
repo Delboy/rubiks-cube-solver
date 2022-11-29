@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 
 const DaisySolver = (props) => {
-  const [stringToPrint, setStringToPrint] = useState("");
 
   // Checks if 'petals' on yellow face are solved
   const [daisySolved, setDaisySolved] = useState(false);
