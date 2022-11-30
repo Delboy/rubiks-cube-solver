@@ -32,7 +32,7 @@
 }
 
 
-button:hover:enabled {
+.guideBtn:hover:enabled {
     background-color: var(--color-grey);
     border-color: var(--color-darkgrey);
 }

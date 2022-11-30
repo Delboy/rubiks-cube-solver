@@ -191,6 +191,8 @@ const initialFaceState = {
     ybm: null,
     ybr: null,
   },
+  completedEdges: [],
+  completedCorners: [],
 };
 
 const facesSlice = createSlice({
@@ -322,7 +324,6 @@ const facesSlice = createSlice({
     },
     clearAllSegmentColors(state) {
       state.segmentState = initialFaceState.segmentState;
-      // state.colorCount = initialFaceState.colorCount;
       state.edgeColorCount = initialFaceState.edgeColorCount
       state.cornerColorCount = initialFaceState.cornerColorCount
     },
@@ -334,6 +335,12 @@ const facesSlice = createSlice({
         let color = colors[colorKey]
         state.segmentState[key] = color
       })
+    },
+    addToCompletedEdges(state, action){
+      state.completedEdges = [...state.completedEdges, action.payload]
+    },
+    addToCompletedCorners(state, action){
+      state.completedCorners = [...state.completedCorners, action.payload]
     },
     rotateWedge(state, action) {
       let wedges = {

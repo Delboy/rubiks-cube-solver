@@ -12,6 +12,7 @@ const CubeFace = (props) => {
     // dispatch(axisActions.changeFace(props.face));
   };
 
+
   const faceInitial = props.face.slice(0, 1)
   
   return (
@@ -20,10 +21,10 @@ const CubeFace = (props) => {
       ref={ref}
       onClick={faceClickHandler}
     >
-      <CubeSegment position={faceInitial+'tl'}/>
-      <CubeSegment position={faceInitial+'tm'}/>
-      <CubeSegment position={faceInitial+'tr'}/>
-      <CubeSegment position={faceInitial+'cl'}/>
+      <CubeSegment position={faceInitial+'tl'} />
+      <CubeSegment position={faceInitial+'tm'} />
+      <CubeSegment position={faceInitial+'tr'} />
+      <CubeSegment position={faceInitial+'cl'} />
       
       <div
         style={{
@@ -31,10 +32,10 @@ const CubeFace = (props) => {
         }}
       >
       </div>
-      <CubeSegment position={faceInitial+'cr'}/>
-      <CubeSegment position={faceInitial+'bl'}/>
-      <CubeSegment position={faceInitial+'bm'}/>
-      <CubeSegment position={faceInitial+'br'}/>
+      <CubeSegment position={faceInitial+'cr'} />
+      <CubeSegment position={faceInitial+'bl'} />
+      <CubeSegment position={faceInitial+'bm'} />
+      <CubeSegment position={faceInitial+'br'} />
     </div>
   );
 };
