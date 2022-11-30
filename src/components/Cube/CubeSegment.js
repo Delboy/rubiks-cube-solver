@@ -124,7 +124,7 @@ const CubeSegment = (props) => {
 
   const hoverHandler = () => {
     // Disables cursor if user is trying to create an impossible edge or corner
-    setCursor('not-allowed')
+    setCursor('wait')
 
     const edges = [
       ["btm", "ybm"],
@@ -272,11 +272,12 @@ const CubeSegment = (props) => {
       (colorSelected === "yellow" &&
         (cornerSecondColor === "white" || cornerThirdColor === "white"))
     ) {
+      setCursor('not-allowed')
     } else {
       // Timeout to give a small buffer 
       setTimeout(() => {
         setCursor("");
-      }, 50)
+      }, 100)
     }
   };
 
@@ -288,8 +289,7 @@ const CubeSegment = (props) => {
   return (
     <div
       onClick={setColorHandler}
-      // onMouseOver={hoverHandler}
-      onMouseEnter={hoverHandler}
+      onMouseOver={hoverHandler}
       style={bgColor}
     ></div>
   );
