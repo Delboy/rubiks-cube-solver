@@ -22,8 +22,10 @@ const CubeSegment = (props) => {
     (state) => state.faces.segmentState[cornerThirdPos]
   );
 
-  const allCompletedEdges = useSelector(state => state.faces.completedEdges)
-  const allCompletedCorners = useSelector(state => state.faces.completedCorners)
+  const allCompletedEdges = useSelector((state) => state.faces.completedEdges);
+  const allCompletedCorners = useSelector(
+    (state) => state.faces.completedCorners
+  );
 
   const [cursor, setCursor] = useState("");
 
@@ -42,23 +44,22 @@ const CubeSegment = (props) => {
   let totalEdgeColor = edgeColorCount[colorSelected];
   let totalCornerColor = cornerColorCount[colorSelected];
 
-
   const setColorHandler = (e) => {
-    if (cursor === "not-allowed" || cursor === 'wait') {
+    if (cursor === "not-allowed" || cursor === "wait") {
       return;
     }
 
-    if(!isCorner){
-      if(colorSelected && pairsColor){
-        let pair = [colorSelected, pairsColor]
-        dispatch(facesActions.addToCompletedEdges(pair))
+    if (!isCorner) {
+      if ((colorSelected !== 'clear') && pairsColor) {
+        let pair = [colorSelected, pairsColor];
+        dispatch(facesActions.addToCompletedEdges(pair));
       }
     }
 
-    if(isCorner){
-      if(colorSelected && cornerSecondColor && cornerThirdColor){
-        let corner = [colorSelected, cornerSecondColor, cornerThirdColor]
-        dispatch(facesActions.addToCompletedCorners(corner))
+    if (isCorner) {
+      if ((colorSelected !== 'clear') && cornerSecondColor && cornerThirdColor) {
+        let corner = [colorSelected, cornerSecondColor, cornerThirdColor];
+        dispatch(facesActions.addToCompletedCorners(corner));
       }
     }
 
@@ -67,7 +68,6 @@ const CubeSegment = (props) => {
       color: colorSelected,
     };
 
-  
     // If the color selected is the same as the segments color remove the color
     if (colorSelected === segmentColor) {
       dispatch(
@@ -75,8 +75,10 @@ const CubeSegment = (props) => {
       );
       if (isCorner) {
         dispatch(facesActions.removeFromCornerColorCounter(colorSelected));
+        // remove corner from completed corners if exists
       } else {
         dispatch(facesActions.removeFromEdgeColorCounter(colorSelected));
+        // remove edge pair from completed edges if exists
       }
       return;
     }
@@ -88,6 +90,7 @@ const CubeSegment = (props) => {
       dispatch(facesActions.addToCornerColorCounter(colorSelected));
       return;
     }
+    // removes corner from completed corners if exists and replaces with new corner if completed
 
     if (!isCorner && segmentColor && totalEdgeColor < 4) {
       dispatch(facesActions.setSegmentColor(payload));
@@ -95,6 +98,7 @@ const CubeSegment = (props) => {
       dispatch(facesActions.addToEdgeColorCounter(colorSelected));
       return;
     }
+    // removes edge pair from completed edges if exists and replaces with new edge pair if completed
 
     // If the segment has no color, add the color selected
     if (isCorner && totalCornerColor < 4) {
@@ -117,6 +121,22 @@ const CubeSegment = (props) => {
         dispatch(facesActions.removeFromCornerColorCounter(segmentColor));
       } else {
         dispatch(facesActions.removeFromEdgeColorCounter(segmentColor));
+        
+        if (pairsColor) {
+          let edge1 = [segmentColor, pairsColor];
+          let edge2 = [pairsColor, segmentColor];
+
+          let index = -1;
+          allCompletedEdges.forEach((edge) => {
+            index += 1;
+            if (
+              (edge[0] === edge1[0] && edge[1] === edge1[1]) ||
+              (edge[0] === edge2[0] && edge[1] === edge2[1])
+            ) {
+              dispatch(facesActions.removeFromCompletedEdges(index));
+            }
+          });
+        }
       }
       return;
     }
@@ -124,7 +144,7 @@ const CubeSegment = (props) => {
 
   const hoverHandler = () => {
     // Disables cursor if user is trying to create an impossible edge or corner
-    setCursor('wait')
+    setCursor("wait");
 
     const edges = [
       ["btm", "ybm"],
@@ -154,23 +174,22 @@ const CubeSegment = (props) => {
       }
     });
 
-
     // Checks if edge pair to be created already exists
-    let edgeAlreadyExists = false
+    let edgeAlreadyExists = false;
 
-    if(!isCorner && pairsColor && (segmentColor === null) ){
-      let pair = [pairsColor, colorSelected]
-      let reversePair = [colorSelected, pairsColor]
-      
-      let stringfyEdges = JSON.stringify(allCompletedEdges)
-      pair = JSON.stringify(pair)
-      reversePair = JSON.stringify(reversePair)
+    if (!isCorner && pairsColor && segmentColor === null) {
+      let pair = [pairsColor, colorSelected];
+      let reversePair = [colorSelected, pairsColor];
 
-      let pairIndex = stringfyEdges.indexOf(pair)
-      let reversePairIndex = stringfyEdges.indexOf(reversePair)
+      let stringfyEdges = JSON.stringify(allCompletedEdges);
+      pair = JSON.stringify(pair);
+      reversePair = JSON.stringify(reversePair);
 
-      if(pairIndex !== -1 || reversePairIndex !== -1){
-        edgeAlreadyExists = true
+      let pairIndex = stringfyEdges.indexOf(pair);
+      let reversePairIndex = stringfyEdges.indexOf(reversePair);
+
+      if (pairIndex !== -1 || reversePairIndex !== -1) {
+        edgeAlreadyExists = true;
       }
     }
 
@@ -204,44 +223,48 @@ const CubeSegment = (props) => {
       }
     });
 
-    // Check if corner already exists 
+    // Check if corner already exists
 
-    let cornerAlreadyExists = false
+    let cornerAlreadyExists = false;
 
-    if(isCorner && cornerSecondColor && cornerThirdColor && (segmentColor === null) ){
-      let corner1 = [colorSelected, cornerSecondColor, cornerThirdColor]
-      let corner2 = [colorSelected, cornerThirdColor, cornerSecondColor]
-      let corner3 = [cornerSecondColor, colorSelected, cornerThirdColor]
-      let corner4 = [cornerSecondColor, cornerThirdColor, colorSelected]
-      let corner5 = [cornerThirdColor, colorSelected, cornerSecondColor]
-      let corner6 = [cornerThirdColor, cornerSecondColor, colorSelected]
-      
-      let stringfyCorners = JSON.stringify(allCompletedCorners)
-      
-      corner1 = JSON.stringify(corner1)
-      corner2 = JSON.stringify(corner2)
-      corner3 = JSON.stringify(corner3)
-      corner4 = JSON.stringify(corner4)
-      corner5 = JSON.stringify(corner5)
-      corner6 = JSON.stringify(corner6)
-      
+    if (
+      isCorner &&
+      cornerSecondColor &&
+      cornerThirdColor &&
+      segmentColor === null
+    ) {
+      let corner1 = [colorSelected, cornerSecondColor, cornerThirdColor];
+      let corner2 = [colorSelected, cornerThirdColor, cornerSecondColor];
+      let corner3 = [cornerSecondColor, colorSelected, cornerThirdColor];
+      let corner4 = [cornerSecondColor, cornerThirdColor, colorSelected];
+      let corner5 = [cornerThirdColor, colorSelected, cornerSecondColor];
+      let corner6 = [cornerThirdColor, cornerSecondColor, colorSelected];
 
-      let corner1Index = stringfyCorners.indexOf(corner1)
-      let corner2Index = stringfyCorners.indexOf(corner2)
-      let corner3Index = stringfyCorners.indexOf(corner3)
-      let corner4Index = stringfyCorners.indexOf(corner4)
-      let corner5Index = stringfyCorners.indexOf(corner5)
-      let corner6Index = stringfyCorners.indexOf(corner6)
+      let stringfyCorners = JSON.stringify(allCompletedCorners);
 
-      if(
+      corner1 = JSON.stringify(corner1);
+      corner2 = JSON.stringify(corner2);
+      corner3 = JSON.stringify(corner3);
+      corner4 = JSON.stringify(corner4);
+      corner5 = JSON.stringify(corner5);
+      corner6 = JSON.stringify(corner6);
+
+      let corner1Index = stringfyCorners.indexOf(corner1);
+      let corner2Index = stringfyCorners.indexOf(corner2);
+      let corner3Index = stringfyCorners.indexOf(corner3);
+      let corner4Index = stringfyCorners.indexOf(corner4);
+      let corner5Index = stringfyCorners.indexOf(corner5);
+      let corner6Index = stringfyCorners.indexOf(corner6);
+
+      if (
         corner1Index !== -1 ||
         corner2Index !== -1 ||
         corner3Index !== -1 ||
         corner4Index !== -1 ||
         corner5Index !== -1 ||
-        corner6Index !== -1 
-        ){
-        cornerAlreadyExists = true
+        corner6Index !== -1
+      ) {
+        cornerAlreadyExists = true;
       }
     }
 
@@ -272,12 +295,12 @@ const CubeSegment = (props) => {
       (colorSelected === "yellow" &&
         (cornerSecondColor === "white" || cornerThirdColor === "white"))
     ) {
-      setCursor('not-allowed')
+      setCursor("not-allowed");
     } else {
-      // Timeout to give a small buffer 
+      // Timeout to give a small buffer
       setTimeout(() => {
         setCursor("");
-      }, 100)
+      }, 100);
     }
   };
 
