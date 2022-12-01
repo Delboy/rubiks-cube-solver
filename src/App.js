@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import Header from "./components/Layout/Header";
 import Guide from "./components/Guide/Guide";
 import Cube from "./components/Cube/Cube";

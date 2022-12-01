@@ -1,11 +1,12 @@
 import { useSelector } from "react-redux";
 import { facesActions } from "../../orientation";
-
-import classes from "./Cube.module.css";
-import CubeFace from "./CubeFace";
 import { useDispatch } from "react-redux";
 import { axisActions } from "../../orientation";
 import { useEffect } from "react";
+
+import ErrorMSg from "./ErrorMsg";
+import CubeFace from "./CubeFace";
+import classes from "./Cube.module.css";
 
 
 const Cube = () => {
@@ -81,6 +82,7 @@ const Cube = () => {
 
   return (
     <>
+      <ErrorMSg />
       <div className={classes.scene}>
         <div className={classes.cube} style={rotation}>
           <CubeFace key={1} face={"blue"} />

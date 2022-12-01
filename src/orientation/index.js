@@ -193,6 +193,7 @@ const initialFaceState = {
   },
   completedEdges: [],
   completedCorners: [],
+  errorMsg: '',
 };
 
 const facesSlice = createSlice({
@@ -360,9 +361,7 @@ const facesSlice = createSlice({
         ['green', 'red', 'white'],
         ['green', 'yellow', 'orange'],
         ['green', 'white', 'orange'],
-        
       ]
-      
     },
     addToCompletedEdges(state, action){
       state.completedEdges = [...state.completedEdges, action.payload]
@@ -379,6 +378,9 @@ const facesSlice = createSlice({
       let array = state.completedCorners
       array.splice(action.payload, 1)
       state.completedCorners = array
+    },
+    setErrorMsg(state, action){
+      state.errorMsg = action.payload
     },
     rotateWedge(state, action) {
       let wedges = {

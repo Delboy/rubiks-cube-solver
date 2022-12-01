@@ -302,32 +302,54 @@ const CubeSegment = (props) => {
       }
     }
 
-    if (
-      edgeAlreadyExists ||
-      cornerAlreadyExists ||
-      pairsColor === colorSelected ||
+    let illegalSegment
+
+    if(edgeAlreadyExists || cornerAlreadyExists){
+      illegalSegment = true
+      dispatch(facesActions.setErrorMsg('Sorry, this piece already exists'))
+    }
+
+    if(pairsColor === colorSelected ||
       cornerSecondColor === colorSelected ||
-      cornerThirdColor === colorSelected ||
-      (isCorner && selectedColorsTotalCorners === 4) ||
-      (!isCorner && selectedColorsTotalEdges === 4) ||
-      (colorSelected === "blue" && pairsColor === "green") ||
-      (colorSelected === "green" && pairsColor === "blue") ||
-      (colorSelected === "red" && pairsColor === "orange") ||
-      (colorSelected === "orange" && pairsColor === "red") ||
-      (colorSelected === "white" && pairsColor === "yellow") ||
-      (colorSelected === "yellow" && pairsColor === "white") ||
-      (colorSelected === "green" &&
-        (cornerSecondColor === "blue" || cornerThirdColor === "blue")) ||
-      (colorSelected === "blue" &&
-        (cornerSecondColor === "green" || cornerThirdColor === "green")) ||
-      (colorSelected === "red" &&
-        (cornerSecondColor === "orange" || cornerThirdColor === "orange")) ||
-      (colorSelected === "orange" &&
-        (cornerSecondColor === "red" || cornerThirdColor === "red")) ||
-      (colorSelected === "white" &&
-        (cornerSecondColor === "yellow" || cornerThirdColor === "yellow")) ||
-      (colorSelected === "yellow" &&
-        (cornerSecondColor === "white" || cornerThirdColor === "white"))
+      cornerThirdColor === colorSelected){
+      illegalSegment = true
+      dispatch(facesActions.setErrorMsg("Sorry, you can't have two of the same color on one piece"))
+      }
+
+    if(isCorner && selectedColorsTotalCorners === 4){
+      illegalSegment = true
+      dispatch(facesActions.setErrorMsg("Sorry, there is already the maximum number corners with this color"))
+    }
+
+    if(!isCorner && selectedColorsTotalEdges === 4){
+      illegalSegment = true
+      dispatch(facesActions.setErrorMsg("Sorry, there is already the maximum number edge pieces with this color"))
+    }
+
+    if((colorSelected === "blue" && pairsColor === "green") ||
+    (colorSelected === "green" && pairsColor === "blue") ||
+    (colorSelected === "red" && pairsColor === "orange") ||
+    (colorSelected === "orange" && pairsColor === "red") ||
+    (colorSelected === "white" && pairsColor === "yellow") ||
+    (colorSelected === "yellow" && pairsColor === "white") ||
+    (colorSelected === "green" &&
+      (cornerSecondColor === "blue" || cornerThirdColor === "blue")) ||
+    (colorSelected === "blue" &&
+      (cornerSecondColor === "green" || cornerThirdColor === "green")) ||
+    (colorSelected === "red" &&
+      (cornerSecondColor === "orange" || cornerThirdColor === "orange")) ||
+    (colorSelected === "orange" &&
+      (cornerSecondColor === "red" || cornerThirdColor === "red")) ||
+    (colorSelected === "white" &&
+      (cornerSecondColor === "yellow" || cornerThirdColor === "yellow")) ||
+    (colorSelected === "yellow" &&
+      (cornerSecondColor === "white" || cornerThirdColor === "white"))){
+        illegalSegment = true
+        dispatch(facesActions.setErrorMsg("Sorry, you can't have a piece that contains two colors from opposite side faces"))
+      }
+
+    if (
+      illegalSegment
     ) {
       setCursor("not-allowed");
     } else {
@@ -336,6 +358,7 @@ const CubeSegment = (props) => {
         setCursor("");
       }, 100);
     }
+    
   };
 
   const bgColor = {
