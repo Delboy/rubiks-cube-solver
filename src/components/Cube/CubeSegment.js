@@ -41,26 +41,66 @@ const CubeSegment = (props) => {
     isCorner = true;
   }
 
-  let totalEdgeColor = edgeColorCount[colorSelected];
-  let totalCornerColor = cornerColorCount[colorSelected];
+  let selectedColorsTotalEdges = edgeColorCount[colorSelected];
+  let selectedColorsTotalCorners = cornerColorCount[colorSelected];
+
+  const removeFromSolvedCorners = () => {
+    let corner1 = [segmentColor, cornerSecondColor, cornerThirdColor];
+    let corner2 = [segmentColor, cornerThirdColor, cornerSecondColor];
+    let corner3 = [cornerSecondColor, segmentColor, cornerThirdColor];
+    let corner4 = [cornerSecondColor, cornerThirdColor, segmentColor];
+    let corner5 = [cornerThirdColor, segmentColor, cornerSecondColor];
+    let corner6 = [cornerThirdColor, cornerSecondColor, segmentColor];
+
+    let index = -1;
+    allCompletedCorners.forEach((corner) => {
+      index += 1;
+      if (
+        (corner[0] === corner1[0] &&
+          corner[1] === corner1[1] &&
+          corner[2] === corner1[2]) ||
+        (corner[0] === corner2[0] &&
+          corner[1] === corner2[1] &&
+          corner[2] === corner2[2]) ||
+        (corner[0] === corner3[0] &&
+          corner[1] === corner3[1] &&
+          corner[2] === corner3[2]) ||
+        (corner[0] === corner4[0] &&
+          corner[1] === corner4[1] &&
+          corner[2] === corner4[2]) ||
+        (corner[0] === corner5[0] &&
+          corner[1] === corner5[1] &&
+          corner[2] === corner5[2]) ||
+        (corner[0] === corner6[0] &&
+          corner[1] === corner6[1] &&
+          corner[2] === corner6[2])
+      ) {
+        dispatch(facesActions.removeFromCompletedCorners(index));
+      }
+    });
+  };
+
+  const removeFromSolvedEdges = () => {
+    if (pairsColor) {
+      let edge1 = [segmentColor, pairsColor];
+      let edge2 = [pairsColor, segmentColor];
+
+      let index = -1;
+      allCompletedEdges.forEach((edge) => {
+        index += 1;
+        if (
+          (edge[0] === edge1[0] && edge[1] === edge1[1]) ||
+          (edge[0] === edge2[0] && edge[1] === edge2[1])
+        ) {
+          dispatch(facesActions.removeFromCompletedEdges(index));
+        }
+      });
+    } 
+  }
 
   const setColorHandler = (e) => {
     if (cursor === "not-allowed" || cursor === "wait") {
       return;
-    }
-
-    if (!isCorner) {
-      if ((colorSelected !== 'clear') && pairsColor) {
-        let pair = [colorSelected, pairsColor];
-        dispatch(facesActions.addToCompletedEdges(pair));
-      }
-    }
-
-    if (isCorner) {
-      if ((colorSelected !== 'clear') && cornerSecondColor && cornerThirdColor) {
-        let corner = [colorSelected, cornerSecondColor, cornerThirdColor];
-        dispatch(facesActions.addToCompletedCorners(corner));
-      }
     }
 
     const payload = {
@@ -68,101 +108,73 @@ const CubeSegment = (props) => {
       color: colorSelected,
     };
 
-    // If the color selected is the same as the segments color remove the color
-    if (colorSelected === segmentColor) {
-      dispatch(
-        facesActions.setSegmentColor({ position: props.position, color: null })
-      );
-      if (isCorner) {
-        dispatch(facesActions.removeFromCornerColorCounter(colorSelected));
-        // remove corner from completed corners if exists
-      } else {
-        dispatch(facesActions.removeFromEdgeColorCounter(colorSelected));
-        // remove edge pair from completed edges if exists
+    // If coloring segment completes edge piece, add to completed edges array
+    if (!isCorner) {
+      if (colorSelected !== "clear" && colorSelected !== segmentColor && pairsColor) {
+        let pair = [colorSelected, pairsColor];
+        dispatch(facesActions.addToCompletedEdges(pair));
       }
-      return;
     }
 
-    // If the segment has a color, remove that color and replace with the color selcted
-    if (isCorner && segmentColor && totalCornerColor < 4) {
-      dispatch(facesActions.setSegmentColor(payload));
-      dispatch(facesActions.removeFromCornerColorCounter(segmentColor));
-      dispatch(facesActions.addToCornerColorCounter(colorSelected));
-      return;
-    }
-    // removes corner from completed corners if exists and replaces with new corner if completed
-
-    if (!isCorner && segmentColor && totalEdgeColor < 4) {
-      dispatch(facesActions.setSegmentColor(payload));
-      dispatch(facesActions.removeFromEdgeColorCounter(segmentColor));
-      dispatch(facesActions.addToEdgeColorCounter(colorSelected));
-      return;
-    }
-    // removes edge pair from completed edges if exists and replaces with new edge pair if completed
-
-    // If the segment has no color, add the color selected
-    if (isCorner && totalCornerColor < 4) {
-      dispatch(facesActions.setSegmentColor(payload));
-      dispatch(facesActions.addToCornerColorCounter(colorSelected));
-      return;
-    }
-    if (!isCorner && totalEdgeColor < 4) {
-      dispatch(facesActions.setSegmentColor(payload));
-      dispatch(facesActions.addToEdgeColorCounter(colorSelected));
-      return;
+    // If coloring segment completes corner, add to completed corners array
+    if (isCorner) {
+      if (colorSelected !== "clear" && colorSelected !== segmentColor && cornerSecondColor && cornerThirdColor) {
+        let corner = [colorSelected, cornerSecondColor, cornerThirdColor];
+        dispatch(facesActions.addToCompletedCorners(corner));
+      }
     }
 
-    // If clear is selected color, remove the color
-    if (colorSelected === "clear") {
+    // If color selected is 'clear' or is the same color as segment clicked, remove the color
+    if (colorSelected === "clear" || colorSelected === segmentColor) {
       dispatch(
         facesActions.setSegmentColor({ position: props.position, color: null })
       );
       if (isCorner) {
-        console.log('isCorner')
         dispatch(facesActions.removeFromCornerColorCounter(segmentColor));
-
-        let corner1 = [segmentColor, cornerSecondColor, cornerThirdColor];
-        let corner2 = [segmentColor, cornerThirdColor, cornerSecondColor];
-        let corner3 = [cornerSecondColor, segmentColor, cornerThirdColor];
-        let corner4 = [cornerSecondColor, cornerThirdColor, segmentColor];
-        let corner5 = [cornerThirdColor, segmentColor, cornerSecondColor];
-        let corner6 = [cornerThirdColor, cornerSecondColor, segmentColor];
-
-        let index = -1
-        allCompletedCorners.forEach((corner) => {
-          index += 1
-          if(
-            (corner[0] === corner1[0] && corner[1] === corner1[1] && corner[2] === corner1[2]) ||
-            (corner[0] === corner2[0] && corner[1] === corner2[1] && corner[2] === corner2[2]) ||
-            (corner[0] === corner3[0] && corner[1] === corner3[1] && corner[2] === corner3[2]) ||
-            (corner[0] === corner4[0] && corner[1] === corner4[1] && corner[2] === corner4[2]) ||
-            (corner[0] === corner5[0] && corner[1] === corner5[1] && corner[2] === corner5[2]) ||
-            (corner[0] === corner6[0] && corner[1] === corner6[1] && corner[2] === corner6[2]) 
-          ) {
-            dispatch(facesActions.removeFromCompletedCorners(index))
-          }
-        })
+        if(cornerSecondColor && cornerThirdColor){
+          removeFromSolvedCorners()
+        }
       } else {
         dispatch(facesActions.removeFromEdgeColorCounter(segmentColor));
-        
-        if (pairsColor) {
-          let edge1 = [segmentColor, pairsColor];
-          let edge2 = [pairsColor, segmentColor];
-
-          let index = -1;
-          allCompletedEdges.forEach((edge) => {
-            index += 1;
-            if (
-              (edge[0] === edge1[0] && edge[1] === edge1[1]) ||
-              (edge[0] === edge2[0] && edge[1] === edge2[1])
-            ) {
-              dispatch(facesActions.removeFromCompletedEdges(index));
-            }
-          });
+        if(pairsColor){
+          removeFromSolvedEdges()
         }
       }
       return;
     }
+
+    // If the segment is colored and is different from color selected, remove that color and replace with the color selected
+    if (isCorner && segmentColor && selectedColorsTotalCorners < 4) {
+      dispatch(facesActions.setSegmentColor(payload));
+      dispatch(facesActions.removeFromCornerColorCounter(segmentColor));
+      dispatch(facesActions.addToCornerColorCounter(colorSelected));
+      if(cornerSecondColor && cornerThirdColor){
+        removeFromSolvedCorners()
+      }
+      return;
+    }
+    if (!isCorner && segmentColor && selectedColorsTotalEdges < 4) {
+      dispatch(facesActions.setSegmentColor(payload));
+      dispatch(facesActions.removeFromEdgeColorCounter(segmentColor));
+      dispatch(facesActions.addToEdgeColorCounter(colorSelected));
+      if(pairsColor){
+        removeFromSolvedEdges()
+      }
+      return;
+    }
+
+    // If the segment has no color, add the color selected
+    if (isCorner && selectedColorsTotalCorners < 4) {
+      dispatch(facesActions.setSegmentColor(payload));
+      dispatch(facesActions.addToCornerColorCounter(colorSelected));
+      return;
+    }
+    if (!isCorner && selectedColorsTotalEdges < 4) {
+      dispatch(facesActions.setSegmentColor(payload));
+      dispatch(facesActions.addToEdgeColorCounter(colorSelected));
+      return;
+    }
+    
   };
 
   const hoverHandler = () => {
@@ -200,7 +212,7 @@ const CubeSegment = (props) => {
     // Checks if edge pair to be created already exists
     let edgeAlreadyExists = false;
 
-    if (!isCorner && pairsColor && segmentColor === null) {
+    if (!isCorner && pairsColor) {
       let pair = [pairsColor, colorSelected];
       let reversePair = [colorSelected, pairsColor];
 
@@ -253,8 +265,7 @@ const CubeSegment = (props) => {
     if (
       isCorner &&
       cornerSecondColor &&
-      cornerThirdColor &&
-      segmentColor === null
+      cornerThirdColor 
     ) {
       let corner1 = [colorSelected, cornerSecondColor, cornerThirdColor];
       let corner2 = [colorSelected, cornerThirdColor, cornerSecondColor];
@@ -297,8 +308,8 @@ const CubeSegment = (props) => {
       pairsColor === colorSelected ||
       cornerSecondColor === colorSelected ||
       cornerThirdColor === colorSelected ||
-      (isCorner && totalCornerColor === 4) ||
-      (!isCorner && totalEdgeColor === 4) ||
+      (isCorner && selectedColorsTotalCorners === 4) ||
+      (!isCorner && selectedColorsTotalEdges === 4) ||
       (colorSelected === "blue" && pairsColor === "green") ||
       (colorSelected === "green" && pairsColor === "blue") ||
       (colorSelected === "red" && pairsColor === "orange") ||
