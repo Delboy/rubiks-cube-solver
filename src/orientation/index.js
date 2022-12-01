@@ -341,11 +341,18 @@ const facesSlice = createSlice({
     },
     addToCompletedCorners(state, action){
       state.completedCorners = [...state.completedCorners, action.payload]
+      console.log(state.completedCorners)
     },
     removeFromCompletedEdges(state, action){
       let array = state.completedEdges
       array.splice(action.payload, 1)
       state.completedEdges = array
+    },
+    removeFromCompletedCorners(state, action){
+      let array = state.completedCorners
+      array.splice(action.payload, 1)
+      state.completedCorners = array
+      console.log(state.completedCorners)
     },
     rotateWedge(state, action) {
       let wedges = {

@@ -118,7 +118,30 @@ const CubeSegment = (props) => {
         facesActions.setSegmentColor({ position: props.position, color: null })
       );
       if (isCorner) {
+        console.log('isCorner')
         dispatch(facesActions.removeFromCornerColorCounter(segmentColor));
+
+        let corner1 = [segmentColor, cornerSecondColor, cornerThirdColor];
+        let corner2 = [segmentColor, cornerThirdColor, cornerSecondColor];
+        let corner3 = [cornerSecondColor, segmentColor, cornerThirdColor];
+        let corner4 = [cornerSecondColor, cornerThirdColor, segmentColor];
+        let corner5 = [cornerThirdColor, segmentColor, cornerSecondColor];
+        let corner6 = [cornerThirdColor, cornerSecondColor, segmentColor];
+
+        let index = -1
+        allCompletedCorners.forEach((corner) => {
+          index += 1
+          if(
+            (corner[0] === corner1[0] && corner[1] === corner1[1] && corner[2] === corner1[2]) ||
+            (corner[0] === corner2[0] && corner[1] === corner2[1] && corner[2] === corner2[2]) ||
+            (corner[0] === corner3[0] && corner[1] === corner3[1] && corner[2] === corner3[2]) ||
+            (corner[0] === corner4[0] && corner[1] === corner4[1] && corner[2] === corner4[2]) ||
+            (corner[0] === corner5[0] && corner[1] === corner5[1] && corner[2] === corner5[2]) ||
+            (corner[0] === corner6[0] && corner[1] === corner6[1] && corner[2] === corner6[2]) 
+          ) {
+            dispatch(facesActions.removeFromCompletedCorners(index))
+          }
+        })
       } else {
         dispatch(facesActions.removeFromEdgeColorCounter(segmentColor));
         
