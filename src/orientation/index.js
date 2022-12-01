@@ -326,6 +326,8 @@ const facesSlice = createSlice({
       state.segmentState = initialFaceState.segmentState;
       state.edgeColorCount = initialFaceState.edgeColorCount
       state.cornerColorCount = initialFaceState.cornerColorCount
+      state.completedCorners = initialFaceState.completedCorners
+      state.completedEdges = initialFaceState.completedEdges
     },
     solveCube(state){
       // set all colors to solved
@@ -335,6 +337,32 @@ const facesSlice = createSlice({
         let color = colors[colorKey]
         state.segmentState[key] = color
       })
+      state.completedEdges = [
+        ['blue', 'yellow'],
+        ['blue', 'orange'],
+        ['blue', 'red'],
+        ['blue', 'white'],
+        ['red', 'yellow'],
+        ['red', 'white'],
+        ['orange', 'yellow'],
+        ['orange', 'white'],
+        ['green', 'yellow'],
+        ['green', 'orange'],
+        ['green', 'red'],
+        ['green', 'white'],
+      ]
+      state.completedCorners = [
+        ['blue', 'yellow', 'orange'],
+        ['blue', 'yellow', 'red'],
+        ['blue', 'orange', 'white'],
+        ['blue', 'red', 'white'],
+        ['green', 'red', 'yellow'],
+        ['green', 'red', 'white'],
+        ['green', 'yellow', 'orange'],
+        ['green', 'white', 'orange'],
+        
+      ]
+      
     },
     addToCompletedEdges(state, action){
       state.completedEdges = [...state.completedEdges, action.payload]
