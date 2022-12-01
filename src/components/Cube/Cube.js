@@ -8,7 +8,6 @@ import ErrorMSg from "./ErrorMsg";
 import CubeFace from "./CubeFace";
 import classes from "./Cube.module.css";
 
-
 const Cube = () => {
   const xAxis = useSelector((state) => state.axises.xAxis);
   const yAxis = useSelector((state) => state.axises.yAxis);
@@ -16,7 +15,23 @@ const Cube = () => {
   
   const cubeMatrix = useSelector((state) => state.faces.cubeMatrix);
 
+  const cornerColorCounter = useSelector(state => state.faces.cornerColorCount)
+  const edgeColorCounter = useSelector(state => state.faces.edgeColorCount)
+  
   const dispatch = useDispatch();
+
+  // Sets all segments filled to true once cube has been filled in
+  useEffect(() => {
+    let totalCornerCount = 0
+    let totalEdgeCount = 0
+
+    Object.values(cornerColorCounter).forEach(val => totalCornerCount += val)
+    Object.values(edgeColorCounter).forEach(val => totalEdgeCount += val)
+
+    if(totalCornerCount + totalEdgeCount === 48){
+      dispatch(facesActions.setAllSegmentsFilled(true))
+    }
+  }, [cornerColorCounter, edgeColorCounter, dispatch])
 
   // Uses the cube matrix to set which face is which color
   useEffect(() => {

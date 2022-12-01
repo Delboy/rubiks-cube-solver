@@ -194,6 +194,7 @@ const initialFaceState = {
   completedEdges: [],
   completedCorners: [],
   errorMsg: '',
+  allSegmentsFilled: false
 };
 
 const facesSlice = createSlice({
@@ -301,24 +302,21 @@ const facesSlice = createSlice({
       state.cornerColorCount.orange = 4
       state.cornerColorCount.white = 4
       state.cornerColorCount.yellow = 4
-    },
-    addToColorCounter(state, action) {
-      state.colorCount[action.payload] += 1;
-    },
-    removeFromColorCounter(state, action) {
-      state.colorCount[action.payload] -= 1;
+      state.allSegmentsFilled = true
     },
     addToEdgeColorCounter(state, action) {
       state.edgeColorCount[action.payload] += 1;
     },
     removeFromEdgeColorCounter(state, action) {
       state.edgeColorCount[action.payload] -= 1;
+      state.allSegmentsFilled = false
     },
     addToCornerColorCounter(state, action) {
       state.cornerColorCount[action.payload] += 1;
     },
     removeFromCornerColorCounter(state, action) {
       state.cornerColorCount[action.payload] -= 1;
+      state.allSegmentsFilled = false
     },
     setSegmentColor(state, action) {
       state.segmentState[action.payload.position] = action.payload.color;
@@ -329,6 +327,7 @@ const facesSlice = createSlice({
       state.cornerColorCount = initialFaceState.cornerColorCount
       state.completedCorners = initialFaceState.completedCorners
       state.completedEdges = initialFaceState.completedEdges
+      state.allSegmentsFilled = false
     },
     solveCube(state){
       // set all colors to solved
@@ -381,6 +380,9 @@ const facesSlice = createSlice({
     },
     setErrorMsg(state, action){
       state.errorMsg = action.payload
+    },
+    setAllSegmentsFilled(state, action){
+      state.allSegmentsFilled = action.payload
     },
     rotateWedge(state, action) {
       let wedges = {
