@@ -17,7 +17,7 @@ const Cube = () => {
 
   const cornerColorCounter = useSelector(state => state.faces.cornerColorCount)
   const edgeColorCounter = useSelector(state => state.faces.edgeColorCount)
-  
+
   const dispatch = useDispatch();
 
   // Sets all segments filled to true once cube has been filled in
@@ -31,6 +31,7 @@ const Cube = () => {
     if(totalCornerCount + totalEdgeCount === 48){
       dispatch(facesActions.setAllSegmentsFilled(true))
     }
+    console.log(totalCornerCount,totalEdgeCount)
   }, [cornerColorCounter, edgeColorCounter, dispatch])
 
   // Uses the cube matrix to set which face is which color

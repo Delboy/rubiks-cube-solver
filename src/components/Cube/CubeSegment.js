@@ -13,7 +13,6 @@ const CubeSegment = (props) => {
   const [pairsPos, setPairsPos] = useState(null);
   const [cornerSecondPos, setCornerSecondPos] = useState(null);
   const [cornerThirdPos, setCornerThirdPos] = useState(null);
-
   const pairsColor = useSelector((state) => state.faces.segmentState[pairsPos]);
   const cornerSecondColor = useSelector(
     (state) => state.faces.segmentState[cornerSecondPos]
@@ -28,6 +27,8 @@ const CubeSegment = (props) => {
   );
 
   const [cursor, setCursor] = useState("");
+
+  const cubeFilled = useSelector(state => state.faces.allSegmentsFilled)
 
   const dispatch = useDispatch();
 
@@ -178,9 +179,9 @@ const CubeSegment = (props) => {
   };
 
   const hoverHandler = () => {
+    setCursor('')
+    
     // Disables cursor if user is trying to create an impossible edge or corner
-    setCursor("wait");
-
     const edges = [
       ["btm", "ybm"],
       ["bcl", "ocr"],
@@ -259,7 +260,6 @@ const CubeSegment = (props) => {
     });
 
     // Check if corner already exists
-
     let cornerAlreadyExists = false;
 
     if (
@@ -347,7 +347,8 @@ const CubeSegment = (props) => {
         illegalSegment = true
         dispatch(facesActions.setErrorMsg("Sorry, you can't have a piece that contains two colors from opposite side faces"))
       }
-
+    if(!cubeFilled){
+      setCursor("wait");
     if (
       illegalSegment
     ) {
@@ -358,8 +359,12 @@ const CubeSegment = (props) => {
         setCursor("");
       }, 100);
     }
-    
+  }
   };
+
+  const leaveHandler = () => {
+    dispatch(facesActions.setErrorMsg('')) 
+  }
 
   const bgColor = {
     backgroundColor: `var(--color-${segmentColor})`,
@@ -370,6 +375,7 @@ const CubeSegment = (props) => {
     <div
       onClick={setColorHandler}
       onMouseOver={hoverHandler}
+      onMouseLeave={leaveHandler}
       style={bgColor}
     ></div>
   );

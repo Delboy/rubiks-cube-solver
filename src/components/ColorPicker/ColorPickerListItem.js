@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { facesActions } from "../../orientation";
 
@@ -8,6 +9,14 @@ const ColorPickerListItem = (props) => {
 
   const colorEdgeCount = useSelector((state) => state.faces.edgeColorCount);
   const colorCornerCount = useSelector((state) => state.faces.cornerColorCount);
+
+  const cubeFilled = useSelector(state => state.faces.allSegmentsFilled)
+
+  useEffect(() => {
+    if(cubeFilled === true){
+      dispatch(facesActions.setColorSelected('clear'))
+    }
+  })
 
   const colorPickerHandler = () => {
     dispatch(facesActions.setColorSelected(props.color));
