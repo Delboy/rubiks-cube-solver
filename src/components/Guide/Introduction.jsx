@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import ButtonLayout from "../Instructions/ButtonLayout";
 import CubeNotation from "../Instructions/CubeNotation";
@@ -9,6 +10,8 @@ const Introduction = (props) => {
   const [showButtonLayout, setShowButtonLayout] = useState(false);
   const [showCubeNotation, setShowCubeNotation] = useState(false);
 
+  const cubeFilled = useSelector(state => state.faces.allSegmentsFilled)
+  
   const showButtonLayoutHandler = () => {
     setShowButtonLayout((prevState) => !prevState);
   };
@@ -21,6 +24,12 @@ const Introduction = (props) => {
     [
       <div key='1'>
         <p>Hello! And welcome to the Rubiks Cube Solver beginners guide!</p>
+        {!cubeFilled && 
+        <div>
+          <p className={classes.bold}>It looks like you havn't filled in the cube yet!</p>
+          <p children={classes.bold}>Please fill it by using the color picker or hit the shuffle button to randomise!</p>
+        </div>
+        }
       </div>,
     ],
     [
@@ -129,7 +138,7 @@ const Introduction = (props) => {
   return (
     <>
     <div className={classes.guideArea}>{messages[props.messageNo]}</div>
-    <button className={classes.skipBtn} onClick={skipTutorialHandler}>skip introduction</button>
+    {cubeFilled && <button className={classes.skipBtn} onClick={skipTutorialHandler}>skip introduction</button>}
 
     </>
 

@@ -15,7 +15,7 @@ const Guide = () => {
 
   return (
     <div className={classes.solvers}>
-      <GuideBox command={command}/>
+      <GuideBox command={command} />
       <Solvers onCommandSet={setCommandHandler}/>
     </div>
   );

@@ -31,7 +31,6 @@ const Cube = () => {
     if(totalCornerCount + totalEdgeCount === 48){
       dispatch(facesActions.setAllSegmentsFilled(true))
     }
-    console.log(totalCornerCount,totalEdgeCount)
   }, [cornerColorCounter, edgeColorCounter, dispatch])
 
   // Uses the cube matrix to set which face is which color

@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 
 import Introduction from "./Introduction";
 import DaisyGuide from "./DaisyGuide";
+import { useSelector } from "react-redux";
 
 const Guides = (props) => {
   const [currentGuide, setCurrentGuide] = useState(0);
   const [currentGuideMsgLength, setCurrentGuideMsgLength] = useState(0);
 
+  const cubeFilled = useSelector(state => state.faces.allSegmentsFilled)
+  
   const msgLengthHandler = (messageNo) => {
     setCurrentGuideMsgLength(messageNo);
   };
@@ -27,18 +30,25 @@ const Guides = (props) => {
   };
 
   useEffect(() => {
-    if (currentGuide === 0 && props.messageNo === 0) {
-      props.onBackDisable(true);
+    if(!cubeFilled){
+      setCurrentGuide(0)
+      props.clearMessageNo()
+      props.onNextDisable(true)
+      props.onBackDisable(true)
     } else {
-      props.onBackDisable(false)
+      if (currentGuide === 0 && props.messageNo === 0) {
+        props.onBackDisable(true);
+      } else {
+        props.onBackDisable(false)
+      }
+  
+      if (currentGuide === 1 && props.messageNo === 1) {
+        props.onNextDisable(true);
+      } else {
+        props.onNextDisable(false);
+      }
     }
-
-    if (currentGuide === 1 && props.messageNo === 1) {
-      props.onNextDisable(true);
-    } else {
-      props.onNextDisable(false);
-    }
-  }, [currentGuide, props.messageNo, props]);
+  }, [currentGuide, cubeFilled, props.messageNo, props]);
 
   return (
     <>
@@ -47,6 +57,7 @@ const Guides = (props) => {
           messageNo={props.messageNo}
           updateGuide={updateGuideHandler}
           setCurrentGuideMsgLength={msgLengthHandler}
+          onNextDisable={props.onNextDisable}
         />
       ) : null}
       {currentGuide === 1 ? (
