@@ -7,7 +7,7 @@
   .arrowButtons {
     position: absolute;
     bottom: 125px;
-    left: 340px;
+    right: 4rem;
     color: var(--color-grey)
   }
   

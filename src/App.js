@@ -14,11 +14,11 @@ function App() {
         <Header />
         <Guide />
         <div className={classes.center}>
-          <div>
+          <div className={classes.cube}>
             <Cube />
             <Buttons />
           </div>
-          <div>
+          <div className={classes.colorPicker}>
             <ColorPicker />
           </div>
         </div>
