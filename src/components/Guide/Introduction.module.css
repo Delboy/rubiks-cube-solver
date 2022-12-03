@@ -56,3 +56,10 @@
     background-color: var(--color-grey);
     border-color: var(--color-darkgrey);
 }
+
+.shuffle {
+    background: none;
+  border: none;
+  color: rgb(100, 100, 100);
+  font-size: 1.1rem;
+}

@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { guideActions } from "../../orientation";
+import { guideActions, facesActions } from "../../orientation";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShuffle } from "@fortawesome/free-solid-svg-icons";
+
 
 import classes from './Introduction.module.css'
 
@@ -15,6 +19,25 @@ const Introduction = (props) => {
     dispatch(guideActions.toggleInstruction(instruction))
   };
 
+  const shuffleHandler = () => {
+     // Solves Cube then performs 20 random moves
+     dispatch(facesActions.solveCube())
+     dispatch(facesActions.setAllColorCounterToMax())
+     let colorList = ["blue", "orange", "green", "red", "yellow", "white"];
+     let prime = [true, false]
+     let turns = 0
+     while(turns < 20){
+       let randomColor = Math.floor(Math.random() * colorList.length);
+       let randomPrime = Math.floor(Math.random() * prime.length)
+       dispatch(facesActions.rotateWedge({ face: colorList[randomColor], prime: prime[randomPrime] }));
+       turns += 1      
+      } 
+  }
+
+  const shuffle = (
+    <FontAwesomeIcon icon={faShuffle} className="noPointerEvents" />
+  );
+
   const messages = [
     [
       <div key='1'>
@@ -23,6 +46,7 @@ const Introduction = (props) => {
         <div>
           <p className={classes.bold}>It looks like you havn't filled in the cube yet!</p>
           <p children={classes.bold}>Please fill it by using the color picker or hit the shuffle button to randomise!</p>
+          <button className={classes.shuffle} onClick={shuffleHandler}>{shuffle}</button>
         </div>
         }
       </div>,
