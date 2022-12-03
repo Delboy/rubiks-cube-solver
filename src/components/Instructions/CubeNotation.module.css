@@ -1,3 +1,5 @@
+
+
 .cubeNotation {
     position: fixed !important;
     left: 50%;
@@ -26,6 +28,7 @@
 
 .exitBtn {
     position: absolute;
+    font-family: 'fuzzy bubbles';
     left: 600px;
     width: 16px;
     cursor: pointer;

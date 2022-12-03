@@ -1,23 +1,18 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-
-import ButtonLayout from "../Instructions/ButtonLayout";
-import CubeNotation from "../Instructions/CubeNotation";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { guideActions } from "../../orientation";
 
 import classes from './Introduction.module.css'
 
 const Introduction = (props) => {
-  const [showButtonLayout, setShowButtonLayout] = useState(false);
-  const [showCubeNotation, setShowCubeNotation] = useState(false);
+
+  const dispatch = useDispatch()
 
   const cubeFilled = useSelector(state => state.faces.allSegmentsFilled)
   
-  const showButtonLayoutHandler = () => {
-    setShowButtonLayout((prevState) => !prevState);
-  };
-
-  const showCubeNotationHandler = () => {
-    setShowCubeNotation((prevState) => !prevState);
+  const showInstructionHandler = (e) => {
+    const instruction = e.target.attributes.value.value
+    dispatch(guideActions.toggleInstruction(instruction))
   };
 
   const messages = [
@@ -43,23 +38,18 @@ const Introduction = (props) => {
           <ul className={classes.guideList}>
             <li
               className={classes.guideListItem}
-              onClick={showCubeNotationHandler}
+              onClick={showInstructionHandler}
+              value='notationLayout'
             >
               Cube Notation
             </li>
-            {showCubeNotation && (
-              <CubeNotation onCloseBtnClick={showCubeNotationHandler} />
-            )}
-
             <li
               className={classes.guideListItem}
-              onClick={showButtonLayoutHandler}
+              onClick={showInstructionHandler}
+              value='buttonLayout'
             >
               Button Layout
             </li>
-            {showButtonLayout && (
-              <ButtonLayout onCloseBtnClick={showButtonLayoutHandler} />
-            )}
           </ul>
         </div>
       </div>,

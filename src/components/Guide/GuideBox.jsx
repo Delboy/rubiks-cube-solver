@@ -42,11 +42,13 @@ const GuideBox = (props) => {
   
   return (
     <>
+    <div className={classes.guideBtnContainer}>
       {!guideVisible && (
         <button className={classes.startBtn} onClick={toggleGuideHandler}>
           Open Guide
         </button>
       )}
+    </div>
       {guideVisible && (
         <div className={classes.box}>
           <button className={classes.exitButton} onClick={toggleGuideHandler}>

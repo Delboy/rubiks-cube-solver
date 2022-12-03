@@ -1,15 +1,28 @@
 .box {
+    position: fixed !important;
     font-family: 'fuzzy bubbles';
-    text-align: center;
-    width: 100%;
-    padding: 1.5rem;
-    margin-top: 2rem;
-    margin-left: auto;
-    margin-right: auto;
+    left: 50%;
+    top: 50vh;
+    transform: translate(-50%, -50%);
+    z-index: 99999;
     border: 2px solid var(--color-grey);
-    border-radius: 15px;
-    box-shadow: 0 3px 15px var(--color-darkgrey)
-  }
+    border-radius: 32px;
+    width: 650px;
+    background-color:  #FAF9ED;
+    box-shadow: 0 3px 15px var(--color-darkgrey);
+    padding: 2rem;
+    padding-top: 0;
+    overflow: hidden;
+
+}
+
+.guideBtnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 4rem;
+    width: 100%;
+}
 
 .startBtn {
     width: fit-content;
@@ -17,7 +30,6 @@
     border: 2px solid var(--color-grey);
     border-radius: 15px;
     padding: .5rem;
-    margin-top: 1rem;
 }
 
 .guideBtn {
@@ -40,13 +52,15 @@
 
 .exitButton {
     font-family: 'fuzzy bubbles';
+    font-weight: bold;
     color: var(--color-darkgrey);
     border: none;
     background: none;
     margin-left: auto;
     position: relative;
-    left: 280px;
-    bottom: 20px;
+    left: 18.5rem;
+    top: .25rem;
+    
 }
 
 .exitButton:hover {

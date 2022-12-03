@@ -638,11 +638,32 @@ const facesSlice = createSlice({
   },
 });
 
+const initialGuideState = {
+  buttonLayoutVisible: false,
+  notationVisible: false,
+};
+
+const guideSlice = createSlice({
+  name: "guide",
+  initialState: initialGuideState,
+  reducers: {
+    toggleInstruction(state, action){
+      if(action.payload === 'notationLayout'){
+        state.notationVisible = !state.notationVisible
+      }
+      if(action.payload === 'buttonLayout'){
+        state.buttonLayoutVisible = !state.buttonLayoutVisible
+      }
+    }
+  }
+})
+
 const orientation = configureStore({
-  reducer: { axises: axisesSlice.reducer, faces: facesSlice.reducer },
+  reducer: { axises: axisesSlice.reducer, faces: facesSlice.reducer, guide: guideSlice.reducer },
 });
 
 export const axisActions = axisesSlice.actions;
 export const facesActions = facesSlice.actions;
+export const guideActions = guideSlice.actions
 
 export default orientation;

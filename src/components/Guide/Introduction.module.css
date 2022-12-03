@@ -6,6 +6,10 @@
     text-align: center;
 }
 
+.list ul {
+    padding: 0;
+}
+
 .guideListItem {
     list-style-type: circle;
     line-height: 32px;

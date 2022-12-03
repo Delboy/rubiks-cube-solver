@@ -1,10 +1,20 @@
+import { useDispatch } from "react-redux";
+import { guideActions } from "../../orientation";
+
 import classes from "./ButtonLayout.module.css";
 
 const ButtonLayout = (props) => {
+
+  const dispatch = useDispatch()
+
+  const onCloseHandler = () => {
+     dispatch(guideActions.toggleInstruction('buttonLayout'))
+  }
+
   return (
     <>
-      <div className={classes.overlay} onClick={props.onCloseBtnClick}></div>
-      <div className={classes.buttonLayout} onClick={props.onCloseBtnClick}>
+      <div className={classes.overlay} onClick={onCloseHandler}></div>
+      <div className={classes.buttonLayout} onClick={onCloseHandler}>
         <p className={classes.exitBtn}>
           X
         </p>
@@ -30,7 +40,7 @@ const ButtonLayout = (props) => {
           <div className={classes.rightColumn}>
             <ul className={classes.layoutList}>
               <li className={classes.bold}>COMMAND</li>
-              <hr className={classes.rule} noshade></hr>
+              <hr className={classes.rule}></hr>
               <li>Rotate Cube Up</li>
               <li>Rotate Cube Left</li>
               <li>Rotate Cube Down</li>

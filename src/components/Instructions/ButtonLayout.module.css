@@ -26,7 +26,9 @@
   
 .exitBtn {
     position: absolute;
-    left: 600px;
+    font-family: 'fuzzy bubbles';
+    right: 1.25rem;
+    top: .25rem;
     width: 16px;
     cursor: pointer;
 }
