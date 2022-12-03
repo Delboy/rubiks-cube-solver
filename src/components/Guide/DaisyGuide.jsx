@@ -1,8 +1,11 @@
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import classes from './DaisyGuide.module.css'
 
 const DaisyGuide = (props) => {
+
+  const dispatch = useDispatch()
   
   const messages = [
     [
@@ -38,7 +41,7 @@ const DaisyGuide = (props) => {
         </p>
       </div>,
     ],
-    [<p key='2'>{props.command}</p>],
+    [<p key='2' value='command'>{props.command}</p>],
   ];
 
   useEffect(() => {
@@ -49,7 +52,12 @@ const DaisyGuide = (props) => {
     if(props.messageNo === -1 ){
         props.updateGuide('prev')
     }
-  },[props, messages.length])
+    if(props.messageNo === 1){
+      props.onCommandVisible(true)
+    } else {
+      props.onCommandVisible(false)
+    }
+  },[props, messages.length, dispatch])
   return (
     <div className={classes.guideArea}>{messages[props.messageNo]}</div>
   )

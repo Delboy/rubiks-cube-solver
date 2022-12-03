@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { guideActions } from "../../orientation";
 
 import Introduction from "./Introduction";
 import DaisyGuide from "./DaisyGuide";
-import { useSelector } from "react-redux";
 
 const Guides = (props) => {
   const [currentGuide, setCurrentGuide] = useState(0);
   const [currentGuideMsgLength, setCurrentGuideMsgLength] = useState(0);
 
   const cubeFilled = useSelector(state => state.faces.allSegmentsFilled)
+
+  const dispatch = useDispatch()
   
   const msgLengthHandler = (messageNo) => {
     setCurrentGuideMsgLength(messageNo);
@@ -28,6 +31,10 @@ const Guides = (props) => {
         return;
     }
   };
+
+  const setCommandHandler = (bool) => {
+    dispatch(guideActions.setCommandVisible(bool))
+  }
 
   useEffect(() => {
     if(!cubeFilled){
@@ -58,6 +65,7 @@ const Guides = (props) => {
           updateGuide={updateGuideHandler}
           setCurrentGuideMsgLength={msgLengthHandler}
           onNextDisable={props.onNextDisable}
+          onCommandVisible={setCommandHandler}
         />
       ) : null}
       {currentGuide === 1 ? (
@@ -66,6 +74,7 @@ const Guides = (props) => {
           updateGuide={updateGuideHandler}
           command={props.command}
           setMessagesLength={props.setMessagesLength}
+          onCommandVisible={setCommandHandler}
         />
       ) : null}
     </>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 import Guides from "./Guides";
 
@@ -39,6 +40,12 @@ const GuideBox = (props) => {
     }
   };
 
+  // If the guide is showing commands, change the poisitoning of the box
+  const commandVisible = useSelector(state => state.guide.commandVisible)
+  let style
+  if(commandVisible){
+    style = { top: '25vh'  }
+  }
   
   return (
     <>
@@ -50,7 +57,7 @@ const GuideBox = (props) => {
       )}
     </div>
       {guideVisible && (
-        <div className={classes.box}>
+        <div className={classes.box} style={style}>
           <button className={classes.exitButton} onClick={toggleGuideHandler}>
             X
           </button>

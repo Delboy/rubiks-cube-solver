@@ -118,6 +118,9 @@ const Introduction = (props) => {
     if(props.messageNo === -1 ){
         props.updateGuide('prev')
     }
+    if(props.messageNo){
+      props.onCommandVisible(false)
+    }
   },[props, messages.length])
 
   const skipTutorialHandler = () => {

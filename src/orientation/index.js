@@ -641,6 +641,7 @@ const facesSlice = createSlice({
 const initialGuideState = {
   buttonLayoutVisible: false,
   notationVisible: false,
+  commandVisible: false
 };
 
 const guideSlice = createSlice({
@@ -654,6 +655,12 @@ const guideSlice = createSlice({
       if(action.payload === 'buttonLayout'){
         state.buttonLayoutVisible = !state.buttonLayoutVisible
       }
+      if(action.payload === 'command'){
+        state.commandVisible = !state.commandVisible
+      }
+    },
+    setCommandVisible(state, action){
+      state.commandVisible = action.payload
     }
   }
 })
