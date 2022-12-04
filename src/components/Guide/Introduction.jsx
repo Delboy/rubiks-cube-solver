@@ -76,6 +76,7 @@ const Introduction = (props) => {
             </li>
           </ul>
         </div>
+        <p>Click either of the links above for a reference.</p>
       </div>,
     ],
     [

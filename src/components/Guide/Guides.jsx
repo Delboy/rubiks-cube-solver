@@ -4,6 +4,7 @@ import { guideActions } from "../../orientation";
 
 import Introduction from "./Introduction";
 import DaisyGuide from "./DaisyGuide";
+import WhiteCrossGuide from "./WhiteCrossGuide";
 
 const Guides = (props) => {
   const [currentGuide, setCurrentGuide] = useState(0);
@@ -12,7 +13,7 @@ const Guides = (props) => {
   const cubeFilled = useSelector(state => state.faces.allSegmentsFilled)
 
   const dispatch = useDispatch()
-  
+
   const msgLengthHandler = (messageNo) => {
     setCurrentGuideMsgLength(messageNo);
   };
@@ -54,6 +55,18 @@ const Guides = (props) => {
       } else {
         props.onNextDisable(false);
       }
+
+      if(currentGuide === 1 && props.messageNo === 2){
+        props.onBackDisable(true)
+      } else {
+        props.onBackDisable(false)
+      }
+
+      if(currentGuide === 2 && props.messageNo === 0){
+        props.onBackDisable(true)
+      } else {
+        props.onBackDisable(false)
+      }
     }
   }, [currentGuide, cubeFilled, props.messageNo, props]);
 
@@ -72,10 +85,13 @@ const Guides = (props) => {
         <DaisyGuide
           messageNo={props.messageNo}
           updateGuide={updateGuideHandler}
-          command={props.command}
-          setMessagesLength={props.setMessagesLength}
+          setCurrentGuideMsgLength={msgLengthHandler}
           onCommandVisible={setCommandHandler}
+          command={props.command}
         />
+      ) : null}
+      {currentGuide === 2 ? (
+        <WhiteCrossGuide messageNo={props.messageNo} onCommandVisible={setCommandHandler}/>
       ) : null}
     </>
   );

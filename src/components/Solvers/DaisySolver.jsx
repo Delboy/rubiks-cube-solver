@@ -1,5 +1,6 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { guideActions } from "../../orientation";
 
 const DaisySolver = (props) => {
   // Checks if 'petals' on yellow face are solved
@@ -13,6 +14,8 @@ const DaisySolver = (props) => {
   const petal2 = useSelector((state) => state.faces.segmentState.ycl);
   const petal3 = useSelector((state) => state.faces.segmentState.ycr);
   const petal4 = useSelector((state) => state.faces.segmentState.ybm);
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (petal1 === "white") {
@@ -38,7 +41,7 @@ const DaisySolver = (props) => {
       petalFourSolved
     ) {
       setDaisySolved(true);
-      props.onCommandSet("Daisy Solved!");
+      dispatch(guideActions.setDaisySolved(true))
     }
   }, [
     props,
@@ -46,6 +49,7 @@ const DaisySolver = (props) => {
     petalTwoSolved,
     petalThreeSolved,
     petalFourSolved,
+    dispatch
   ]);
 
   // Checks each face to see if top middle or bottom middle segments are white and if so rotates them into middle layer

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import Guides from "./Guides";
@@ -8,16 +8,16 @@ import classes from "./GuideBox.module.css";
 const GuideBox = (props) => {
   const [guideVisible, setGuideVisible] = useState(false);
   const [messageNo, setMessageNo] = useState(0);
-  const [disableNextBtn, setDisableNextBtn] = useState(false)
-  const [disableBackBtn, setDisableBackBtn] = useState(false)
+  const [disableNextBtn, setDisableNextBtn] = useState(false);
+  const [disableBackBtn, setDisableBackBtn] = useState(false);
 
   const disableBackBtnHandler = (bool) => {
-    setDisableBackBtn(bool) 
-  }
+    setDisableBackBtn(bool);
+  };
 
   const disableNextBtnHandler = (bool) => {
-    setDisableNextBtn(bool)
-  }
+    setDisableNextBtn(bool);
+  };
 
   const toggleGuideHandler = () => {
     setGuideVisible((prevState) => !prevState);
@@ -40,22 +40,30 @@ const GuideBox = (props) => {
     }
   };
 
+  // Once daisy is solved move to the next message
+  const daisySolved = useSelector((state) => state.guide.daisySolved);
+  useEffect(() => {
+    if (daisySolved) {
+      setMessageNo((prevState) => (prevState += 1))
+    }
+  }, [daisySolved]);
+
   // If the guide is showing commands, change the poisitoning of the box
-  const commandVisible = useSelector(state => state.guide.commandVisible)
-  let style
-  if(commandVisible){
-    style = { top: '25vh'  }
+  const commandVisible = useSelector((state) => state.guide.commandVisible);
+  let style;
+  if (commandVisible) {
+    style = { top: "25vh" };
   }
-  
+
   return (
     <>
-    <div className={classes.guideBtnContainer}>
-      {!guideVisible && (
-        <button className={classes.startBtn} onClick={toggleGuideHandler}>
-          Open Guide
-        </button>
-      )}
-    </div>
+      <div className={classes.guideBtnContainer}>
+        {!guideVisible && (
+          <button className={classes.startBtn} onClick={toggleGuideHandler}>
+            Open Guide
+          </button>
+        )}
+      </div>
       {guideVisible && (
         <div className={classes.box} style={style}>
           <button className={classes.exitButton} onClick={toggleGuideHandler}>
@@ -67,7 +75,6 @@ const GuideBox = (props) => {
             clearMessageNo={clearMessageNo}
             onBackDisable={disableBackBtnHandler}
             onNextDisable={disableNextBtnHandler}
-            
           />
           <div className={classes.buttons}>
             <button

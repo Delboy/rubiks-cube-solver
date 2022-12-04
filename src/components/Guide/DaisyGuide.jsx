@@ -1,12 +1,9 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 
 import classes from './DaisyGuide.module.css'
 
 const DaisyGuide = (props) => {
 
-  const dispatch = useDispatch()
-  
   const messages = [
     [
       <div key='1' className={classes.daisyBox}>
@@ -33,7 +30,7 @@ const DaisyGuide = (props) => {
         </div>
         <p>A yellow center piece surrounded by all white edge pieces.</p>
         <p>
-          It does not matter what colour the corner pieces are at this state.
+          It does not matter what colour the corner pieces are at this stage.
         </p>
         <p>
           Try closing the guide and achieving this alone or press next to
@@ -42,6 +39,13 @@ const DaisyGuide = (props) => {
       </div>,
     ],
     [<p key='2' value='command'>{props.command}</p>],
+    [
+      <div key='3'>
+        <p>Well done!</p>
+        <p>You've completed the daisy!</p>
+        <p>Lets move on to step 2</p>
+      </div>
+    ]
   ];
 
   useEffect(() => {
@@ -57,7 +61,7 @@ const DaisyGuide = (props) => {
     } else {
       props.onCommandVisible(false)
     }
-  },[props, messages.length, dispatch])
+  },[props, messages.length])
   return (
     <div className={classes.guideArea}>{messages[props.messageNo]}</div>
   )

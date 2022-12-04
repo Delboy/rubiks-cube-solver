@@ -641,7 +641,8 @@ const facesSlice = createSlice({
 const initialGuideState = {
   buttonLayoutVisible: false,
   notationVisible: false,
-  commandVisible: false
+  commandVisible: false,
+  daisySolved: false,
 };
 
 const guideSlice = createSlice({
@@ -661,6 +662,9 @@ const guideSlice = createSlice({
     },
     setCommandVisible(state, action){
       state.commandVisible = action.payload
+    },
+    setDaisySolved(state, action){
+      state.daisySolved = action.payload
     }
   }
 })
