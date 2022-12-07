@@ -45,6 +45,7 @@ const ColorPicker = () => {
        dispatch(facesActions.rotateWedge({ face: colorList[randomColor], prime: prime[randomPrime] }));
        turns += 1      
       }
+      dispatch(facesActions.resetMoveCounter())
   }
 
   return (

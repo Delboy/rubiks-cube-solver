@@ -1,15 +1,19 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import Guides from "./Guides";
 
 import classes from "./GuideBox.module.css";
+import { guideActions } from "../../orientation";
 
-const GuideBox = (props) => {
+const GuideBox = () => {
   const [guideVisible, setGuideVisible] = useState(false);
-  const [messageNo, setMessageNo] = useState(0);
   const [disableNextBtn, setDisableNextBtn] = useState(false);
   const [disableBackBtn, setDisableBackBtn] = useState(false);
+
+  const msgNo = useSelector(state => state.guide.msgNo)
+
+  const dispatch = useDispatch()
 
   const disableBackBtnHandler = (bool) => {
     setDisableBackBtn(bool);
@@ -25,28 +29,22 @@ const GuideBox = (props) => {
 
   const buttonHandler = (e) => {
     if (e.target.value === "next") {
-      setMessageNo((prevState) => (prevState += 1));
+      dispatch(guideActions.setMsgNumber(msgNo + 1))
     }
     if (e.target.value === "back") {
-      setMessageNo((prevState) => (prevState -= 1));
+      dispatch(guideActions.setMsgNumber(msgNo - 1))
     }
   };
 
-  const clearMessageNo = (messageNo) => {
-    if (messageNo) {
-      setMessageNo(messageNo - 1);
+  // If guide increases clear message number to zero
+  // If guide decreases, take the message length of previous guide, and set to one from the end
+  const clearMessageNo = (prev) => {
+    if (prev) {
+      dispatch(guideActions.setMsgNumber(prev - 1))
     } else {
-      setMessageNo(0);
+      dispatch(guideActions.setMsgNumber(0))
     }
   };
-
-  // Once daisy is solved move to the next message
-  const daisySolved = useSelector((state) => state.guide.daisySolved);
-  useEffect(() => {
-    if (daisySolved) {
-      setMessageNo((prevState) => (prevState += 1))
-    }
-  }, [daisySolved]);
 
   // If the guide is showing commands, change the poisitoning of the box
   const commandVisible = useSelector((state) => state.guide.commandVisible);
@@ -70,8 +68,6 @@ const GuideBox = (props) => {
             X
           </button>
           <Guides
-            command={props.command}
-            messageNo={messageNo}
             clearMessageNo={clearMessageNo}
             onBackDisable={disableBackBtnHandler}
             onNextDisable={disableNextBtnHandler}

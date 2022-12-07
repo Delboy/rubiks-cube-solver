@@ -194,7 +194,9 @@ const initialFaceState = {
   completedEdges: [],
   completedCorners: [],
   errorMsg: '',
-  allSegmentsFilled: false
+  allSegmentsFilled: false,
+  savedCounter: 0,
+  moveCounter: 0,
 };
 
 const facesSlice = createSlice({
@@ -384,7 +386,14 @@ const facesSlice = createSlice({
     setAllSegmentsFilled(state, action){
       state.allSegmentsFilled = action.payload
     },
+    resetMoveCounter(state){
+      state.moveCounter = 0
+    },
+    setSavedMoveCounter(state, action){
+      state.savedCounter = action.payload
+    },
     rotateWedge(state, action) {
+      state.moveCounter = state.moveCounter += 1
       let wedges = {
         blueWedge: [
           // Top of blue wedge
@@ -642,7 +651,15 @@ const initialGuideState = {
   buttonLayoutVisible: false,
   notationVisible: false,
   commandVisible: false,
+  twoStageCommand: false,
+  command: null,
+  secondCommand: null,
+  errorMsg: null,
+  guideNo: 0,
+  msgNo: 0,
   daisySolved: false,
+  petalCounter: 0,
+  whiteCrossSolved: false,
 };
 
 const guideSlice = createSlice({
@@ -663,8 +680,32 @@ const guideSlice = createSlice({
     setCommandVisible(state, action){
       state.commandVisible = action.payload
     },
+    setTwoStageCommand(state, action){
+      state.twoStageCommand = action.payload
+    },
+    setCommand(state, action){
+      state.command = action.payload
+    },
+    setSecondCommand(state, action){
+      state.secondCommand = action.payload
+    },
+    setErrorMsg(state, action){
+      state.errorMsg = action.payload
+    },
+    setGuideNumber(state, action){
+      state.guideNo = action.payload
+    },
+    setMsgNumber(state, action){
+      state.msgNo = action.payload
+    },
+    setPetalCounter(state, action){
+      state.petalCounter = action.payload
+    },
     setDaisySolved(state, action){
       state.daisySolved = action.payload
+    },
+    setWhiteCrossSolved(state, action){
+      state.whiteCrossSolved = action.payload
     }
   }
 })

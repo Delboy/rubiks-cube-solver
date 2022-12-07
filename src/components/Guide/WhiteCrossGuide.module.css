@@ -101,3 +101,19 @@
 .bold {
   font-weight: bold;
 }
+
+.button {
+  width: 56px;
+    font-family: 'fuzzy bubbles';
+    border: 2px solid var(--color-grey);
+    border-radius: 15px;
+    padding: .25rem;
+    margin-top: 1rem;
+    margin-left: .2rem;
+    margin-right: .2rem;
+}
+
+.button:hover:enabled {
+  background-color: var(--color-grey);
+  border-color: var(--color-darkgrey);
+}

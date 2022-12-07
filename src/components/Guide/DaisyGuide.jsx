@@ -1,8 +1,15 @@
 import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { guideActions } from '../../orientation';
 
 import classes from './DaisyGuide.module.css'
 
 const DaisyGuide = (props) => {
+
+  const dispatch = useDispatch()
+
+  const msgNo = useSelector(state => state.guide.msgNo)
+  const command = useSelector(state => state.guide.command)
 
   const messages = [
     [
@@ -38,7 +45,7 @@ const DaisyGuide = (props) => {
         </p>
       </div>,
     ],
-    [<p key='2' value='command'>{props.command}</p>],
+    [<p key='2' value='command'>{command}</p>],
     [
       <div key='3'>
         <p>Well done!</p>
@@ -48,22 +55,31 @@ const DaisyGuide = (props) => {
     ]
   ];
 
+  // Once daisy is solved move to the next message
+  const daisySolved = useSelector((state) => state.guide.daisySolved);
   useEffect(() => {
-    if(props.messageNo === messages.length){
+    if (daisySolved) {
+      dispatch(guideActions.setMsgNumber(2))
+      // setMessageNo((prevState) => (prevState += 1))
+    }
+  }, [daisySolved, dispatch]);
+
+  useEffect(() => {
+    if(msgNo === messages.length){
         props.setCurrentGuideMsgLength(messages.length)
         props.updateGuide('next')
     }
-    if(props.messageNo === -1 ){
+    if(msgNo === -1 ){
         props.updateGuide('prev')
     }
-    if(props.messageNo === 1){
+    if(msgNo === 1){
       props.onCommandVisible(true)
     } else {
       props.onCommandVisible(false)
     }
-  },[props, messages.length])
+  },[msgNo, props, messages.length])
   return (
-    <div className={classes.guideArea}>{messages[props.messageNo]}</div>
+    <div className={classes.guideArea}>{messages[msgNo]}</div>
   )
 };
 

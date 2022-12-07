@@ -10,6 +10,8 @@ import classes from './Introduction.module.css'
 
 const Introduction = (props) => {
 
+  const msgNo = useSelector(state => state.guide.msgNo)
+
   const dispatch = useDispatch()
 
   const cubeFilled = useSelector(state => state.faces.allSegmentsFilled)
@@ -31,7 +33,8 @@ const Introduction = (props) => {
        let randomPrime = Math.floor(Math.random() * prime.length)
        dispatch(facesActions.rotateWedge({ face: colorList[randomColor], prime: prime[randomPrime] }));
        turns += 1      
-      } 
+      }
+    dispatch(facesActions.resetMoveCounter()) 
   }
 
   const shuffle = (
@@ -136,17 +139,17 @@ const Introduction = (props) => {
   ];
 
   useEffect(() => {
-    if(props.messageNo === messages.length){
+    if(msgNo === messages.length){
         props.updateGuide('next')
         props.setCurrentGuideMsgLength(messages.length)
     }
-    if(props.messageNo === -1 ){
+    if(msgNo === -1 ){
         props.updateGuide('prev')
     }
-    if(props.messageNo){
+    if(msgNo){
       props.onCommandVisible(false)
     }
-  },[props, messages.length])
+  }, [msgNo, props, messages.length])
 
   const skipTutorialHandler = () => {
     props.updateGuide('next')
@@ -155,7 +158,7 @@ const Introduction = (props) => {
 
   return (
     <>
-    <div className={classes.guideArea}>{messages[props.messageNo]}</div>
+    <div className={classes.guideArea}>{messages[msgNo]}</div>
     {cubeFilled && <button className={classes.skipBtn} onClick={skipTutorialHandler}>skip introduction</button>}
 
     </>
