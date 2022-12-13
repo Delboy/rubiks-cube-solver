@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { guideActions } from "../../orientation";
 
 const DaisySolver = () => {
@@ -19,18 +19,32 @@ const DaisySolver = () => {
 
   const dispatch = useDispatch();
 
+  // Counts how many petals have been solved
   useEffect(() => {
-    let allPetals = [petalOneSolved, petalTwoSolved, petalThreeSolved, petalFourSolved]
-    let counter = 0
-    allPetals.forEach(petal => {
-      if(petal === true){
-        counter += 1
+    let allPetals = [
+      petalOneSolved,
+      petalTwoSolved,
+      petalThreeSolved,
+      petalFourSolved,
+    ];
+    let counter = 0;
+    allPetals.forEach((petal) => {
+      if (petal === true) {
+        counter += 1;
       }
-    })
-    setPetalCounter(counter)
-    dispatch(guideActions.setPetalCounter(counter))
-  },[petalCounter, petalOneSolved, petalTwoSolved, petalThreeSolved, petalFourSolved, dispatch])
+    });
+    setPetalCounter(counter);
+    dispatch(guideActions.setPetalCounter(counter));
+  }, [
+    petalCounter,
+    petalOneSolved,
+    petalTwoSolved,
+    petalThreeSolved,
+    petalFourSolved,
+    dispatch,
+  ]);
 
+  // Checks each petal to see if its solved
   useEffect(() => {
     if (petal1 === "white") {
       setPetalOneSolved(true);
@@ -56,17 +70,12 @@ const DaisySolver = () => {
 
   // Checks if whole daisy is solved
   useEffect(() => {
-    if (
-      petalCounter === 4
-    ) {
+    if (petalCounter === 4) {
       dispatch(guideActions.setDaisySolved(true));
     }
-  }, [
-    petalCounter,
-    dispatch,
-  ]);
+  }, [petalCounter, dispatch]);
 
-  // Checks each face to see if top middle or bottom middle segments are white and if so rotates them into middle layer
+  // Edges used in whiteInTopOrBottomRow function
   const blueTopEdge = useSelector((state) => state.faces.segmentState.btm);
   const redTopEdge = useSelector((state) => state.faces.segmentState.rtm);
   const greenTopEdge = useSelector((state) => state.faces.segmentState.gtm);
@@ -84,90 +93,89 @@ const DaisySolver = () => {
   const greenBottomPair = useSelector((state) => state.faces.segmentState.ytm);
   const orangeBottomPair = useSelector((state) => state.faces.segmentState.ycl);
 
-  useEffect(() => {
-    if (!daisySolved) {
-      const topAndBottomArray = [
-        {
-          edge: blueTopEdge,
-          face: "blue",
-          pair: blueTopPair,
-        },
-        {
-          edge: redTopEdge,
-          face: "red",
-          pair: redTopPair,
-        },
-        {
-          edge: greenTopEdge,
-          face: "green",
-          pair: greenTopPair,
-        },
-        {
-          edge: orangeTopEdge,
-          face: "orange",
-          pair: orangeTopPair,
-        },
-        {
-          edge: blueBottomEdge,
-          face: "blue",
-          pair: blueBottomPair,
-        },
-        {
-          edge: redBottomEdge,
-          face: "red",
-          pair: redBottomPair,
-        },
-        {
-          edge: greenBottomEdge,
-          face: "green",
-          pair: greenBottomPair,
-        },
-        {
-          edge: orangeBottomEdge,
-          face: "orange",
-          pair: orangeBottomPair,
-        },
-      ];
+  // Checks each face to see if top middle or bottom middle segments are white and if so rotates them into middle layer
+  const whiteInTopOrBottomRow = useCallback(() => {
+    const topAndBottomArray = [
+      {
+        edge: blueTopEdge,
+        face: "blue",
+        pair: blueTopPair,
+      },
+      {
+        edge: redTopEdge,
+        face: "red",
+        pair: redTopPair,
+      },
+      {
+        edge: greenTopEdge,
+        face: "green",
+        pair: greenTopPair,
+      },
+      {
+        edge: orangeTopEdge,
+        face: "orange",
+        pair: orangeTopPair,
+      },
+      {
+        edge: blueBottomEdge,
+        face: "blue",
+        pair: blueBottomPair,
+      },
+      {
+        edge: redBottomEdge,
+        face: "red",
+        pair: redBottomPair,
+      },
+      {
+        edge: greenBottomEdge,
+        face: "green",
+        pair: greenBottomPair,
+      },
+      {
+        edge: orangeBottomEdge,
+        face: "orange",
+        pair: orangeBottomPair,
+      },
+    ];
 
-      topAndBottomArray.forEach((seg) => {
-        if (seg.edge === "white" && seg.pair === "white") {
-          dispatch(
-            guideActions.setCommand(
-              `Rotate the top (U) so that the ${seg.face} face can rotate freely without moving an already solved piece`
-            )
-          );
-        }
-        if (seg.edge === "white" && seg.pair !== "white") {
-          dispatch(
-            guideActions.setCommand(
-              `Rotate the ${seg.face} face once (F) so that the white edge piece is in the center row`
-            )
-          );
-        }
-      });
-    }
+    topAndBottomArray.forEach((seg) => {
+      if (seg.edge === "white" && seg.pair === "white") {
+        dispatch(
+          guideActions.setCommand(
+            `Rotate the top (U) so that the ${seg.face} face can rotate freely without moving an already solved piece`
+          )
+        );
+      }
+      if (seg.edge === "white" && seg.pair !== "white") {
+        dispatch(
+          guideActions.setCommand(
+            `Rotate the ${seg.face} face once (F) so that the white edge piece is in the center row`
+          )
+        );
+      }
+    });
   }, [
-    daisySolved,
     blueTopEdge,
-    blueBottomEdge,
-    redTopEdge,
-    redBottomEdge,
-    greenTopEdge,
-    greenBottomEdge,
-    orangeTopEdge,
-    orangeBottomEdge,
     blueTopPair,
+    redTopEdge,
     redTopPair,
+    greenTopEdge,
     greenTopPair,
+    orangeTopEdge,
     orangeTopPair,
+    blueBottomEdge,
     blueBottomPair,
+    redBottomEdge,
     redBottomPair,
+    greenBottomEdge,
     greenBottomPair,
+    orangeBottomEdge,
     orangeBottomPair,
     dispatch,
   ]);
 
-  // Checks for white segments in center layer and if so rotates them to the top face
+  // Edges that are used in whiteInCenterRow function
+
   // Middle Edges
   const blueMiddleLeftEdge = useSelector(
     (state) => state.faces.segmentState.bcl
@@ -204,101 +212,99 @@ const DaisySolver = () => {
   const omlTopPair = useSelector((state) => state.faces.segmentState.ytm);
   const omrTopPair = useSelector((state) => state.faces.segmentState.ybm);
 
-  useEffect(() => {
-    if (!daisySolved) {
-      const leftAndRightArray = [
-        {
-          edge: blueMiddleRightEdge,
-          top: bmrTopPair,
-          face: "blue",
-          pos: "right",
-        },
-        {
-          edge: blueMiddleLeftEdge,
-          top: bmlTopPair,
-          face: "blue",
-          pos: "left",
-        },
-        {
-          edge: redMiddleRightEdge,
-          top: rmrTopPair,
-          face: "red",
-          pos: "right",
-        },
-        {
-          edge: redMiddleLeftEdge,
-          top: rmlTopPair,
-          face: "red",
-          pos: "left",
-        },
-        {
-          edge: greenMiddleRightEdge,
-          top: gmrTopPair,
-          face: "green",
-          pos: "right",
-        },
-        {
-          edge: greenMiddleLeftEdge,
-          top: gmlTopPair,
-          face: "green",
-          pos: "left",
-        },
-        {
-          edge: orangeMiddleRightEdge,
-          top: omrTopPair,
-          face: "orange",
-          pos: "right",
-        },
-        {
-          edge: orangeMiddleLeftEdge,
-          top: omlTopPair,
-          face: "orange",
-          pos: "left",
-        },
-      ];
+  // Checks for white segments in center layer and if so rotates them to the top face
+  const whiteInCenterRow = useCallback(() => {
+    const leftAndRightArray = [
+      {
+        edge: blueMiddleRightEdge,
+        top: bmrTopPair,
+        face: "blue",
+        pos: "right",
+      },
+      {
+        edge: blueMiddleLeftEdge,
+        top: bmlTopPair,
+        face: "blue",
+        pos: "left",
+      },
+      {
+        edge: redMiddleRightEdge,
+        top: rmrTopPair,
+        face: "red",
+        pos: "right",
+      },
+      {
+        edge: redMiddleLeftEdge,
+        top: rmlTopPair,
+        face: "red",
+        pos: "left",
+      },
+      {
+        edge: greenMiddleRightEdge,
+        top: gmrTopPair,
+        face: "green",
+        pos: "right",
+      },
+      {
+        edge: greenMiddleLeftEdge,
+        top: gmlTopPair,
+        face: "green",
+        pos: "left",
+      },
+      {
+        edge: orangeMiddleRightEdge,
+        top: omrTopPair,
+        face: "orange",
+        pos: "right",
+      },
+      {
+        edge: orangeMiddleLeftEdge,
+        top: omlTopPair,
+        face: "orange",
+        pos: "left",
+      },
+    ];
 
-      leftAndRightArray.forEach((seg) => {
-        if (seg.edge === "white" && seg.top === "white") {
-          dispatch(
-            guideActions.setCommand(
-              `Rotate the top (U) so that the white edge on the ${seg.face} face can rotate up into place`
-            )
-          );
-        } else if (seg.edge === "white" && seg.top !== "white") {
-          dispatch(
-            guideActions.setCommand(
-              `Rotate the ${seg.pos}  side (${seg.pos
-                .toUpperCase()
-                .charAt(0)} ${seg.pos === "left" ? "' " : ""}) of the ${
-                seg.face
-              } face away from you once, putting the white edge piece in place!`
-            )
-          );
-        }
-      });
-    }
+    leftAndRightArray.forEach((seg) => {
+      if (seg.edge === "white" && seg.top === "white") {
+        dispatch(
+          guideActions.setCommand(
+            `Rotate the top (U) so that the white edge on the ${seg.face} face can rotate up into place`
+          )
+        );
+      } else if (seg.edge === "white" && seg.top !== "white") {
+        dispatch(
+          guideActions.setCommand(
+            `Rotate the ${seg.pos}  side (${seg.pos.toUpperCase().charAt(0)} ${
+              seg.pos === "left" ? "' " : ""
+            }) of the ${
+              seg.face
+            } face away from you once, putting the white edge piece in place!`
+          )
+        );
+      }
+    });
   }, [
-    daisySolved,
-    blueMiddleLeftEdge,
     blueMiddleRightEdge,
-    redMiddleLeftEdge,
-    redMiddleRightEdge,
-    greenMiddleLeftEdge,
-    greenMiddleRightEdge,
-    orangeMiddleLeftEdge,
-    orangeMiddleRightEdge,
-    bmlTopPair,
     bmrTopPair,
+    blueMiddleLeftEdge,
+    bmlTopPair,
+    redMiddleRightEdge,
     rmrTopPair,
+    redMiddleLeftEdge,
     rmlTopPair,
+    greenMiddleRightEdge,
     gmrTopPair,
+    greenMiddleLeftEdge,
     gmlTopPair,
+    orangeMiddleRightEdge,
     omrTopPair,
+    orangeMiddleLeftEdge,
     omlTopPair,
     dispatch,
   ]);
 
-  // Checks if any white edges on bottom face and if so rotates them to top
+  // Edges used in whiteInBottomLayer function
 
   // Bottom Edges
   const blueWedgeBottomEdge = useSelector(
@@ -324,49 +330,47 @@ const DaisySolver = () => {
     (state) => state.faces.segmentState.ycl
   );
 
-  useEffect(() => {
-    if (!daisySolved) {
-      const topAndBottomArray = [
-        {
-          top: blueWedgeTopEdge,
-          bottom: blueWedgeBottomEdge,
-          face: "blue",
-        },
-        {
-          top: redWedgeTopEdge,
-          bottom: redWedgeBottomEdge,
-          face: "red",
-        },
-        {
-          top: greenWedgeTopEdge,
-          bottom: greenWedgeBottomEdge,
-          face: "green",
-        },
-        {
-          top: orangeWedgeTopEdge,
-          bottom: orangeWedgeBottomEdge,
-          face: "orange",
-        },
-      ];
+  // Checks if any white edges on bottom face and if so rotates them to top
+  const whiteInBottomLayer = useCallback(() => {
+    const topAndBottomEdgeArray = [
+      {
+        top: blueWedgeTopEdge,
+        bottom: blueWedgeBottomEdge,
+        face: "blue",
+      },
+      {
+        top: redWedgeTopEdge,
+        bottom: redWedgeBottomEdge,
+        face: "red",
+      },
+      {
+        top: greenWedgeTopEdge,
+        bottom: greenWedgeBottomEdge,
+        face: "green",
+      },
+      {
+        top: orangeWedgeTopEdge,
+        bottom: orangeWedgeBottomEdge,
+        face: "orange",
+      },
+    ];
 
-      topAndBottomArray.forEach((pair) => {
-        if (pair.bottom === "white" && pair.top === "white") {
-          dispatch(
-            guideActions.setCommand(
-              `Rotate the top (U) so that the white edge on the ${pair.bottom} face can rotate up into place`
-            )
-          );
-        } else if (pair.bottom === "white") {
-          dispatch(
-            guideActions.setCommand(
-              `Rotate the ${pair.face} face (F) twice so that the white edge on the bottom face rotates up to the top!`
-            )
-          );
-        }
-      });
-    }
+    topAndBottomEdgeArray.forEach((pair) => {
+      if (pair.bottom === "white" && pair.top === "white") {
+        dispatch(
+          guideActions.setCommand(
+            `Rotate the top (U) so that the white edge on the ${pair.bottom} face can rotate up into place`
+          )
+        );
+      } else if (pair.bottom === "white") {
+        dispatch(
+          guideActions.setCommand(
+            `Rotate the ${pair.face} face (F) twice so that the white edge on the bottom face rotates up to the top!`
+          )
+        );
+      }
+    });
   }, [
-    daisySolved,
     blueWedgeTopEdge,
     blueWedgeBottomEdge,
     redWedgeTopEdge,
@@ -377,6 +381,23 @@ const DaisySolver = () => {
     orangeWedgeBottomEdge,
     dispatch,
   ]);
+
+  // Runs the individual solvers
+  const daisySolver = useCallback(() => {
+    //  if white in top or bottom run this
+    whiteInTopOrBottomRow();
+    // if white in center row run this
+    whiteInCenterRow();
+    // if white on bottom run this
+    whiteInBottomLayer();
+  }, [whiteInTopOrBottomRow, whiteInCenterRow, whiteInBottomLayer]);
+
+  // Runs the daisy solver if daisy is not solved
+  useEffect(() => {
+    if (!daisySolved) {
+      daisySolver();
+    }
+  }, [daisySolved, daisySolver]);
 };
 
 export default DaisySolver;
