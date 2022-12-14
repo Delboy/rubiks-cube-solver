@@ -13,19 +13,17 @@ const WhiteCrossSolver = (props) => {
   const [whiteCrossGreenPiece, setWhiteCrossGreenPiece] = useState(false);
   const [whiteCrossOrangePiece, setWhiteCrossOrangePiece] = useState(false);
 
-  const command = useSelector((state) => state.guide.command);
-  const twoStageCommand = useSelector((state) => state.guide.twoStageCommand);
-  const [secondCommand, setSecondCommand] = useState("");
   const moveCounter = useSelector((state) => state.faces.moveCounter);
 
   const dispatch = useDispatch();
 
-  // Check if white cross is solved
+  // White Cross main face
   const whiteCrossTop = useSelector((state) => state.faces.segmentState.wtm);
   const whiteCrossBottom = useSelector((state) => state.faces.segmentState.wbm);
   const whiteCrossLeft = useSelector((state) => state.faces.segmentState.wcl);
   const whiteCrossRight = useSelector((state) => state.faces.segmentState.wcr);
 
+  // White Cross opposite face
   const whiteCrossBlueEdge = useSelector(
     (state) => state.faces.segmentState.bbm
   );
@@ -41,6 +39,7 @@ const WhiteCrossSolver = (props) => {
     (state) => state.faces.segmentState.rbm
   );
 
+  // Checks if white cross face and opposite face are correct
   useEffect(() => {
     if (whiteCrossTop === "white" && whiteCrossBlueEdge === "blue") {
       setWhiteCrossBluePiece(true);
@@ -73,6 +72,7 @@ const WhiteCrossSolver = (props) => {
     whiteCrossRedEdge,
   ]);
 
+  // Sets white cross solved when completed
   useEffect(() => {
     let allWhiteCrossPieces = [
       whiteCrossBluePiece,
@@ -90,7 +90,6 @@ const WhiteCrossSolver = (props) => {
     setWhiteSolvedPiecesCount(counter);
     if (counter === 4) {
       dispatch(guideActions.setWhiteCrossSolved(true));
-      dispatch(guideActions.setCommand("White Cross Solved!"));
     }
   }, [
     whiteCrossBluePiece,
@@ -110,6 +109,7 @@ const WhiteCrossSolver = (props) => {
     }
   },[daisySolved, whiteSolvedPiecesCount, petalCount, dispatch]);
 
+  // Array of edge pieces needing to move
   const whiteEdgePair1 = [
     useSelector((state) => state.faces.segmentState.btm),
     useSelector((state) => state.faces.segmentState.ybm),
@@ -138,7 +138,11 @@ const WhiteCrossSolver = (props) => {
     whiteEdgePair4,
   ];
 
-  const checkEdge = () => {
+  // Moves pieces from daisy position to make white cross 
+  const checkEdgeMatchesCenter = () => {
+    if(whiteCrossSolved){
+      return
+    }
     let matched;
     allWhiteEdges.forEach((edge) => {
       if (edge[0] === edge[2] && edge[1] === "white") {
@@ -147,9 +151,8 @@ const WhiteCrossSolver = (props) => {
             `The ${edge[2]} face's center piece matches the daisys piece adjacent color, so turn this face 180\u00b0`
           )
         );
-        setSecondCommand(`Turn the ${edge[2]} face another 90\u00b0`);
+        props.setValuesForTwoStageCommand(true, moveCounter, `Turn the ${edge[2]} face another 90\u00b0` )
         matched = true;
-        dispatch(guideActions.setTwoStageCommand(true));
       }
       if (!matched) {
         dispatch(
@@ -161,25 +164,24 @@ const WhiteCrossSolver = (props) => {
     });
   };
 
-  // Check if daisy solved
+  const whiteCrossSolver = () => {
+    if (!props.twoStageCommand) {
+      // checks if white piece other face matches center piece
+      checkEdgeMatchesCenter()
+    }
+    if (props.twoStageCommand) {
+      // checks if any commands had two parts
+      props.checkTwoStageCommand();
+    }
+  }
+
+  // Runs the solver if white cross not solved
   useEffect(() => {
     if (daisySolved && !whiteCrossSolved) {
-      if (!twoStageCommand) {
-        checkEdge();
-      }
+        whiteCrossSolver();
     }
   });
 
-  useEffect(() => {
-    if (twoStageCommand) {
-      dispatch(guideActions.setCommand(secondCommand));
-    }
-    if (command === secondCommand) {
-      setSecondCommand("");
-      dispatch(guideActions.setTwoStageCommand(false));
-    }
-  }, [moveCounter]);
-  
 };
 
 export default WhiteCrossSolver;

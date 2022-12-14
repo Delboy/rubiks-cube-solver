@@ -372,9 +372,6 @@ const DaisySolver = (props) => {
           )
         );
         props.setValuesForTwoStageCommand(true, moveCounter, `Rotate the ${pair.face} face another 90\u00b0`)
-        // setTwoStageCommand(true);
-        // setSavedMoveCount(moveCounter);
-        // setSecondCommand(`Roate the ${pair.face} face another 90\u00b0`)
       }
     });
   }, [

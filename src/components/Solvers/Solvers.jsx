@@ -44,7 +44,11 @@ const Solvers = (props) => {
         setValuesForTwoStageCommand={setValuesForTwoStageCommand}
         twoStageCommand={twoStageCommand}
       />
-      <WhiteCrossSolver />
+      <WhiteCrossSolver 
+        checkTwoStageCommand={checkTwoStageCommand}
+        setValuesForTwoStageCommand={setValuesForTwoStageCommand}
+        twoStageCommand={twoStageCommand}
+      />
     </>
   );
 };

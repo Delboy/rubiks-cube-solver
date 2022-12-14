@@ -9,12 +9,12 @@ import WhiteCrossGuide from "./WhiteCrossGuide";
 const Guides = (props) => {
   const [currentGuideMsgLength, setCurrentGuideMsgLength] = useState(0);
 
-  const cubeFilled = useSelector(state => state.faces.allSegmentsFilled)
+  const cubeFilled = useSelector((state) => state.faces.allSegmentsFilled);
 
-  const msgNo = useSelector(state => state.guide.msgNo)
-  const guideNo = useSelector(state => state.guide.guideNo)
+  const msgNo = useSelector((state) => state.guide.msgNo);
+  const guideNo = useSelector((state) => state.guide.guideNo);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const msgLengthHandler = (messageNo) => {
     setCurrentGuideMsgLength(messageNo);
@@ -23,11 +23,11 @@ const Guides = (props) => {
   const updateGuideHandler = (direction) => {
     switch (direction) {
       case "next":
-        dispatch(guideActions.setGuideNumber(guideNo + 1))
+        dispatch(guideActions.setGuideNumber(guideNo + 1));
         props.clearMessageNo();
         return;
       case "prev":
-        dispatch(guideActions.setGuideNumber(guideNo - 1))
+        dispatch(guideActions.setGuideNumber(guideNo - 1));
         props.clearMessageNo(currentGuideMsgLength);
         return;
       default:
@@ -36,38 +36,31 @@ const Guides = (props) => {
   };
 
   const setCommandHandler = (bool) => {
-    dispatch(guideActions.setCommandVisible(bool))
-  }
+    dispatch(guideActions.setCommandVisible(bool));
+  };
 
   useEffect(() => {
-    if(!cubeFilled){
-      dispatch(guideActions.setGuideNumber(0))
-      props.clearMessageNo()
-      props.onNextDisable(true)
-      props.onBackDisable(true)
+    if (!cubeFilled) {
+      dispatch(guideActions.setGuideNumber(0));
+      props.clearMessageNo();
+      props.onNextDisable(true);
+      props.onBackDisable(true);
     } else {
-      if (guideNo === 0 && msgNo === 0) {
+      if (
+        (guideNo === 0 && msgNo === 0) ||
+        (guideNo === 1 && msgNo === 2) ||
+        (guideNo === 2 && msgNo === 0) ||
+        (guideNo === 2 && msgNo === 3)
+      ) {
         props.onBackDisable(true);
       } else {
-        props.onBackDisable(false)
+        props.onBackDisable(false);
       }
-  
+
       if (guideNo === 1 && msgNo === 1) {
         props.onNextDisable(true);
       } else {
         props.onNextDisable(false);
-      }
-
-      if(guideNo === 1 && msgNo === 2){
-        props.onBackDisable(true)
-      } else {
-        props.onBackDisable(false)
-      }
-
-      if(guideNo === 2 && msgNo === 0){
-        props.onBackDisable(true)
-      } else {
-        props.onBackDisable(false)
       }
     }
   }, [guideNo, cubeFilled, msgNo, props, dispatch]);
@@ -87,10 +80,13 @@ const Guides = (props) => {
           updateGuide={updateGuideHandler}
           setCurrentGuideMsgLength={msgLengthHandler}
           onCommandVisible={setCommandHandler}
-                 />
+        />
       ) : null}
       {guideNo === 2 ? (
-        <WhiteCrossGuide  onCommandVisible={setCommandHandler} updateGuide={updateGuideHandler} />
+        <WhiteCrossGuide
+          onCommandVisible={setCommandHandler}
+          updateGuide={updateGuideHandler}
+        />
       ) : null}
     </>
   );

@@ -161,7 +161,22 @@ const WhiteCrossGuide = (props) => {
         
       </div>,
     ],
+    [
+      <div key='4'>
+        <p>Well done!</p>
+        <p>You've completed the White Cross!</p>
+        <p>Lets move on to step 3</p>
+      </div>
+    ]
   ];
+
+  // Once white cross is solved move to the next message
+  const whiteCrossSolved = useSelector((state) => state.guide.whiteCrossSolved);
+  useEffect(() => {
+    if (whiteCrossSolved) {
+      dispatch(guideActions.setMsgNumber(3))
+    }
+  }, [whiteCrossSolved, dispatch]);
 
   useEffect(() => {
     if (msgNo === 2) {
