@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect, useCallback } from "react";
 import { guideActions } from "../../orientation";
 
-const DaisySolver = () => {
+const DaisySolver = (props) => {
   // Checks if 'petals' on yellow face are solved
   const [petalOneSolved, setPetalOneSolved] = useState(false);
   const [petalTwoSolved, setPetalTwoSolved] = useState(false);
@@ -17,12 +17,6 @@ const DaisySolver = () => {
 
   const daisySolved = useSelector((state) => state.guide.daisySolved);
 
-  // Two stage command bool
-  const [twoStageCommand, setTwoStageCommand] = useState(false);
-  // Second Command string
-  const [secondCommand, setSecondCommand] = useState(null)
-  // Set Move number
-  const [savedMoveCount, setSavedMoveCount] = useState(null);
   // Move Counter
   const moveCounter = useSelector((state) => state.faces.moveCounter);
 
@@ -377,9 +371,10 @@ const DaisySolver = () => {
             `Rotate the ${pair.face} face (F) 180\u00b0 to move the white edge on the bottom face to the top!`
           )
         );
-        setTwoStageCommand(true);
-        setSavedMoveCount(moveCounter);
-        setSecondCommand(`Roate the ${pair.face} another 90\u00b0`)
+        props.setValuesForTwoStageCommand(true, moveCounter, `Rotate the ${pair.face} face another 90\u00b0`)
+        // setTwoStageCommand(true);
+        // setSavedMoveCount(moveCounter);
+        // setSecondCommand(`Roate the ${pair.face} face another 90\u00b0`)
       }
     });
   }, [
@@ -392,22 +387,13 @@ const DaisySolver = () => {
     orangeWedgeTopEdge,
     orangeWedgeBottomEdge,
     moveCounter,
+    props,
     dispatch,
   ]);
 
-  // Runs if a command has two parts
-  const checkTwoStageCommand = useCallback(() => {
-    if (moveCounter === savedMoveCount + 1) {
-      dispatch(guideActions.setCommand(secondCommand));
-    }
-    if (moveCounter === savedMoveCount + 2){
-      setTwoStageCommand(false)
-    }
-  }, [moveCounter, savedMoveCount, secondCommand, dispatch]);
-
   // Runs the individual solvers
   const daisySolver = useCallback(() => {
-    if (!twoStageCommand) {
+    if (!props.twoStageCommand) {
       //  checks white in top or bottom
       whiteInTopOrBottomRow();
       // checks white in center row
@@ -415,16 +401,15 @@ const DaisySolver = () => {
       // checks white on bottom
       whiteInBottomLayer();
     }
-    if (twoStageCommand) {
+    if (props.twoStageCommand) {
       // checks if any commands had two parts
-      checkTwoStageCommand();
+      props.checkTwoStageCommand();
     }
   }, [
     whiteInTopOrBottomRow,
     whiteInCenterRow,
     whiteInBottomLayer,
-    checkTwoStageCommand,
-    twoStageCommand,
+    props
   ]);
 
   // Runs the daisy solver if daisy is not solved

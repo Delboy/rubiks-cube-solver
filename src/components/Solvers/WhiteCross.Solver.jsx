@@ -20,15 +20,6 @@ const WhiteCrossSolver = (props) => {
 
   const dispatch = useDispatch();
 
-  // Check if daisy solved
-  useEffect(() => {
-    if (daisySolved && !whiteCrossSolved) {
-      if (!twoStageCommand) {
-        checkEdge();
-      }
-    }
-  });
-
   // Check if white cross is solved
   const whiteCrossTop = useSelector((state) => state.faces.segmentState.wtm);
   const whiteCrossBottom = useSelector((state) => state.faces.segmentState.wbm);
@@ -169,6 +160,15 @@ const WhiteCrossSolver = (props) => {
       }
     });
   };
+
+  // Check if daisy solved
+  useEffect(() => {
+    if (daisySolved && !whiteCrossSolved) {
+      if (!twoStageCommand) {
+        checkEdge();
+      }
+    }
+  });
 
   useEffect(() => {
     if (twoStageCommand) {
