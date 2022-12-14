@@ -197,6 +197,8 @@ const initialFaceState = {
   allSegmentsFilled: false,
   savedCounter: 0,
   moveCounter: 0,
+  lastWedgeTurned: null,
+  lastMove: null,
 };
 
 const facesSlice = createSlice({
@@ -394,6 +396,14 @@ const facesSlice = createSlice({
     },
     rotateWedge(state, action) {
       state.moveCounter = state.moveCounter += 1
+      state.lastWedgeTurned = action.payload.face
+
+      let move = action.payload.face.charAt(0)
+      if(action.payload.prime === true){
+        move = move + ('p')
+      }
+      state.lastMove = move
+      
       let wedges = {
         blueWedge: [
           // Top of blue wedge
@@ -654,6 +664,7 @@ const initialGuideState = {
   twoStageCommand: false,
   command: null,
   secondCommand: null,
+  wedgeToTurn: null,
   errorMsg: null,
   guideNo: 0,
   msgNo: 0,

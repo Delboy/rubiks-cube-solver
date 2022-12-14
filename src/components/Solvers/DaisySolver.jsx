@@ -17,6 +17,15 @@ const DaisySolver = () => {
 
   const daisySolved = useSelector((state) => state.guide.daisySolved);
 
+  // Two stage command bool
+  const [twoStageCommand, setTwoStageCommand] = useState(false);
+  // Second Command string
+  const [secondCommand, setSecondCommand] = useState(null)
+  // Set Move number
+  const [savedMoveCount, setSavedMoveCount] = useState(null);
+  // Move Counter
+  const moveCounter = useSelector((state) => state.faces.moveCounter);
+
   const dispatch = useDispatch();
 
   // Counts how many petals have been solved
@@ -365,9 +374,12 @@ const DaisySolver = () => {
       } else if (pair.bottom === "white") {
         dispatch(
           guideActions.setCommand(
-            `Rotate the ${pair.face} face (F) twice so that the white edge on the bottom face rotates up to the top!`
+            `Rotate the ${pair.face} face (F) 180\u00b0 to move the white edge on the bottom face to the top!`
           )
         );
+        setTwoStageCommand(true);
+        setSavedMoveCount(moveCounter);
+        setSecondCommand(`Roate the ${pair.face} another 90\u00b0`)
       }
     });
   }, [
@@ -379,18 +391,41 @@ const DaisySolver = () => {
     greenWedgeBottomEdge,
     orangeWedgeTopEdge,
     orangeWedgeBottomEdge,
+    moveCounter,
     dispatch,
   ]);
 
+  // Runs if a command has two parts
+  const checkTwoStageCommand = useCallback(() => {
+    if (moveCounter === savedMoveCount + 1) {
+      dispatch(guideActions.setCommand(secondCommand));
+    }
+    if (moveCounter === savedMoveCount + 2){
+      setTwoStageCommand(false)
+    }
+  }, [moveCounter, savedMoveCount, secondCommand, dispatch]);
+
   // Runs the individual solvers
   const daisySolver = useCallback(() => {
-    //  if white in top or bottom run this
-    whiteInTopOrBottomRow();
-    // if white in center row run this
-    whiteInCenterRow();
-    // if white on bottom run this
-    whiteInBottomLayer();
-  }, [whiteInTopOrBottomRow, whiteInCenterRow, whiteInBottomLayer]);
+    if (!twoStageCommand) {
+      //  checks white in top or bottom
+      whiteInTopOrBottomRow();
+      // checks white in center row
+      whiteInCenterRow();
+      // checks white on bottom
+      whiteInBottomLayer();
+    }
+    if (twoStageCommand) {
+      // checks if any commands had two parts
+      checkTwoStageCommand();
+    }
+  }, [
+    whiteInTopOrBottomRow,
+    whiteInCenterRow,
+    whiteInBottomLayer,
+    checkTwoStageCommand,
+    twoStageCommand,
+  ]);
 
   // Runs the daisy solver if daisy is not solved
   useEffect(() => {

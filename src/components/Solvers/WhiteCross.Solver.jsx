@@ -179,6 +179,7 @@ const WhiteCrossSolver = (props) => {
       dispatch(guideActions.setTwoStageCommand(false));
     }
   }, [moveCounter]);
+  
 };
 
 export default WhiteCrossSolver;
