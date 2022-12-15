@@ -179,13 +179,20 @@ const WhiteCrossGuide = (props) => {
   }, [whiteCrossSolved, dispatch]);
 
   useEffect(() => {
-    if (msgNo === 2) {
-      props.onCommandVisible(true);
-    } else {
-      props.onCommandVisible(false);
+    if(msgNo === messages.length){
+        props.setCurrentGuideMsgLength(messages.length)
+        props.updateGuide('next')
     }
-    
-  }, [msgNo, props, messages.length]);
+    if(msgNo === -1 ){
+        props.updateGuide('prev')
+    }
+    if(msgNo === 2){
+      props.onCommandVisible(true)
+    } else {
+      props.onCommandVisible(false)
+    }
+  },[msgNo, props, messages.length])
+
 
   return <div className={classes.guideArea}>{messages[msgNo]}</div>;
 };

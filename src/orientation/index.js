@@ -671,6 +671,7 @@ const initialGuideState = {
   daisySolved: false,
   petalCounter: 0,
   whiteCrossSolved: false,
+  firstLayerSolved: false,
 };
 
 const guideSlice = createSlice({
@@ -717,6 +718,9 @@ const guideSlice = createSlice({
     },
     setWhiteCrossSolved(state, action){
       state.whiteCrossSolved = action.payload
+    },
+    setFirstLayerSolved(state, action){
+      state.firstLayerSolved = action.payload
     }
   }
 })

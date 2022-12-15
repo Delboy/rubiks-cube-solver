@@ -5,6 +5,7 @@ import { guideActions } from "../../orientation";
 import Introduction from "./Introduction";
 import DaisyGuide from "./DaisyGuide";
 import WhiteCrossGuide from "./WhiteCrossGuide";
+import FirstLayerGuide from "./FirstLayerGuide";
 
 const Guides = (props) => {
   const [currentGuideMsgLength, setCurrentGuideMsgLength] = useState(0);
@@ -84,8 +85,16 @@ const Guides = (props) => {
       ) : null}
       {guideNo === 2 ? (
         <WhiteCrossGuide
-          onCommandVisible={setCommandHandler}
           updateGuide={updateGuideHandler}
+          setCurrentGuideMsgLength={msgLengthHandler}
+          onCommandVisible={setCommandHandler}
+        />
+      ) : null}
+      {guideNo === 3 ? (
+        <FirstLayerGuide
+          updateGuide={updateGuideHandler}
+          setCurrentGuideMsgLength={msgLengthHandler}
+          onCommandVisible={setCommandHandler}
         />
       ) : null}
     </>

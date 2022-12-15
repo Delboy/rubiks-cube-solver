@@ -60,7 +60,6 @@ const DaisyGuide = (props) => {
   useEffect(() => {
     if (daisySolved) {
       dispatch(guideActions.setMsgNumber(2))
-      // setMessageNo((prevState) => (prevState += 1))
     }
   }, [daisySolved, dispatch]);
 
