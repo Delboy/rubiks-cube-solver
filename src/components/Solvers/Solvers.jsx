@@ -4,6 +4,7 @@ import { guideActions } from "../../orientation";
 
 import DaisySolver from "./DaisySolver";
 import WhiteCrossSolver from "./WhiteCross.Solver";
+import FirstLayerSolver from "./FirstLayerSolver";
 
 const Solvers = (props) => {
   const dispatch = useDispatch();
@@ -45,6 +46,11 @@ const Solvers = (props) => {
         twoStageCommand={twoStageCommand}
       />
       <WhiteCrossSolver 
+        checkTwoStageCommand={checkTwoStageCommand}
+        setValuesForTwoStageCommand={setValuesForTwoStageCommand}
+        twoStageCommand={twoStageCommand}
+      />
+      <FirstLayerSolver 
         checkTwoStageCommand={checkTwoStageCommand}
         setValuesForTwoStageCommand={setValuesForTwoStageCommand}
         twoStageCommand={twoStageCommand}
