@@ -6,7 +6,7 @@ const FirstLayerSolver = (props) => {
   const whiteCrossSolved = useSelector((state) => state.guide.whiteCrossSolved);
   const firstLayerSolved = useSelector((state) => state.guide.firstLayerSolved);
 
-  // Top Layer Corners
+  // Top Layer Corners - white facing out
   const blueTopLeftCorner = useSelector(
     (state) => state.faces.segmentState.btl
   );
@@ -54,6 +54,47 @@ const FirstLayerSolver = (props) => {
   );
   const redBottomRightCorner = useSelector(
     (state) => state.faces.segmentState.rbr
+  );
+
+  // Top Layer corners - White facing up
+  const topLeftYellowCorner = useSelector(
+    (state) => state.faces.segmentState.ytl
+  );
+  const topLeftYellowLeftPair = useSelector(
+    (state) => state.faces.segmentState.gtr
+  );
+  const topLeftYellowRightPair = useSelector(
+    (state) => state.faces.segmentState.otl
+  );
+
+  const topRightYellowCorner = useSelector(
+    (state) => state.faces.segmentState.ytr
+  );
+  const topRightYellowLeftPair = useSelector(
+    (state) => state.faces.segmentState.rtr
+  );
+  const topRightYellowRightPair = useSelector(
+    (state) => state.faces.segmentState.gtl
+  );
+
+  const bottomLeftYellowCorner = useSelector(
+    (state) => state.faces.segmentState.ybl
+  );
+  const bottomLeftYellowLeftPair = useSelector(
+    (state) => state.faces.segmentState.otr
+  );
+  const bottomLeftYellowRightPair = useSelector(
+    (state) => state.faces.segmentState.btl
+  );
+
+  const bottomRightYellowCorner = useSelector(
+    (state) => state.faces.segmentState.ybr
+  );
+  const bottomRightYellowLeftPair = useSelector(
+    (state) => state.faces.segmentState.btr
+  );
+  const bottomRightYellowRightPair = useSelector(
+    (state) => state.faces.segmentState.rtl
   );
 
   // Move counter
@@ -239,8 +280,8 @@ const FirstLayerSolver = (props) => {
             true,
             moveCounter,
             [
-              `The ${corner.face.toUpperCase()} face has a white edge in the top ${whiteCornerPos} corner, so match up it's adjacent color ${cornerEdgePair} to the same color center by turning the top either direction twice!`,
-              "Keep turning",
+              `The ${corner.face.toUpperCase()} face has a white edge in the top ${whiteCornerPos} corner, so match up it's adjacent color ${cornerEdgePair} to the same color center by turning the top either clockwise twice! (U2)`,
+              "Keep turning the top (U)",
               `Now, facing the ${cornerEdgePair} face, perform ${algoString[0]}`,
               `Now, facing the ${cornerEdgePair} face, perform ${algoString[1]}`,
               `Now, facing the ${cornerEdgePair} face, perform ${algoString[2]}`,
@@ -344,8 +385,130 @@ const FirstLayerSolver = (props) => {
     redBottomRightCorner,
   ]);
 
+  const topLayerFacingUp = useCallback(() => {
+    const topCorners = [
+      {
+        topFace: topLeftYellowCorner,
+        leftEdge: topLeftYellowLeftPair,
+        rightEdge: topLeftYellowRightPair,
+        rightSide: "orange",
+      },
+      {
+        topFace: topRightYellowCorner,
+        leftEdge: topRightYellowLeftPair,
+        rightEdge: topRightYellowRightPair,
+        rightSide: "green",
+      },
+      {
+        topFace: bottomLeftYellowCorner,
+        leftEdge: bottomLeftYellowLeftPair,
+        rightEdge: bottomLeftYellowRightPair,
+        rightSide: "blue",
+      },
+      {
+        topFace: bottomRightYellowCorner,
+        leftEdge: bottomRightYellowLeftPair,
+        rightEdge: bottomRightYellowRightPair,
+        rightSide: "red",
+      },
+    ];
+
+    topCorners.forEach((corner) => {
+      if (corner.topFace === "white") {
+        const faceOrder = ["blue", "red", "green", "orange"];
+
+        // Get left edge pos
+        const indexOfLeftEdge = faceOrder.indexOf(corner.leftEdge);
+
+        // Get matching side pos
+        const indexOfRightSide = faceOrder.indexOf(corner.rightSide);
+
+        // Work out the amount of moves need to get the top corner in place
+        let movesNeeded = indexOfRightSide - indexOfLeftEdge;
+
+        let direction = "clockwise";
+        let algoDirection = "y"
+        if (movesNeeded === -3) {
+          movesNeeded = 1;
+        }
+        if (movesNeeded === -2) {
+          movesNeeded = 2;
+        }
+        if (movesNeeded < 0) {
+          direction = "anticlockwise";
+          algoDirection = "yp"
+        }
+
+        // Runs command depending on amount of moves needed
+        switch (movesNeeded) {
+          case 0:
+            props.setValuesForMultiStageCommand(
+              true,
+              moveCounter,
+              [
+                `The ${corner.rightEdge} face has a white edge facing up in top right corner. We need to get this white edge facing outwards. As this is directly above the bottom corner where it needs to be we can begin the alogrithm. So facing the ${corner.rightEdge} face, perform the alorithm R, U, U, R'.`,
+                `Now, facing the ${corner.rightEdge} face, perform U`,
+                `Now, facing the ${corner.rightEdge} face, perform U`,
+                `Now, facing the ${corner.rightEdge} face, perform R'`,
+              ],
+              [`${corner.leftEdge.charAt(0)}`, "y", "y", `${corner.leftEdge.charAt(0)}p` ]
+            );
+            break;
+          case 1:
+            props.setValuesForMultiStageCommand(
+                true,
+                moveCounter,
+                [
+                  `The ${corner.rightEdge} face has a white edge facing up in top right corner. To begin we need to place it above the bottom corner where it will eventually end up. To do this turn the top ${direction} one time.`,
+                  `Now that we have the corner in the right position we need to get the white edge facing outwards. To do so, facing the ${corner.rightEdge} face perform the alorithm R, U, U, R'.`,
+                  `Now, facing the ${corner.rightEdge} face, perform U`,
+                  `Now, facing the ${corner.rightEdge} face, perform U`,
+                  `Now, facing the ${corner.rightEdge} face, perform R'`,
+                ],
+                [`${algoDirection}`,`${corner.leftEdge.charAt(0)}`, "y", "y", `${corner.leftEdge.charAt(0)}p` ]
+              );
+            break;
+          case 2:
+            props.setValuesForMultiStageCommand(
+                true,
+                moveCounter,
+                [
+                  `The ${corner.rightEdge} face has a white edge facing up in top right corner. To begin we need to place it above the bottom corner where it will eventually end up. To do this turn the top clockwise twice (U2).`,
+                  `Keep turning the top (U)`,
+                  `Now that we have the corner in the right position we need to get the white edge facing outwards. To do so, facing the ${corner.rightEdge} face perform the alorithm R, U, U, R'.`,
+                  `Now, facing the ${corner.rightEdge} face, perform U`,
+                  `Now, facing the ${corner.rightEdge} face, perform U`,
+                  `Now, facing the ${corner.rightEdge} face, perform R'`,
+                ],
+                ["y","y",`${corner.leftEdge.charAt(0)}`, "y", "y", `${corner.leftEdge.charAt(0)}p` ]
+              );
+            break;
+          default:
+            break;
+        }
+      }
+    });
+  }, [
+    bottomLeftYellowCorner,
+    bottomLeftYellowLeftPair,
+    bottomLeftYellowRightPair,
+    bottomRightYellowCorner,
+    bottomRightYellowLeftPair,
+    bottomRightYellowRightPair,
+    topLeftYellowCorner,
+    topLeftYellowLeftPair,
+    topLeftYellowRightPair,
+    topRightYellowCorner,
+    topRightYellowLeftPair,
+    topRightYellowRightPair,
+    moveCounter,
+    props
+  ]);
+
   const firstLayerSolver = useCallback(() => {
     if (!props.multiStageCommand) {
+      // checks if white corners facing up in top layer
+      topLayerFacingUp();
       // checks if white corners are in the bottom layer
       bottomLayer();
       // checks if white corners facing out in top layer
@@ -354,7 +517,7 @@ const FirstLayerSolver = (props) => {
     if (props.multiStageCommand) {
       props.multiStageCommandSetter();
     }
-  }, [topLayerFacingOut, bottomLayer, props]);
+  }, [topLayerFacingOut, bottomLayer, topLayerFacingUp, props]);
 
   // Runs the solver if white cross not solved
   useEffect(() => {
