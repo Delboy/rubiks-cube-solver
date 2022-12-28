@@ -99,6 +99,12 @@ const initialFaceState = {
   lastRightFace: null,
   lastTopFace: null,
   lastBottomFace: null,
+  frontWedge: "blue",
+  backWedge: "green",
+  leftWedge: "orange",
+  rightRight: "red",
+  topWedge: "yellow",
+  bottomWedge: "white",
   colorSelected: null,
   edgeColorCount: {
     blue: 0,
@@ -266,6 +272,14 @@ const facesSlice = createSlice({
     },
     setOneBellowBottomFace(state, action){
       state.oneBellowBottomFace = action.payload
+    },
+    setWedges(state, action){
+      state.frontWedge = action.payload.frontWedge
+      state.backWedge = action.payload.backWedge
+      state.leftWedge = action.payload.leftWedge
+      state.rightWedge = action.payload.rightWedge
+      state.topWedge = action.payload.topWedge
+      state.bottomWedge = action.payload.bottomWedge
     },
     moveCubeMatrixLeft(state) {
       state.cubeMatrix.forEach((face) => {

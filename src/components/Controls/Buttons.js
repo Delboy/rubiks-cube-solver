@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { axisActions, facesActions } from "../../orientation";
 import { useDispatch, useSelector } from "react-redux";
 import Radioinputs from "./RadioInputs";
@@ -44,16 +45,23 @@ const Buttons = () => {
     (state) => state.faces.oneBellowBottomFace
   );
 
+  // Wedges
+  const [frontWedge, setFrontWedge] = useState()
+  const [backWedge, setBackWedge] = useState()
+  const [leftWedge, setLeftWedge] = useState()
+  const [rightWedge, setRightWedge] = useState()
+  const [topWedge, setTopWedge] = useState()
+  const [bottomWedge, setBottomWedge] = useState()
+
   // Handles Keypresses
   const keypressHandler = (e) => {
     if (
       (currentFace === "yellow" && e.key === "s") ||
       (currentFace === "white" && e.key === "w")
-    ) 
-    {
+    ) {
       // do nothing
     } else {
-      e.preventDefault()
+      e.preventDefault();
       buttonHandler(e);
     }
   };
@@ -77,7 +85,7 @@ const Buttons = () => {
     if (e.key) {
       buttonPressed = e.key;
     }
-    
+
     switch (buttonPressed) {
       case "up":
         dispatch(axisActions.updateX(45));
@@ -118,57 +126,9 @@ const Buttons = () => {
     if (buttonPressed.includes("-p")) {
       prime = true;
     }
-    
-    if(e.shiftKey){
-      prime = true
-    }
 
-    let frontWedge;
-    let backWedge;
-    let leftWedge;
-    let rightWedge;
-    let topWedge;
-    let bottomWedge;
-
-    if (currentFace !== "edge" || currentFace !== "faceEdge") {
-      frontWedge = currentFace;
-      backWedge = backFace;
-      leftWedge = leftFace;
-      rightWedge = rightFace;
-      topWedge = topFace;
-      bottomWedge = bottomFace;
-    }
-    if (currentFace === "edge") {
-      frontWedge = lastCurrentFace;
-      backWedge = lastBackFace;
-      leftWedge = lastLeftFace;
-      rightWedge = lastRightFace;
-      topWedge = lastTopFace;
-      bottomWedge = lastBottomFace;
-    }
-    if ((currentFace === 'white' || currentFace === 'yellow') && (leftFace === 'edge')){
-      frontWedge = currentFace
-      backWedge = lastBackFace;
-      leftWedge = lastLeftFace;
-      rightWedge = lastRightFace;
-      topWedge = lastTopFace;
-      bottomWedge = lastBottomFace;
-    }
-    if (currentFace === "faceEdge" && oneAboveCur === "yellow") {
-      frontWedge = oneBellowCur;
-      backWedge = oneBellowBack;
-      leftWedge = oneBellowLeft;
-      rightWedge = oneBellowRight;
-      topWedge = oneBellowTop;
-      bottomWedge = oneBellowBottom;
-    }
-    if (currentFace === "faceEdge" && oneBellowCur === "white") {
-      frontWedge = oneAboveCur;
-      backWedge = oneAboveBack;
-      leftWedge = oneAboveLeft;
-      rightWedge = oneAboveRight;
-      topWedge = oneAboveTop;
-      bottomWedge = oneAboveBottom;
+    if (e.shiftKey) {
+      prime = true;
     }
 
     switch (buttonPressed) {
@@ -236,6 +196,112 @@ const Buttons = () => {
         break;
     }
   };
+
+  useEffect(() => {
+    let frontWedge;
+    let backWedge;
+    let leftWedge;
+    let rightWedge;
+    let topWedge;
+    let bottomWedge;
+
+    if (currentFace !== "edge" || currentFace !== "faceEdge") {
+      frontWedge = currentFace;
+      backWedge = backFace;
+      leftWedge = leftFace;
+      rightWedge = rightFace;
+      topWedge = topFace;
+      bottomWedge = bottomFace;
+    }
+    if (currentFace === "edge") {
+      frontWedge = lastCurrentFace;
+      backWedge = lastBackFace;
+      leftWedge = lastLeftFace;
+      rightWedge = lastRightFace;
+      topWedge = lastTopFace;
+      bottomWedge = lastBottomFace;
+    }
+    if (
+      (currentFace === "white" || currentFace === "yellow") &&
+      leftFace === "edge"
+    ) {
+      frontWedge = currentFace;
+      backWedge = lastBackFace;
+      leftWedge = lastLeftFace;
+      rightWedge = lastRightFace;
+      topWedge = lastTopFace;
+      bottomWedge = lastBottomFace;
+    }
+    if (currentFace === "faceEdge" && oneAboveCur === "yellow") {
+      frontWedge = oneBellowCur;
+      backWedge = oneBellowBack;
+      leftWedge = oneBellowLeft;
+      rightWedge = oneBellowRight;
+      topWedge = oneBellowTop;
+      bottomWedge = oneBellowBottom;
+    }
+    if (currentFace === "faceEdge" && oneBellowCur === "white") {
+      frontWedge = oneAboveCur;
+      backWedge = oneAboveBack;
+      leftWedge = oneAboveLeft;
+      rightWedge = oneAboveRight;
+      topWedge = oneAboveTop;
+      bottomWedge = oneAboveBottom;
+    }
+
+    const wedges = {
+      frontWedge: frontWedge,
+      backWedge: backWedge,
+      leftWedge: leftWedge,
+      rightWedge: rightWedge,
+      topWedge: topWedge,
+      bottomWedge: bottomWedge
+    };
+
+    const wedgesInitial = {
+      frontWedge: frontWedge.charAt(0),
+      backWedge: backWedge.charAt(0),
+      leftWedge: leftWedge.charAt(0),
+      rightWedge: rightWedge.charAt(0),
+      topWedge: topWedge.charAt(0),
+      bottomWedge: bottomWedge.charAt(0)
+    }
+
+    setFrontWedge(wedges.frontWedge)
+    setBackWedge(wedges.backWedge)
+    setLeftWedge(wedges.leftWedge)
+    setRightWedge(wedges.rightWedge)
+    setTopWedge(wedges.topWedge)
+    setBottomWedge(wedges.bottomWedge)
+
+    dispatch(facesActions.setWedges(wedgesInitial));
+  }, [
+    currentFace,
+    backFace,
+    bottomFace,
+    leftFace,
+    oneAboveCur,
+    oneBellowCur,
+    dispatch,
+    rightFace,
+    topFace,
+    lastCurrentFace,
+    lastBackFace,
+    lastLeftFace,
+    lastRightFace,
+    lastTopFace,
+    lastBottomFace,
+    oneBellowBack,
+    oneBellowLeft,
+    oneBellowRight,
+    oneBellowTop,
+    oneBellowBottom,
+    oneAboveBack,
+    oneAboveLeft,
+    oneAboveRight,
+    oneAboveTop,
+    oneAboveBottom,
+  ]);
 
   return (
     <div className={classes.buttons}>
