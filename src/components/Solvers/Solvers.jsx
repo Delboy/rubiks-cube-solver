@@ -13,11 +13,7 @@ const Solvers = (props) => {
   const moveCounter = useSelector((state) => state.faces.moveCounter);
   // Set Move number
   const [savedMoveCount, setSavedMoveCount] = useState(null);
-  // Two stage command bool
-  const [twoStageCommand, setTwoStageCommand] = useState(false);
-  // Second Command string
-  const [secondCommand, setSecondCommand] = useState(null);
-
+  
   // multistage command
   const [multiStageCommand, setMultiStageCommand] = useState(false);
   // multstage counter
@@ -45,27 +41,6 @@ const Solvers = (props) => {
   const rightWedge = useSelector((state) => state.faces.rightWedge);
   const topWedge = useSelector((state) => state.faces.topWedge);
   const bottomWedge = useSelector((state) => state.faces.bottomWedge);
-
-  const setValuesForTwoStageCommand = (
-    twoStageCommandBool,
-    savedMoveCount,
-    secondCommand
-  ) => {
-    setTwoStageCommand(twoStageCommandBool);
-    setSavedMoveCount(savedMoveCount);
-    setSecondCommand(secondCommand);
-  };
-
-  // Runs if a command has two parts
-  const checkTwoStageCommand = useCallback(() => {
-    if (moveCounter === savedMoveCount + 1) {
-      dispatch(guideActions.setCommand(secondCommand));
-    }
-    if (moveCounter === savedMoveCount + 2) {
-      setTwoStageCommand(false);
-    }
-  }, [moveCounter, savedMoveCount, secondCommand, dispatch]);
-
 
   // Takes an input of what wedge is needed to move and returns the command needed
   const findSideToMove = useCallback((moveNeeded) => {
@@ -220,19 +195,16 @@ const Solvers = (props) => {
   return (
     <>
       <DaisySolver
-        checkTwoStageCommand={checkTwoStageCommand}
-        setValuesForTwoStageCommand={setValuesForTwoStageCommand}
-        twoStageCommand={twoStageCommand}
+        multiStageCommandSetter={multiStageCommandSetter}
+        setValuesForMultiStageCommand={setValuesForMultiStageCommand}
+        multiStageCommand={multiStageCommand}
       />
       <WhiteCrossSolver
-        checkTwoStageCommand={checkTwoStageCommand}
-        setValuesForTwoStageCommand={setValuesForTwoStageCommand}
-        twoStageCommand={twoStageCommand}
+        multiStageCommandSetter={multiStageCommandSetter}
+        setValuesForMultiStageCommand={setValuesForMultiStageCommand}
+        multiStageCommand={multiStageCommand}
       />
       <FirstLayerSolver
-        checkTwoStageCommand={checkTwoStageCommand}
-        setValuesForTwoStageCommand={setValuesForTwoStageCommand}
-        twoStageCommand={twoStageCommand}
         multiStageCommandSetter={multiStageCommandSetter}
         setValuesForMultiStageCommand={setValuesForMultiStageCommand}
         multiStageCommand={multiStageCommand}

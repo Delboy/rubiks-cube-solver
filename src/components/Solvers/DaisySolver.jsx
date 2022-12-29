@@ -366,12 +366,24 @@ const DaisySolver = (props) => {
           )
         );
       } else if (pair.bottom === "white") {
-        dispatch(
-          guideActions.setCommand(
-            `Rotate the ${pair.face} face (F) 180\u00b0 to move the white edge on the bottom face to the top!`
-          )
+        // dispatch(
+        //   guideActions.setCommand(
+        //     `Rotate the ${pair.face} face (F) 180\u00b0 to move the white edge on the bottom face to the top!`
+        //   )
+        // );
+        // props.setValuesForTwoStageCommand(true, moveCounter, `Rotate the ${pair.face} face another 90\u00b0`)
+        props.setValuesForMultiStageCommand(
+          true,
+          moveCounter,
+          [
+            `Rotate the ${pair.face} face (F) 180\u00b0 to move the white edge on the bottom face to the top!`,
+            `Rotate the ${pair.face} face another 90\u00b0`,
+          ],
+          [
+            `${pair.face.charAt(0)}`,
+            `${pair.face.charAt(0)}`
+          ]
         );
-        props.setValuesForTwoStageCommand(true, moveCounter, `Rotate the ${pair.face} face another 90\u00b0`)
       }
     });
   }, [
@@ -390,7 +402,7 @@ const DaisySolver = (props) => {
 
   // Runs the individual solvers
   const daisySolver = useCallback(() => {
-    if (!props.twoStageCommand) {
+    if (!props.multiStageCommand) {
       //  checks white in top or bottom
       whiteInTopOrBottomRow();
       // checks white in center row
@@ -398,9 +410,9 @@ const DaisySolver = (props) => {
       // checks white on bottom
       whiteInBottomLayer();
     }
-    if (props.twoStageCommand) {
+    if (props.multiStageCommand) {
       // checks if any commands had two parts
-      props.checkTwoStageCommand();
+      props.multiStageCommandSetter();
     }
   }, [
     whiteInTopOrBottomRow,

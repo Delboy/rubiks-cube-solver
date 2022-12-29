@@ -41,7 +41,6 @@ const Guides = (props) => {
   };
 
   const skipGuideHandler = (messagesLength) => {
-    console.log(messagesLength)
     updateGuideHandler('next')
     setCurrentGuideMsgLength(messagesLength)
   }

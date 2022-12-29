@@ -36,7 +36,7 @@ const GuideBox = () => {
     }
   };
 
-  // If guide increases clear message number to zero
+  // If guide increases, clear message number to zero
   // If guide decreases, take the message length of previous guide, and set to one from the end
   const clearMessageNo = (prev) => {
     if (prev) {

@@ -675,9 +675,7 @@ const initialGuideState = {
   buttonLayoutVisible: false,
   notationVisible: false,
   commandVisible: false,
-  twoStageCommand: false,
   command: null,
-  secondCommand: null,
   wedgeToTurn: null,
   errorMsg: null,
   guideNo: 0,
@@ -706,14 +704,8 @@ const guideSlice = createSlice({
     setCommandVisible(state, action){
       state.commandVisible = action.payload
     },
-    setTwoStageCommand(state, action){
-      state.twoStageCommand = action.payload
-    },
     setCommand(state, action){
       state.command = action.payload
-    },
-    setSecondCommand(state, action){
-      state.secondCommand = action.payload
     },
     setErrorMsg(state, action){
       state.errorMsg = action.payload

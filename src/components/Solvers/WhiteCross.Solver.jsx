@@ -146,13 +146,20 @@ const WhiteCrossSolver = (props) => {
     let matched;
     allWhiteEdges.forEach((edge) => {
       if (edge[0] === edge[2] && edge[1] === "white") {
-        dispatch(
-          guideActions.setCommand(
-            `The ${edge[2]} face's center piece matches the daisys piece adjacent color, so turn this face 180\u00b0`
-          )
-        );
-        props.setValuesForTwoStageCommand(true, moveCounter, `Turn the ${edge[2]} face another 90\u00b0` )
-        matched = true;
+        const faceInitial = edge[2].charAt(0)
+        props.setValuesForMultiStageCommand(
+          true,
+          moveCounter,
+          [
+            `The ${edge[2]} face's center piece matches the daisys piece adjacent color, so turn this face 180\u00b0`,
+            `Turn the ${edge[2]} face another 90\u00b0`
+          ],
+          [
+            `${faceInitial}`,
+            `${faceInitial}`
+          ]
+          );
+          matched = true;
       }
       if (!matched) {
         dispatch(
@@ -165,13 +172,13 @@ const WhiteCrossSolver = (props) => {
   };
 
   const whiteCrossSolver = () => {
-    if (!props.twoStageCommand) {
+    if (!props.multiStageCommand) {
       // checks if white piece other face matches center piece
       checkEdgeMatchesCenter()
     }
-    if (props.twoStageCommand) {
+    if (props.multiStageCommand) {
       // checks if any commands had two parts
-      props.checkTwoStageCommand();
+      props.multiStageCommandSetter();
     }
   }
 
