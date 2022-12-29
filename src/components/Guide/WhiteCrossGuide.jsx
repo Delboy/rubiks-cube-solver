@@ -180,6 +180,7 @@ const WhiteCrossGuide = (props) => {
   }, [whiteCrossSolved, dispatch]);
 
   useEffect(() => {
+    console.log(msgNo)
     if(msgNo === messages.length){
         props.setCurrentGuideMsgLength(messages.length)
         props.updateGuide('next')
@@ -188,6 +189,7 @@ const WhiteCrossGuide = (props) => {
         props.updateGuide('prev')
     }
     if(msgNo === 2){
+      console.log('HIT')
       props.onCommandVisible(true)
     } else {
       props.onCommandVisible(false)

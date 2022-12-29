@@ -57,14 +57,19 @@ const Guides = (props) => {
         (guideNo === 0 && msgNo === 0) ||
         (guideNo === 1 && msgNo === 2) ||
         (guideNo === 2 && msgNo === 0) ||
-        (guideNo === 2 && msgNo === 3)
+        (guideNo === 2 && msgNo === 3) ||
+        (guideNo === 3 && msgNo === 7)
       ) {
         props.onBackDisable(true);
       } else {
         props.onBackDisable(false);
       }
 
-      if (guideNo === 1 && msgNo === 1) {
+      if (
+        (guideNo === 1 && msgNo === 1) ||
+        (guideNo === 2 && msgNo === 2) ||
+        (guideNo === 3 && msgNo === 6) 
+        ) {
         props.onNextDisable(true);
       } else {
         props.onNextDisable(false);
