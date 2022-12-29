@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { guideActions } from "../../orientation";
 
 import classes from "./FirstLayerGuide.module.css";
 
@@ -7,6 +8,8 @@ const FirstLayerGuide = (props) => {
   
   const command = useSelector((state) => state.guide.command);
   const msgNo = useSelector(state => state.guide.msgNo)
+
+  const dispatch = useDispatch()
   
   const messages = [
     [
@@ -410,6 +413,14 @@ const FirstLayerGuide = (props) => {
       </div>,
     ],
   ];
+
+  // Once First Layer is solved move to the next message
+  const firstLayerSolved = useSelector((state) => state.guide.firstLayerSolved);
+  useEffect(() => {
+    if (firstLayerSolved) {
+      dispatch(guideActions.setMsgNumber(7))
+    }
+  }, [firstLayerSolved, dispatch]);
 
   useEffect(() => {
     if (msgNo === messages.length) {

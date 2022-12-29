@@ -125,11 +125,12 @@ const Solvers = (props) => {
       setDynamicMessage(false)
       // If the move made is the move expected
       if (lastMove === algo[multiStageCounter]) {
-        dispatch(guideActions.setCommand(messagesArray[multiStageCounter + 1]));
-        setMultiStageCounter((prevState) => (prevState += 1));
         if (moveCounter === savedMoveCount + messagesArray.length) {
           setMultiStageCounter(0);
           setMultiStageCommand(false);
+        } else {
+          dispatch(guideActions.setCommand(messagesArray[multiStageCounter + 1]));
+          setMultiStageCounter((prevState) => (prevState += 1));
         }
       }
       // If the move made is not what was expected
