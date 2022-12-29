@@ -306,7 +306,7 @@ const FirstLayerSolver = (props) => {
           ];
         }
 
-        // Runs commands depending on how many moves needed
+        // Sets commands depending on how many moves needed
         switch (ammoutOfMoves) {
           case 0:
             props.setValuesForMultiStageCommand(
@@ -399,38 +399,43 @@ const FirstLayerSolver = (props) => {
     ];
 
     bottomCorners.forEach((corner) => {
-      let adjacentFace;
-      let whitePos;
-      let algo;
-      let algoString2;
-      let hasWhiteEdge = false;
-      if (corner.edgeOne === "white") {
-        hasWhiteEdge = true;
-        adjacentFace = corner.leftOfFace;
-        whitePos = "left";
-        algoString2 = ["R", "U", "R'"];
-        algo = [`${corner.face.charAt(0)}`, "y", `${corner.face.charAt(0)}p`];
-      }
-      if (corner.edgeTwo === "white") {
-        hasWhiteEdge = true;
-        adjacentFace = corner.rightOfFace;
-        whitePos = "right";
-        algoString2 = ["L'", "U'", "L"];
-        algo = [`${corner.face.charAt(0)}p`, "yp", `${corner.face.charAt(0)}`];
-      }
-      if (hasWhiteEdge) {
+      if (corner.edgeOne === "white" || corner.edgeTwo === "white") {
+        // Variables
+        let adjacentFace;
+        let whitePos;
+        let algo;
+        let algoString2;
+
+        // Updates variables depending on which side is white
+        if (corner.edgeOne === "white") {
+          adjacentFace = corner.leftOfFace.toUpperCase();
+          whitePos = "left";
+          algoString2 = ["R", "U", "R'"];
+          algo = [`${corner.face.charAt(0)}`, "y", `${corner.face.charAt(0)}p`];
+        }
+        if (corner.edgeTwo === "white") {
+          adjacentFace = corner.rightOfFace.toUpperCase();
+          whitePos = "right";
+          algoString2 = ["L'", "U'", "L"];
+          algo = [
+            `${corner.face.charAt(0)}p`,
+            "yp",
+            `${corner.face.charAt(0)}`,
+          ];
+        }
+
+        // Sets command
         props.setValuesForMultiStageCommand(
           true,
           moveCounter,
           [
-            `The ${corner.face} face has a white edge in the bottom ${whitePos} corner, so facing the ${adjacentFace} face, perform ${algoString2[0]}, ${algoString2[1]}, ${algoString2[2]} in order to put the corner into the top row`,
+            `The ${corner.face.toUpperCase()} face has a white edge in the bottom ${whitePos} corner, so facing the ${adjacentFace} face, perform ${algoString2[0]}, ${algoString2[1]}, ${algoString2[2]} in order to put the corner into the top row`,
             `Now, facing the ${adjacentFace} face, perform ${algoString2[1]}`,
             `Now, facing the ${adjacentFace} face, perform ${algoString2[2]}`,
           ],
           algo
         );
       }
-      hasWhiteEdge = false;
     });
   }, [
     blueBottomLeftCorner,
@@ -505,17 +510,21 @@ const FirstLayerSolver = (props) => {
           algoDirection = "yp";
         }
 
-        // Runs command depending on amount of moves needed
+        // Capitalises Face for string
+        const leftSide = corner.leftSide.toUpperCase()
+        const rightEdge = corner.rightEdge.toUpperCase()
+
+        // Sets command depending on amount of moves needed
         switch (amountOfMoves) {
           case 0:
             props.setValuesForMultiStageCommand(
               true,
               moveCounter,
               [
-                `The ${corner.leftSide} face has a white edge facing up in top right corner. We need to get this white edge facing outwards. As this is directly above the bottom corner where it needs to be we can begin the alogrithm. So facing the ${corner.rightEdge} face, perform the alorithm R, U, U, R'.`,
-                `Now, facing the ${corner.rightEdge} face, perform U`,
-                `Now, facing the ${corner.rightEdge} face, perform U`,
-                `Now, facing the ${corner.rightEdge} face, perform R'`,
+                `The ${leftSide} face has a white edge facing up in top right corner. We need to get this white edge facing outwards. As this is directly above the bottom corner where it needs to be we can begin the alogrithm. So facing the ${rightEdge} face, perform the alorithm R, U, U, R'.`,
+                `Now, facing the ${rightEdge} face, perform U`,
+                `Now, facing the ${rightEdge} face, perform U`,
+                `Now, facing the ${rightEdge} face, perform R'`,
               ],
               [
                 `${corner.leftEdge.charAt(0)}`,
@@ -530,11 +539,11 @@ const FirstLayerSolver = (props) => {
               true,
               moveCounter,
               [
-                `The ${corner.leftSide} face has a white edge facing up in top right corner. To begin we need to place it above the bottom corner where it will eventually end up. To do this turn the top ${direction} one time.`,
-                `Now that we have the corner in the right position we need to get the white edge facing outwards. To do so, facing the ${corner.rightEdge} face perform the alorithm R, U, U, R'.`,
-                `Now, facing the ${corner.rightEdge} face, perform U`,
-                `Now, facing the ${corner.rightEdge} face, perform U`,
-                `Now, facing the ${corner.rightEdge} face, perform R'`,
+                `The ${leftSide} face has a white edge facing up in top right corner. To begin we need to place it above the bottom corner where it will eventually end up. To do this turn the top ${direction} one time.`,
+                `Now that we have the corner in the right position we need to get the white edge facing outwards. To do so, facing the ${rightEdge} face perform the alorithm R, U, U, R'.`,
+                `Now, facing the ${rightEdge} face, perform U`,
+                `Now, facing the ${rightEdge} face, perform U`,
+                `Now, facing the ${rightEdge} face, perform R'`,
               ],
               [
                 `${algoDirection}`,
@@ -550,12 +559,12 @@ const FirstLayerSolver = (props) => {
               true,
               moveCounter,
               [
-                `The ${corner.leftSide} face has a white edge facing up in top right corner. To begin we need to place it above the bottom corner where it will eventually end up. To do this turn the top clockwise twice (U2).`,
+                `The ${leftSide} face has a white edge facing up in top right corner. To begin we need to place it above the bottom corner where it will eventually end up. To do this turn the top clockwise twice (U2).`,
                 `Keep turning the top (U)`,
-                `Now that we have the corner in the right position we need to get the white edge facing outwards. To do so, facing the ${corner.rightEdge} face perform the alorithm R, U, U, R'.`,
-                `Now, facing the ${corner.rightEdge} face, perform U`,
-                `Now, facing the ${corner.rightEdge} face, perform U`,
-                `Now, facing the ${corner.rightEdge} face, perform R'`,
+                `Now that we have the corner in the right position we need to get the white edge facing outwards. To do so, facing the ${rightEdge} face perform the alorithm R, U, U, R'.`,
+                `Now, facing the ${rightEdge} face, perform U`,
+                `Now, facing the ${rightEdge} face, perform U`,
+                `Now, facing the ${rightEdge} face, perform R'`,
               ],
               [
                 "y",
