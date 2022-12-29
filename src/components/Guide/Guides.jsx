@@ -40,6 +40,12 @@ const Guides = (props) => {
     dispatch(guideActions.setCommandVisible(bool));
   };
 
+  const skipGuideHandler = (messagesLength) => {
+    console.log(messagesLength)
+    updateGuideHandler('next')
+    setCurrentGuideMsgLength(messagesLength)
+  }
+
   useEffect(() => {
     if (!cubeFilled) {
       dispatch(guideActions.setGuideNumber(0));
@@ -81,6 +87,7 @@ const Guides = (props) => {
           updateGuide={updateGuideHandler}
           setCurrentGuideMsgLength={msgLengthHandler}
           onCommandVisible={setCommandHandler}
+          skipGuideHandler={skipGuideHandler}
         />
       ) : null}
       {guideNo === 2 ? (
@@ -88,6 +95,7 @@ const Guides = (props) => {
           updateGuide={updateGuideHandler}
           setCurrentGuideMsgLength={msgLengthHandler}
           onCommandVisible={setCommandHandler}
+          skipGuideHandler={skipGuideHandler}
         />
       ) : null}
       {guideNo === 3 ? (
@@ -95,6 +103,7 @@ const Guides = (props) => {
           updateGuide={updateGuideHandler}
           setCurrentGuideMsgLength={msgLengthHandler}
           onCommandVisible={setCommandHandler}
+          skipGuideHandler={skipGuideHandler}
         />
       ) : null}
     </>

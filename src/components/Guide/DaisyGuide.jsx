@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { guideActions } from '../../orientation';
 
+import SkipGuideBtn from '../UI/SkipGuideBtn';
+
 import classes from './DaisyGuide.module.css'
 
 const DaisyGuide = (props) => {
@@ -78,7 +80,10 @@ const DaisyGuide = (props) => {
     }
   },[msgNo, props, messages.length])
   return (
+    <>
     <div className={classes.guideArea}>{messages[msgNo]}</div>
+    <SkipGuideBtn commandMsgNo={1} />
+    </>
   )
 };
 

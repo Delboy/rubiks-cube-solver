@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { guideActions } from "../../orientation";
 
+import SkipGuideBtn from "../UI/SkipGuideBtn";
+
 import classes from "./FirstLayerGuide.module.css";
 
 const FirstLayerGuide = (props) => {
@@ -436,7 +438,12 @@ const FirstLayerGuide = (props) => {
       props.onCommandVisible(false);
     }
   }, [msgNo, props, messages.length]);
-  return <div className={classes.guideArea}>{messages[msgNo]}</div>;
+  return (
+  <>
+  <div className={classes.guideArea}>{messages[msgNo]}</div>
+    <SkipGuideBtn commandMsgNo={6} />
+   </>
+  )
 };
 
 export default FirstLayerGuide;

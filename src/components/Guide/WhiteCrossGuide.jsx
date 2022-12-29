@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { guideActions } from "../../orientation";
 
+import SkipGuideBtn from "../UI/SkipGuideBtn";
 
 import classes from "./WhiteCrossGuide.module.css";
 
@@ -194,7 +195,12 @@ const WhiteCrossGuide = (props) => {
   },[msgNo, props, messages.length])
 
 
-  return <div className={classes.guideArea}>{messages[msgNo]}</div>;
+  return (
+  <>
+  <div className={classes.guideArea}>{messages[msgNo]}</div>
+    <SkipGuideBtn commandMsgNo={2} />
+  </>
+  )
 };
 
 export default WhiteCrossGuide;
