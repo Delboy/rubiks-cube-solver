@@ -3,9 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { guideActions } from "../../orientation";
 
 import Introduction from "./Introduction";
-import DaisyGuide from "./DaisyGuide";
-import WhiteCrossGuide from "./WhiteCrossGuide";
-import FirstLayerGuide from "./FirstLayerGuide";
+
+import Guide from "./Guide";
+
+import { daisySteps } from "./Steps/DaisySteps";
+import { whiteCrossSteps } from "./Steps/WhiteCrossSteps";
+import { firstLayerSteps } from "./Steps/FirstLayerSteps";
 
 const Guides = (props) => {
   const [currentGuideMsgLength, setCurrentGuideMsgLength] = useState(0);
@@ -14,6 +17,11 @@ const Guides = (props) => {
 
   const msgNo = useSelector((state) => state.guide.msgNo);
   const guideNo = useSelector((state) => state.guide.guideNo);
+
+  // Solved Staues
+  const daisySolved = useSelector((state) => state.guide.daisySolved);
+  const whiteCrossSolved = useSelector((state) => state.guide.whiteCrossSolved);
+  const firstLayerSolved = useSelector((state) => state.guide.firstLayerSolved);
 
   const dispatch = useDispatch();
 
@@ -41,9 +49,9 @@ const Guides = (props) => {
   };
 
   const skipGuideHandler = (messagesLength) => {
-    updateGuideHandler('next')
-    setCurrentGuideMsgLength(messagesLength)
-  }
+    updateGuideHandler("next");
+    setCurrentGuideMsgLength(messagesLength);
+  };
 
   useEffect(() => {
     if (!cubeFilled) {
@@ -67,8 +75,8 @@ const Guides = (props) => {
       if (
         (guideNo === 1 && msgNo === 1) ||
         (guideNo === 2 && msgNo === 2) ||
-        (guideNo === 3 && msgNo === 6) 
-        ) {
+        (guideNo === 3 && msgNo === 6)
+      ) {
         props.onNextDisable(true);
       } else {
         props.onNextDisable(false);
@@ -87,7 +95,11 @@ const Guides = (props) => {
         />
       ) : null}
       {guideNo === 1 ? (
-        <DaisyGuide
+        <Guide
+          steps={daisySteps}
+          solvedBool={daisySolved}
+          guideName={"Daisy"}
+          stepNo={guideNo + 1}
           updateGuide={updateGuideHandler}
           setCurrentGuideMsgLength={msgLengthHandler}
           onCommandVisible={setCommandHandler}
@@ -95,15 +107,23 @@ const Guides = (props) => {
         />
       ) : null}
       {guideNo === 2 ? (
-        <WhiteCrossGuide
+        <Guide
+          steps={whiteCrossSteps}
+          solvedBool={whiteCrossSolved}
+          guideName={"White Cross"}
+          stepNo={guideNo + 1}
           updateGuide={updateGuideHandler}
           setCurrentGuideMsgLength={msgLengthHandler}
           onCommandVisible={setCommandHandler}
           skipGuideHandler={skipGuideHandler}
         />
-      ) : null}
+      )  : null}
       {guideNo === 3 ? (
-        <FirstLayerGuide
+        <Guide
+          steps={firstLayerSteps}
+          solvedBool={firstLayerSolved}
+          guideName={"First Layer"}
+          stepNo={guideNo + 1}
           updateGuide={updateGuideHandler}
           setCurrentGuideMsgLength={msgLengthHandler}
           onCommandVisible={setCommandHandler}

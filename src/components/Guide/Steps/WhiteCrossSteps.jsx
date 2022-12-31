@@ -1,26 +1,6 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { guideActions } from "../../orientation";
+import classes from '../Guide.module.css'
 
-import SkipGuideBtn from "../UI/SkipGuideBtn";
-
-import classes from "./WhiteCrossGuide.module.css";
-
-const WhiteCrossGuide = (props) => {
-
-  const command = useSelector((state) => state.guide.command);
-  const msgNo = useSelector(state => state.guide.msgNo)
-  const errorMsg = useSelector(state => state.guide.errorMsg)
-
-  const dispatch = useDispatch()
-
-    const resetGuideHandler = () => {
-        dispatch(guideActions.setErrorMsg(''))
-        dispatch(guideActions.setGuideNumber(1))
-        dispatch(guideActions.setMsgNumber(0))
-    }
-
-  const messages = [
+export const whiteCrossSteps = [
     [
       <div key="1" className={classes.container}>
         <p>Step two</p>
@@ -147,60 +127,5 @@ const WhiteCrossGuide = (props) => {
         </div>
         <p>Click next to try this now!</p>
       </div>,
-    ],
-    [
-      <div key="3">
-        {!errorMsg && <p value="command">
-            {command}
-            
-        </p>}
-        {errorMsg && <><p value="command">
-            {errorMsg}
-            
-        </p>
-        <button className={classes.button} onClick={resetGuideHandler}>Reset</button></>}
-        
-      </div>,
-    ],
-    [
-      <div key='4'>
-        <p>Well done!</p>
-        <p>You've completed the White Cross!</p>
-        <p>Lets move on to step 3</p>
-      </div>
     ]
-  ];
-
-  // Once white cross is solved move to the next message
-  const whiteCrossSolved = useSelector((state) => state.guide.whiteCrossSolved);
-  useEffect(() => {
-    if (whiteCrossSolved) {
-      dispatch(guideActions.setMsgNumber(3))
-    }
-  }, [whiteCrossSolved, dispatch]);
-
-  useEffect(() => {
-    if(msgNo === messages.length){
-        props.setCurrentGuideMsgLength(messages.length)
-        props.updateGuide('next')
-    }
-    if(msgNo === -1 ){
-        props.updateGuide('prev')
-    }
-    if(msgNo === 2){
-      props.onCommandVisible(true)
-    } else {
-      props.onCommandVisible(false)
-    }
-  },[msgNo, props, messages.length])
-
-
-  return (
-  <>
-  <div className={classes.guideArea}>{messages[msgNo]}</div>
-    <SkipGuideBtn commandMsgNo={2} />
-  </>
-  )
-};
-
-export default WhiteCrossGuide;
+  ]

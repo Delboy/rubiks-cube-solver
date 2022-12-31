@@ -1,5 +1,5 @@
 import Header from "./components/Layout/Header";
-import Guide from "./components/Guide/Guide";
+import Tutorial from "./components/Guide/Tutorial";
 import Cube from "./components/Cube/Cube";
 import Buttons from "./components/Controls/Buttons";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
@@ -12,7 +12,7 @@ function App() {
     <>
       <div className={classes.main}>
         <Header />
-        <Guide />
+        <Tutorial />
         <div className={classes.center}>
           <div className={classes.cube}>
             <Cube />

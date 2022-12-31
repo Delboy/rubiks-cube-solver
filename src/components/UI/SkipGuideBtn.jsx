@@ -8,7 +8,7 @@ const SkipGuideBtn = (props) => {
   const msgNo = useSelector(state => state.guide.msgNo)
   
   const skipGuideHandler = () => {
-    dispatch(guideActions.setMsgNumber(props.commandMsgNo));
+    dispatch(guideActions.setMsgNumber(props.commandMsgIndex));
   };
 
   return (
